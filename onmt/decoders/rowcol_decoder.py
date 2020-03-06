@@ -2,7 +2,8 @@ import torch
 import torch.nn as nn
 
 from onmt.models.stacked_rnn import StackedLSTM, StackedGRU
-from onmt.modules import context_gate_factory, GlobalAttention
+from onmt.modules import context_gate_factory
+from onmt.modules.rowcol_attention import RowAttention, ColAttention
 from onmt.utils.rnn_factory import rnn_factory
 
 from onmt.utils.misc import aeq
@@ -119,10 +120,23 @@ class RNNDecoderBase(DecoderBase):
                 raise ValueError("Cannot use coverage term with no attention.")
             self.attn = None
         else:
-            self.attn = GlobalAttention(
+            # self.attn = GlobalAttention(
+            #     hidden_size, coverage=coverage_attn,
+            #     attn_type=attn_type, attn_func=attn_func
+            # )
+
+            self.attn = RowAttention(
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
             )
+            self.attn_col = ColAttention(
+                hidden_size, coverage=coverage_attn,
+                attn_type=attn_type, attn_func=attn_func
+            )
+
+
+
+
 
         if copy_attn and not reuse_copy_attn:
             if copy_attn_type == "none" or copy_attn_type is None:
@@ -243,98 +257,7 @@ class RNNDecoderBase(DecoderBase):
         self.embeddings.update_dropout(dropout)
 
 
-
-
-
-
-class StdRNNDecoder(RNNDecoderBase):
-    """Standard fully batched RNN decoder with attention.
-
-    Faster implementation, uses CuDNN for implementation.
-    See :class:`~onmt.decoders.decoder.RNNDecoderBase` for options.
-
-
-    Based around the approach from
-    "Neural Machine Translation By Jointly Learning To Align and Translate"
-    :cite:`Bahdanau2015`
-
-
-    Implemented without input_feeding and currently with no `coverage_attn`
-    or `copy_attn` support.
-    """
-
-    def _run_forward_pass(self, tgt, memory_bank, memory_lengths=None):
-        """
-        Private helper for running the specific RNN forward pass.
-        Must be overriden by all subclasses.
-
-        Args:
-            tgt (LongTensor): a sequence of input tokens tensors
-                ``(len, batch, nfeats)``.
-            memory_bank (FloatTensor): output(tensor sequence) from the
-                encoder RNN of size ``(src_len, batch, hidden_size)``.
-            memory_lengths (LongTensor): the source memory_bank lengths.
-
-        Returns:
-            (Tensor, List[FloatTensor], Dict[str, List[FloatTensor]):
-
-            * dec_state: final hidden state from the decoder.
-            * dec_outs: an array of output of every time
-              step from the decoder.
-            * attns: a dictionary of different
-              type of attention Tensor array of every time
-              step from the decoder.
-        """
-
-        assert self.copy_attn is None  # TODO, no support yet.
-        assert not self._coverage  # TODO, no support yet.
-
-        attns = {}
-        emb = self.embeddings(tgt)
-        if isinstance(self.rnn, nn.GRU):
-            rnn_output, dec_state = self.rnn(emb, self.state["hidden"][0])
-        else:
-            rnn_output, dec_state = self.rnn(emb, self.state["hidden"])
-
-        # Check
-        tgt_len, tgt_batch, _ = tgt.size()
-        output_len, output_batch, _ = rnn_output.size()
-        aeq(tgt_len, output_len)
-        aeq(tgt_batch, output_batch)
-
-        # Calculate the attention.
-        if not self.attentional:
-            dec_outs = rnn_output
-        else:
-            dec_outs, p_attn = self.attn(
-                rnn_output.transpose(0, 1).contiguous(),
-                memory_bank.transpose(0, 1),
-                memory_lengths=memory_lengths
-            )
-            attns["std"] = p_attn
-
-        # Calculate the context gate.
-        if self.context_gate is not None:
-            dec_outs = self.context_gate(
-                emb.view(-1, emb.size(2)),
-                rnn_output.view(-1, rnn_output.size(2)),
-                dec_outs.view(-1, dec_outs.size(2))
-            )
-            dec_outs = dec_outs.view(tgt_len, tgt_batch, self.hidden_size)
-
-        dec_outs = self.dropout(dec_outs)
-        return dec_state, dec_outs, attns
-
-    def _build_rnn(self, rnn_type, **kwargs):
-        rnn, _ = rnn_factory(rnn_type, **kwargs)
-        return rnn
-
-    @property
-    def _input_size(self):
-        return self.embeddings.embedding_size
-
-
-class InputFeedRNNDecoder(RNNDecoderBase):
+class ROWCOLRNNDecoder(RNNDecoderBase):
     """Input feeding based decoder.
 
     See :class:`~onmt.decoders.decoder.RNNDecoderBase` for options.
@@ -378,6 +301,7 @@ class InputFeedRNNDecoder(RNNDecoderBase):
         attns = {}
         if self.attn is not None:
             attns["std"] = []
+            attns["colstd"] = []
         if self.copy_attn is not None or self._reuse_copy_attn:
             attns["copy"] = []
         if self._coverage:
@@ -401,13 +325,27 @@ class InputFeedRNNDecoder(RNNDecoderBase):
                                                                             # rnn_output 为双层lstm的输出，也就是dec_state（h,c）中h的第二个值h[1]，两者相等！！
                                                                             # 由于h[0]和h[1]做了stack，所以h(2, bz 512)没有 h[1]
             if self.attentional:
-                decoder_output, p_attn = self.attn(    # ot
+                row_memory = memory_bank[0]
+
+                col_memory = memory_bank[1]
+
+                c1, p_attn = self.attn(    # ot, #p_attn是已经softmax的权重
                     rnn_output,
-                    memory_bank.transpose(0, 1),
+                    row_memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
                 attns["std"].append(p_attn)
 
+                p_attn = p_attn.view(p_attn.size(2), p_attn.size(0), p_attn.size(1))
+                col_memory_ = torch.mul(p_attn, col_memory)
 
+                decoder_output, p_attn = self.attn_col(    # ot
+                    c1,
+                    rnn_output,
+                    col_memory_.transpose(0, 1),
+                    memory_lengths=memory_lengths)
+
+
+                attns["colstd"].append(p_attn)
 
             else:
                 decoder_output = rnn_output

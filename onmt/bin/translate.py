@@ -22,6 +22,7 @@ def translate(opt):
     # opt.attn_debug = True
     for i, (src_shard, tgt_shard) in enumerate(shard_pairs):
         logger.info("Translating shard %d." % i)
+
         translator.translate(
             src=src_shard,
             tgt=tgt_shard,
@@ -30,7 +31,8 @@ def translate(opt):
             batch_type=opt.batch_type,
             attn_debug=opt.attn_debug,
             attn_view=opt.attn_view,
-            align_debug=opt.align_debug
+            align_debug=opt.align_debug,
+            multi_scale=opt.multi_scale
             )
 
 

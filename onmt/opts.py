@@ -60,10 +60,10 @@ def model_opts(parser):
     # Encoder-Decoder Options
     group = parser.add_argument_group('Model- Encoder-Decoder')
     group.add('--model_type', '-model_type', default='text',
-              choices=['img', 'imgdense'],
+              choices=['img', 'imgdense', 'rc', 'transformer', 'gru'],
               help="Type of source model to use. Allows "
                    "the system to incorporate non-text inputs. "
-                   "Options are [img|imgdense].")
+                   "Options are [img|imgdense|rc|transformer].")
     group.add('--model_dtype', '-model_dtype', default='fp32',
               choices=['fp32', 'fp16'],
               help='Data type of the model.')
@@ -124,8 +124,7 @@ def model_opts(parser):
               help="Deprecated, use `encoder_type`.")
 
     group.add('--context_gate', '-context_gate', type=str, default=None,
-              choices=['source', 'target', 'both'],
-              help="Type of context gate to use. "
+               help="Type of context gate to use. "
                    "Do not select for no context gate.")
 
     group.add('--log-path', dest="log_path",
@@ -211,7 +210,14 @@ def model_opts(parser):
     group.add("--nDenseBlocks", "-nDenseBlocks", type = int, default =[8,16,24])
     group.add("--reduction", "-reduction", type = float, default = 0.5)
     group.add('--bottleneck', '-bottleneck', action="store_true",
-              help='Print best attn for each word')
+              help='')
+    group.add('--add_m', '-add_m', action="store_true",
+              help='')
+    group.add('--multi_scale', '-multi_scale', action="store_true",
+              help='')
+    group.add('--rowcol', '-rowcol', action="store_true",
+              help='')
+
 
 def preprocess_opts(parser):
     """ Pre-procesing options """
@@ -453,7 +459,7 @@ def train_opts(parser):
                    "Recommended for Transformer.")
     group.add('--accum_steps', '-accum_steps', type=int, nargs='+',
               default=[0], help="Steps at which accum_count values change")
-    group.add('--valid_steps', '-valid_steps', type=int, default=10000,
+    group.add('--valid_steps', '-valid_steps', type=int, default=5000,
               help='Perfom validation every X steps')
     group.add('--valid_batch_size', '-valid_batch_size', type=int, default=32,
               help='Maximum batch size for validation')
@@ -736,6 +742,12 @@ def translate_opts(parser):
                    "decoded sentences")
     group.add('--attn_view', '-attn_view', action="store_true",
               help='show atten pig')
+    # group.add('--add_m', '-add_m', action="store_true",
+    #           help='')
+    #
+    group.add('--multi_scale', '-multi_scale', action="store_true",
+              help='')
+
 
 
 

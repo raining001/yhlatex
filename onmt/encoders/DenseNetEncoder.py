@@ -99,13 +99,14 @@ class DenseNet(EncoderBase):
 
     #
     def forward(self, src, lengths=None):
-        # print('src', src.size())
+        print('src', src.size())
         out = F.relu(self.conv1(src[:, :, :, :] - 0.5), True)
         # print('conv1', out.size())
         out = F.max_pool2d(out, kernel_size=(2, 2), stride=(2, 2))
-        # print('out', out.size())
+        print('out', out.size())
         out = self.trans1(self.dense1(out), kernel_size=(2, 1), stride=(2, 1))
-        # print('dense1', out.size())
+
+        print('dense1', out.size())
         out = self.trans2(self.dense2(out), kernel_size=(1, 2), stride=(1, 2))
         # print('dense2', out.size())
         out = self.trans3(self.dense3(out))
@@ -113,8 +114,7 @@ class DenseNet(EncoderBase):
         # print()
         # cnn： torch.Size([20, 512, 5, 25])
         out, hidden_t = self.rowencoder(out)
-        # print('rowencoder', out.size())
-        # print()
+
         return hidden_t, out, lengths
 
     def rowencoder(self, src):

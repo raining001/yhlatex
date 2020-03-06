@@ -22,6 +22,7 @@ def _check_save_model_path(opt):
         os.makedirs(model_dirname)
 
 
+
 def _tally_parameters(model):
     enc = 0
     dec = 0
@@ -82,8 +83,6 @@ def main(opt, device_id, batch_queue=None, semaphore=None):
         for sn, sf in f_iter:
             if sf.use_vocab:
                 logger.info(' * %s vocab size = %d' % (sn, len(sf.vocab)))
-
-
                 # print('sn', sn)
                 # print('sf.vocab', sf)
                 # print(len(sf.vocab.freqs))

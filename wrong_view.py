@@ -6,7 +6,7 @@ def process_args(args):
 
 
     parser.add_argument('--output-dir', dest='output_dir',
-                        type=str,  default='results/baseline_large/results/')
+                        type=str,  default='results/multi/results/filter_data/tmp_l60/')
     parameters = parser.parse_args(args)
     return parameters
 
@@ -23,8 +23,8 @@ def main(args):
     parameters = process_args(args)
     # output_dir = parameters.output_dir + "99_/"
     output_dir = parameters.output_dir
-    ref = output_dir + "less60_ref.txt"
-    pred = output_dir + "less60_pred.txt"
+    ref = output_dir + "refl60.txt"
+    pred = output_dir + "pred_10_l60.txt"
     log_file = output_dir + "log_img.txt"
     error_result = output_dir + "error_result.txt"
     wserror_result = output_dir + "wserror_result.txt"

@@ -38,10 +38,11 @@ def main(args):
     logging.getLogger('').addHandler(console)
 
     logging.info('Script being executed: %s'%__file__)
-   
+
     ref_txt = parameters.ref_txt
     pred_txt = parameters.pred_txt
     output_dir = parameters.output_dir
+    logging.info(pred_txt)
     assert os.path.exists(ref_txt), 'Label file %s not found'%ref_txt
     assert os.path.exists(pred_txt), 'Data file %s not found'%pred_txt
     assert os.path.exists(output_dir), 'Result file %s not found'%output_dir

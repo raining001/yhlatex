@@ -309,8 +309,8 @@ class Translator(object):
             attn_debug=False,
             attn_view=False,
             align_debug=False,
+            multi_scale=False,
             phrase_table=""):
-
 
         """Translate content of ``src`` and get gold scores from ``tgt``.
 
@@ -375,7 +375,7 @@ class Translator(object):
         for batch in data_iter:
 
             batch_data = self.translate_batch(
-                batch, data.src_vocabs, attn_debug
+                batch, data.src_vocabs, attn_debug, multi_scale
             )
 
             translations = xlation_builder.from_batch(batch_data)
@@ -568,7 +568,7 @@ class Translator(object):
             alignment_attn, prediction_mask, src_lengths, n_best)
         return alignement
 
-    def translate_batch(self, batch, src_vocabs, attn_debug):
+    def translate_batch(self, batch, src_vocabs, attn_debug, multi_scale):
         """Translate a batch of sentences."""
         with torch.no_grad():
             if self.beam_size == 1:
@@ -601,22 +601,28 @@ class Translator(object):
                     stepwise_penalty=self.stepwise_penalty,
                     ratio=self.ratio)
             return self._translate_batch_with_strategy(batch, src_vocabs,
-                                                       decode_strategy, attn_debug)
+                                                       decode_strategy, attn_debug, multi_scale)
 
-    def _run_encoder(self, batch):
+    def _run_encoder(self, batch, multi_scale):
         src, src_lengths = batch.src if isinstance(batch.src, tuple) \
                            else (batch.src, None)
 
         enc_states, memory_bank, src_lengths = self.model.encoder(
             src, src_lengths)
-        if src_lengths is None:
+
+        if isinstance(memory_bank, tuple):
+            src_lengths = torch.Tensor(batch.batch_size) \
+                               .type_as(memory_bank[0]) \
+                               .long() \
+                               .fill_(memory_bank[0].size(0))
+
+        elif src_lengths is None:
             assert not isinstance(memory_bank, tuple), \
                 'Ensemble decoding only supported for text data'
             src_lengths = torch.Tensor(batch.batch_size) \
                                .type_as(memory_bank) \
                                .long() \
                                .fill_(memory_bank.size(0))
-
         return src, enc_states, memory_bank, src_lengths
 
     def _decode_and_generate(
@@ -683,7 +689,7 @@ class Translator(object):
             self,
             batch,
             src_vocabs,
-            decode_strategy, attn_debug):
+            decode_strategy, attn_debug, multi_scale):
         """Translate a batch of sentences step by step using cache.
 
         Args:
@@ -702,7 +708,7 @@ class Translator(object):
 
         # (1) Run the encoder on the src.
 
-        src, enc_states, memory_bank, src_lengths = self._run_encoder(batch)
+        src, enc_states, memory_bank, src_lengths = self._run_encoder(batch, multi_scale)
         # print(src.size())
         self.model.decoder.init_state(src, memory_bank, enc_states)
 

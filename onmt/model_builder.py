@@ -92,6 +92,11 @@ def build_decoder(opt, embeddings):
     """
     dec_type = "ifrnn" if opt.decoder_type == "rnn" and opt.input_feed \
                else opt.decoder_type
+
+    if opt.multi_scale:
+        dec_type = 'multi_decoder'
+    if opt.rowcol:
+        dec_type = 'rowcol'
     return str2dec[dec_type].from_opt(opt, embeddings)
 
 
@@ -154,6 +159,7 @@ def build_base_model(model_opt, fields, gpu, checkpoint=None, gpu_id=None):
     else:                               # 运行这里
         src_emb = None
     # Build encoder.
+
     encoder = build_encoder(model_opt, src_emb)
     # Build decoder.
     tgt_field = fields["tgt"]

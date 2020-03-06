@@ -1,0 +1,1032 @@
+2020-02-23 21:27:05,508 root  INFO     Script being executed: scripts/evaluation/evaluate_image.py
+2020-02-23 21:27:10,021 root  INFO     Total Num: 100
+2020-02-23 21:27:10,021 root  INFO     Accuracy (w spaces): 0.940000
+2020-02-23 21:27:10,021 root  INFO     Accuracy (w/o spaces): 0.940000
+2020-02-23 21:27:10,021 root  INFO     Edit Dist (w spaces): 0.971885
+2020-02-23 21:27:10,022 root  INFO     Total Correct (w spaces): 94
+2020-02-23 21:27:10,022 root  INFO     Total Correct (w/o spaces): 94
+2020-02-23 21:27:10,022 root  INFO     Total Edit Dist (w spaces): 628
+2020-02-23 21:27:10,022 root  INFO     Total Ref (w spaces): 22337
+2020-02-23 21:27:10,022 root  INFO     
+2020-02-23 21:27:13,150 root  INFO     Total Num: 200
+2020-02-23 21:27:13,150 root  INFO     Accuracy (w spaces): 0.930000
+2020-02-23 21:27:13,150 root  INFO     Accuracy (w/o spaces): 0.935000
+2020-02-23 21:27:13,151 root  INFO     Edit Dist (w spaces): 0.967156
+2020-02-23 21:27:13,151 root  INFO     Total Correct (w spaces): 186
+2020-02-23 21:27:13,151 root  INFO     Total Correct (w/o spaces): 187
+2020-02-23 21:27:13,151 root  INFO     Total Edit Dist (w spaces): 1402
+2020-02-23 21:27:13,151 root  INFO     Total Ref (w spaces): 42687
+2020-02-23 21:27:13,151 root  INFO     
+2020-02-23 21:27:16,880 root  INFO     Total Num: 300
+2020-02-23 21:27:16,880 root  INFO     Accuracy (w spaces): 0.933333
+2020-02-23 21:27:16,880 root  INFO     Accuracy (w/o spaces): 0.936667
+2020-02-23 21:27:16,881 root  INFO     Edit Dist (w spaces): 0.967822
+2020-02-23 21:27:16,881 root  INFO     Total Correct (w spaces): 280
+2020-02-23 21:27:16,881 root  INFO     Total Correct (w/o spaces): 281
+2020-02-23 21:27:16,881 root  INFO     Total Edit Dist (w spaces): 2063
+2020-02-23 21:27:16,881 root  INFO     Total Ref (w spaces): 64112
+2020-02-23 21:27:16,881 root  INFO     
+2020-02-23 21:27:20,456 root  INFO     Total Num: 400
+2020-02-23 21:27:20,457 root  INFO     Accuracy (w spaces): 0.940000
+2020-02-23 21:27:20,457 root  INFO     Accuracy (w/o spaces): 0.942500
+2020-02-23 21:27:20,457 root  INFO     Edit Dist (w spaces): 0.969098
+2020-02-23 21:27:20,457 root  INFO     Total Correct (w spaces): 376
+2020-02-23 21:27:20,457 root  INFO     Total Correct (w/o spaces): 377
+2020-02-23 21:27:20,457 root  INFO     Total Edit Dist (w spaces): 2644
+2020-02-23 21:27:20,457 root  INFO     Total Ref (w spaces): 85562
+2020-02-23 21:27:20,457 root  INFO     
+2020-02-23 21:27:24,060 root  INFO     Total Num: 500
+2020-02-23 21:27:24,060 root  INFO     Accuracy (w spaces): 0.942000
+2020-02-23 21:27:24,060 root  INFO     Accuracy (w/o spaces): 0.946000
+2020-02-23 21:27:24,061 root  INFO     Edit Dist (w spaces): 0.967855
+2020-02-23 21:27:24,061 root  INFO     Total Correct (w spaces): 471
+2020-02-23 21:27:24,061 root  INFO     Total Correct (w/o spaces): 473
+2020-02-23 21:27:24,061 root  INFO     Total Edit Dist (w spaces): 3454
+2020-02-23 21:27:24,061 root  INFO     Total Ref (w spaces): 107449
+2020-02-23 21:27:24,061 root  INFO     
+2020-02-23 21:27:27,445 root  INFO     Total Num: 600
+2020-02-23 21:27:27,445 root  INFO     Accuracy (w spaces): 0.943333
+2020-02-23 21:27:27,445 root  INFO     Accuracy (w/o spaces): 0.946667
+2020-02-23 21:27:27,445 root  INFO     Edit Dist (w spaces): 0.968301
+2020-02-23 21:27:27,445 root  INFO     Total Correct (w spaces): 566
+2020-02-23 21:27:27,445 root  INFO     Total Correct (w/o spaces): 568
+2020-02-23 21:27:27,445 root  INFO     Total Edit Dist (w spaces): 4092
+2020-02-23 21:27:27,445 root  INFO     Total Ref (w spaces): 129091
+2020-02-23 21:27:27,445 root  INFO     
+2020-02-23 21:27:31,248 root  INFO     Total Num: 700
+2020-02-23 21:27:31,249 root  INFO     Accuracy (w spaces): 0.942857
+2020-02-23 21:27:31,249 root  INFO     Accuracy (w/o spaces): 0.945714
+2020-02-23 21:27:31,249 root  INFO     Edit Dist (w spaces): 0.967866
+2020-02-23 21:27:31,249 root  INFO     Total Correct (w spaces): 660
+2020-02-23 21:27:31,249 root  INFO     Total Correct (w/o spaces): 662
+2020-02-23 21:27:31,249 root  INFO     Total Edit Dist (w spaces): 4818
+2020-02-23 21:27:31,249 root  INFO     Total Ref (w spaces): 149934
+2020-02-23 21:27:31,249 root  INFO     
+2020-02-23 21:27:35,143 root  INFO     Total Num: 800
+2020-02-23 21:27:35,143 root  INFO     Accuracy (w spaces): 0.945000
+2020-02-23 21:27:35,143 root  INFO     Accuracy (w/o spaces): 0.948750
+2020-02-23 21:27:35,143 root  INFO     Edit Dist (w spaces): 0.969446
+2020-02-23 21:27:35,143 root  INFO     Total Correct (w spaces): 756
+2020-02-23 21:27:35,144 root  INFO     Total Correct (w/o spaces): 759
+2020-02-23 21:27:35,144 root  INFO     Total Edit Dist (w spaces): 5234
+2020-02-23 21:27:35,144 root  INFO     Total Ref (w spaces): 171304
+2020-02-23 21:27:35,144 root  INFO     
+2020-02-23 21:27:38,589 root  INFO     Total Num: 900
+2020-02-23 21:27:38,590 root  INFO     Accuracy (w spaces): 0.944444
+2020-02-23 21:27:38,590 root  INFO     Accuracy (w/o spaces): 0.947778
+2020-02-23 21:27:38,590 root  INFO     Edit Dist (w spaces): 0.967736
+2020-02-23 21:27:38,590 root  INFO     Total Correct (w spaces): 850
+2020-02-23 21:27:38,590 root  INFO     Total Correct (w/o spaces): 853
+2020-02-23 21:27:38,590 root  INFO     Total Edit Dist (w spaces): 6168
+2020-02-23 21:27:38,590 root  INFO     Total Ref (w spaces): 191171
+2020-02-23 21:27:38,590 root  INFO     
+2020-02-23 21:27:42,491 root  INFO     Total Num: 1000
+2020-02-23 21:27:42,491 root  INFO     Accuracy (w spaces): 0.942000
+2020-02-23 21:27:42,491 root  INFO     Accuracy (w/o spaces): 0.945000
+2020-02-23 21:27:42,491 root  INFO     Edit Dist (w spaces): 0.963772
+2020-02-23 21:27:42,491 root  INFO     Total Correct (w spaces): 942
+2020-02-23 21:27:42,491 root  INFO     Total Correct (w/o spaces): 945
+2020-02-23 21:27:42,492 root  INFO     Total Edit Dist (w spaces): 7751
+2020-02-23 21:27:42,492 root  INFO     Total Ref (w spaces): 213953
+2020-02-23 21:27:42,492 root  INFO     
+2020-02-23 21:27:45,404 root  INFO     Total Num: 1100
+2020-02-23 21:27:45,404 root  INFO     Accuracy (w spaces): 0.942727
+2020-02-23 21:27:45,404 root  INFO     Accuracy (w/o spaces): 0.946364
+2020-02-23 21:27:45,404 root  INFO     Edit Dist (w spaces): 0.964359
+2020-02-23 21:27:45,404 root  INFO     Total Correct (w spaces): 1037
+2020-02-23 21:27:45,404 root  INFO     Total Correct (w/o spaces): 1041
+2020-02-23 21:27:45,404 root  INFO     Total Edit Dist (w spaces): 8365
+2020-02-23 21:27:45,404 root  INFO     Total Ref (w spaces): 234702
+2020-02-23 21:27:45,404 root  INFO     
+2020-02-23 21:27:49,313 root  INFO     Total Num: 1200
+2020-02-23 21:27:49,313 root  INFO     Accuracy (w spaces): 0.944167
+2020-02-23 21:27:49,313 root  INFO     Accuracy (w/o spaces): 0.949167
+2020-02-23 21:27:49,314 root  INFO     Edit Dist (w spaces): 0.965412
+2020-02-23 21:27:49,314 root  INFO     Total Correct (w spaces): 1133
+2020-02-23 21:27:49,314 root  INFO     Total Correct (w/o spaces): 1139
+2020-02-23 21:27:49,314 root  INFO     Total Edit Dist (w spaces): 8872
+2020-02-23 21:27:49,314 root  INFO     Total Ref (w spaces): 256508
+2020-02-23 21:27:49,314 root  INFO     
+2020-02-23 21:27:52,885 root  INFO     Total Num: 1300
+2020-02-23 21:27:52,885 root  INFO     Accuracy (w spaces): 0.946923
+2020-02-23 21:27:52,885 root  INFO     Accuracy (w/o spaces): 0.952308
+2020-02-23 21:27:52,885 root  INFO     Edit Dist (w spaces): 0.967382
+2020-02-23 21:27:52,885 root  INFO     Total Correct (w spaces): 1231
+2020-02-23 21:27:52,885 root  INFO     Total Correct (w/o spaces): 1238
+2020-02-23 21:27:52,885 root  INFO     Total Edit Dist (w spaces): 9091
+2020-02-23 21:27:52,885 root  INFO     Total Ref (w spaces): 278707
+2020-02-23 21:27:52,885 root  INFO     
+2020-02-23 21:27:56,468 root  INFO     Total Num: 1400
+2020-02-23 21:27:56,468 root  INFO     Accuracy (w spaces): 0.947857
+2020-02-23 21:27:56,468 root  INFO     Accuracy (w/o spaces): 0.952143
+2020-02-23 21:27:56,468 root  INFO     Edit Dist (w spaces): 0.968122
+2020-02-23 21:27:56,468 root  INFO     Total Correct (w spaces): 1327
+2020-02-23 21:27:56,468 root  INFO     Total Correct (w/o spaces): 1333
+2020-02-23 21:27:56,468 root  INFO     Total Edit Dist (w spaces): 9559
+2020-02-23 21:27:56,468 root  INFO     Total Ref (w spaces): 299862
+2020-02-23 21:27:56,468 root  INFO     
+2020-02-23 21:27:59,347 root  INFO     Total Num: 1500
+2020-02-23 21:27:59,347 root  INFO     Accuracy (w spaces): 0.946667
+2020-02-23 21:27:59,347 root  INFO     Accuracy (w/o spaces): 0.950000
+2020-02-23 21:27:59,348 root  INFO     Edit Dist (w spaces): 0.968399
+2020-02-23 21:27:59,348 root  INFO     Total Correct (w spaces): 1420
+2020-02-23 21:27:59,348 root  INFO     Total Correct (w/o spaces): 1425
+2020-02-23 21:27:59,348 root  INFO     Total Edit Dist (w spaces): 10135
+2020-02-23 21:27:59,348 root  INFO     Total Ref (w spaces): 320715
+2020-02-23 21:27:59,348 root  INFO     
+2020-02-23 21:28:03,057 root  INFO     Total Num: 1600
+2020-02-23 21:28:03,058 root  INFO     Accuracy (w spaces): 0.944375
+2020-02-23 21:28:03,058 root  INFO     Accuracy (w/o spaces): 0.948125
+2020-02-23 21:28:03,058 root  INFO     Edit Dist (w spaces): 0.967212
+2020-02-23 21:28:03,058 root  INFO     Total Correct (w spaces): 1511
+2020-02-23 21:28:03,058 root  INFO     Total Correct (w/o spaces): 1517
+2020-02-23 21:28:03,058 root  INFO     Total Edit Dist (w spaces): 11183
+2020-02-23 21:28:03,058 root  INFO     Total Ref (w spaces): 341075
+2020-02-23 21:28:03,058 root  INFO     
+2020-02-23 21:28:06,828 root  INFO     Total Num: 1700
+2020-02-23 21:28:06,828 root  INFO     Accuracy (w spaces): 0.943529
+2020-02-23 21:28:06,828 root  INFO     Accuracy (w/o spaces): 0.948824
+2020-02-23 21:28:06,828 root  INFO     Edit Dist (w spaces): 0.968321
+2020-02-23 21:28:06,828 root  INFO     Total Correct (w spaces): 1604
+2020-02-23 21:28:06,828 root  INFO     Total Correct (w/o spaces): 1613
+2020-02-23 21:28:06,828 root  INFO     Total Edit Dist (w spaces): 11499
+2020-02-23 21:28:06,828 root  INFO     Total Ref (w spaces): 362988
+2020-02-23 21:28:06,828 root  INFO     
+2020-02-23 21:28:12,911 root  INFO     Total Num: 1800
+2020-02-23 21:28:12,911 root  INFO     Accuracy (w spaces): 0.941111
+2020-02-23 21:28:12,911 root  INFO     Accuracy (w/o spaces): 0.946667
+2020-02-23 21:28:12,911 root  INFO     Edit Dist (w spaces): 0.966170
+2020-02-23 21:28:12,911 root  INFO     Total Correct (w spaces): 1694
+2020-02-23 21:28:12,911 root  INFO     Total Correct (w/o spaces): 1704
+2020-02-23 21:28:12,911 root  INFO     Total Edit Dist (w spaces): 13023
+2020-02-23 21:28:12,911 root  INFO     Total Ref (w spaces): 384958
+2020-02-23 21:28:12,911 root  INFO     
+2020-02-23 21:28:18,975 root  INFO     Total Num: 1900
+2020-02-23 21:28:18,975 root  INFO     Accuracy (w spaces): 0.943158
+2020-02-23 21:28:18,975 root  INFO     Accuracy (w/o spaces): 0.947368
+2020-02-23 21:28:18,975 root  INFO     Edit Dist (w spaces): 0.964481
+2020-02-23 21:28:18,975 root  INFO     Total Correct (w spaces): 1792
+2020-02-23 21:28:18,975 root  INFO     Total Correct (w/o spaces): 1800
+2020-02-23 21:28:18,975 root  INFO     Total Edit Dist (w spaces): 14457
+2020-02-23 21:28:18,975 root  INFO     Total Ref (w spaces): 407027
+2020-02-23 21:28:18,975 root  INFO     
+2020-02-23 21:28:22,831 root  INFO     Total Num: 2000
+2020-02-23 21:28:22,831 root  INFO     Accuracy (w spaces): 0.945000
+2020-02-23 21:28:22,831 root  INFO     Accuracy (w/o spaces): 0.948500
+2020-02-23 21:28:22,831 root  INFO     Edit Dist (w spaces): 0.964330
+2020-02-23 21:28:22,831 root  INFO     Total Correct (w spaces): 1890
+2020-02-23 21:28:22,831 root  INFO     Total Correct (w/o spaces): 1897
+2020-02-23 21:28:22,831 root  INFO     Total Edit Dist (w spaces): 15349
+2020-02-23 21:28:22,831 root  INFO     Total Ref (w spaces): 430307
+2020-02-23 21:28:22,831 root  INFO     
+2020-02-23 21:28:25,887 root  INFO     Total Num: 2100
+2020-02-23 21:28:25,888 root  INFO     Accuracy (w spaces): 0.947143
+2020-02-23 21:28:25,888 root  INFO     Accuracy (w/o spaces): 0.950476
+2020-02-23 21:28:25,888 root  INFO     Edit Dist (w spaces): 0.964611
+2020-02-23 21:28:25,888 root  INFO     Total Correct (w spaces): 1989
+2020-02-23 21:28:25,888 root  INFO     Total Correct (w/o spaces): 1996
+2020-02-23 21:28:25,888 root  INFO     Total Edit Dist (w spaces): 15947
+2020-02-23 21:28:25,888 root  INFO     Total Ref (w spaces): 450622
+2020-02-23 21:28:25,888 root  INFO     
+2020-02-23 21:28:32,888 root  INFO     Total Num: 2200
+2020-02-23 21:28:32,888 root  INFO     Accuracy (w spaces): 0.946364
+2020-02-23 21:28:32,888 root  INFO     Accuracy (w/o spaces): 0.949545
+2020-02-23 21:28:32,888 root  INFO     Edit Dist (w spaces): 0.963132
+2020-02-23 21:28:32,888 root  INFO     Total Correct (w spaces): 2082
+2020-02-23 21:28:32,888 root  INFO     Total Correct (w/o spaces): 2089
+2020-02-23 21:28:32,888 root  INFO     Total Edit Dist (w spaces): 17458
+2020-02-23 21:28:32,888 root  INFO     Total Ref (w spaces): 473528
+2020-02-23 21:28:32,888 root  INFO     
+2020-02-23 21:28:37,565 root  INFO     Total Num: 2300
+2020-02-23 21:28:37,565 root  INFO     Accuracy (w spaces): 0.946522
+2020-02-23 21:28:37,565 root  INFO     Accuracy (w/o spaces): 0.950000
+2020-02-23 21:28:37,565 root  INFO     Edit Dist (w spaces): 0.963144
+2020-02-23 21:28:37,565 root  INFO     Total Correct (w spaces): 2177
+2020-02-23 21:28:37,565 root  INFO     Total Correct (w/o spaces): 2185
+2020-02-23 21:28:37,565 root  INFO     Total Edit Dist (w spaces): 18294
+2020-02-23 21:28:37,565 root  INFO     Total Ref (w spaces): 496362
+2020-02-23 21:28:37,565 root  INFO     
+2020-02-23 21:28:41,448 root  INFO     Total Num: 2400
+2020-02-23 21:28:41,448 root  INFO     Accuracy (w spaces): 0.946667
+2020-02-23 21:28:41,448 root  INFO     Accuracy (w/o spaces): 0.950417
+2020-02-23 21:28:41,448 root  INFO     Edit Dist (w spaces): 0.963467
+2020-02-23 21:28:41,448 root  INFO     Total Correct (w spaces): 2272
+2020-02-23 21:28:41,448 root  INFO     Total Correct (w/o spaces): 2281
+2020-02-23 21:28:41,448 root  INFO     Total Edit Dist (w spaces): 18956
+2020-02-23 21:28:41,448 root  INFO     Total Ref (w spaces): 518880
+2020-02-23 21:28:41,448 root  INFO     
+2020-02-23 21:28:45,285 root  INFO     Total Num: 2500
+2020-02-23 21:28:45,285 root  INFO     Accuracy (w spaces): 0.946400
+2020-02-23 21:28:45,285 root  INFO     Accuracy (w/o spaces): 0.950000
+2020-02-23 21:28:45,285 root  INFO     Edit Dist (w spaces): 0.963126
+2020-02-23 21:28:45,285 root  INFO     Total Correct (w spaces): 2366
+2020-02-23 21:28:45,285 root  INFO     Total Correct (w/o spaces): 2375
+2020-02-23 21:28:45,286 root  INFO     Total Edit Dist (w spaces): 19903
+2020-02-23 21:28:45,286 root  INFO     Total Ref (w spaces): 539764
+2020-02-23 21:28:45,286 root  INFO     
+2020-02-23 21:28:48,742 root  INFO     Total Num: 2600
+2020-02-23 21:28:48,742 root  INFO     Accuracy (w spaces): 0.946923
+2020-02-23 21:28:48,742 root  INFO     Accuracy (w/o spaces): 0.951154
+2020-02-23 21:28:48,742 root  INFO     Edit Dist (w spaces): 0.963620
+2020-02-23 21:28:48,742 root  INFO     Total Correct (w spaces): 2462
+2020-02-23 21:28:48,742 root  INFO     Total Correct (w/o spaces): 2473
+2020-02-23 21:28:48,742 root  INFO     Total Edit Dist (w spaces): 20396
+2020-02-23 21:28:48,742 root  INFO     Total Ref (w spaces): 560634
+2020-02-23 21:28:48,742 root  INFO     
+2020-02-23 21:28:51,740 root  INFO     Total Num: 2700
+2020-02-23 21:28:51,740 root  INFO     Accuracy (w spaces): 0.945556
+2020-02-23 21:28:51,740 root  INFO     Accuracy (w/o spaces): 0.950370
+2020-02-23 21:28:51,740 root  INFO     Edit Dist (w spaces): 0.963144
+2020-02-23 21:28:51,741 root  INFO     Total Correct (w spaces): 2553
+2020-02-23 21:28:51,741 root  INFO     Total Correct (w/o spaces): 2566
+2020-02-23 21:28:51,741 root  INFO     Total Edit Dist (w spaces): 21418
+2020-02-23 21:28:51,741 root  INFO     Total Ref (w spaces): 581120
+2020-02-23 21:28:51,741 root  INFO     
+2020-02-23 21:28:54,976 root  INFO     Total Num: 2800
+2020-02-23 21:28:54,977 root  INFO     Accuracy (w spaces): 0.946071
+2020-02-23 21:28:54,977 root  INFO     Accuracy (w/o spaces): 0.950714
+2020-02-23 21:28:54,977 root  INFO     Edit Dist (w spaces): 0.963725
+2020-02-23 21:28:54,977 root  INFO     Total Correct (w spaces): 2649
+2020-02-23 21:28:54,977 root  INFO     Total Correct (w/o spaces): 2662
+2020-02-23 21:28:54,977 root  INFO     Total Edit Dist (w spaces): 21907
+2020-02-23 21:28:54,977 root  INFO     Total Ref (w spaces): 603910
+2020-02-23 21:28:54,977 root  INFO     
+2020-02-23 21:28:58,321 root  INFO     Total Num: 2900
+2020-02-23 21:28:58,322 root  INFO     Accuracy (w spaces): 0.944483
+2020-02-23 21:28:58,322 root  INFO     Accuracy (w/o spaces): 0.949655
+2020-02-23 21:28:58,322 root  INFO     Edit Dist (w spaces): 0.963732
+2020-02-23 21:28:58,322 root  INFO     Total Correct (w spaces): 2739
+2020-02-23 21:28:58,322 root  INFO     Total Correct (w/o spaces): 2754
+2020-02-23 21:28:58,322 root  INFO     Total Edit Dist (w spaces): 22682
+2020-02-23 21:28:58,322 root  INFO     Total Ref (w spaces): 625399
+2020-02-23 21:28:58,322 root  INFO     
+2020-02-23 21:29:01,192 root  INFO     Total Num: 3000
+2020-02-23 21:29:01,192 root  INFO     Accuracy (w spaces): 0.945000
+2020-02-23 21:29:01,192 root  INFO     Accuracy (w/o spaces): 0.949667
+2020-02-23 21:29:01,192 root  INFO     Edit Dist (w spaces): 0.963896
+2020-02-23 21:29:01,192 root  INFO     Total Correct (w spaces): 2835
+2020-02-23 21:29:01,192 root  INFO     Total Correct (w/o spaces): 2849
+2020-02-23 21:29:01,192 root  INFO     Total Edit Dist (w spaces): 23355
+2020-02-23 21:29:01,192 root  INFO     Total Ref (w spaces): 646886
+2020-02-23 21:29:01,192 root  INFO     
+2020-02-23 21:29:04,219 root  INFO     Total Num: 3100
+2020-02-23 21:29:04,219 root  INFO     Accuracy (w spaces): 0.944516
+2020-02-23 21:29:04,219 root  INFO     Accuracy (w/o spaces): 0.949355
+2020-02-23 21:29:04,219 root  INFO     Edit Dist (w spaces): 0.963962
+2020-02-23 21:29:04,219 root  INFO     Total Correct (w spaces): 2928
+2020-02-23 21:29:04,219 root  INFO     Total Correct (w/o spaces): 2943
+2020-02-23 21:29:04,219 root  INFO     Total Edit Dist (w spaces): 24065
+2020-02-23 21:29:04,220 root  INFO     Total Ref (w spaces): 667759
+2020-02-23 21:29:04,220 root  INFO     
+2020-02-23 21:29:07,145 root  INFO     Total Num: 3200
+2020-02-23 21:29:07,145 root  INFO     Accuracy (w spaces): 0.945312
+2020-02-23 21:29:07,145 root  INFO     Accuracy (w/o spaces): 0.950313
+2020-02-23 21:29:07,145 root  INFO     Edit Dist (w spaces): 0.964552
+2020-02-23 21:29:07,146 root  INFO     Total Correct (w spaces): 3025
+2020-02-23 21:29:07,146 root  INFO     Total Correct (w/o spaces): 3041
+2020-02-23 21:29:07,146 root  INFO     Total Edit Dist (w spaces): 24476
+2020-02-23 21:29:07,146 root  INFO     Total Ref (w spaces): 690467
+2020-02-23 21:29:07,146 root  INFO     
+2020-02-23 21:29:10,057 root  INFO     Total Num: 3300
+2020-02-23 21:29:10,057 root  INFO     Accuracy (w spaces): 0.945152
+2020-02-23 21:29:10,057 root  INFO     Accuracy (w/o spaces): 0.950303
+2020-02-23 21:29:10,058 root  INFO     Edit Dist (w spaces): 0.964947
+2020-02-23 21:29:10,058 root  INFO     Total Correct (w spaces): 3119
+2020-02-23 21:29:10,058 root  INFO     Total Correct (w/o spaces): 3136
+2020-02-23 21:29:10,058 root  INFO     Total Edit Dist (w spaces): 24969
+2020-02-23 21:29:10,058 root  INFO     Total Ref (w spaces): 712331
+2020-02-23 21:29:10,058 root  INFO     
+2020-02-23 21:29:13,382 root  INFO     Total Num: 3400
+2020-02-23 21:29:13,382 root  INFO     Accuracy (w spaces): 0.944706
+2020-02-23 21:29:13,383 root  INFO     Accuracy (w/o spaces): 0.950294
+2020-02-23 21:29:13,383 root  INFO     Edit Dist (w spaces): 0.965484
+2020-02-23 21:29:13,383 root  INFO     Total Correct (w spaces): 3212
+2020-02-23 21:29:13,383 root  INFO     Total Correct (w/o spaces): 3231
+2020-02-23 21:29:13,383 root  INFO     Total Edit Dist (w spaces): 25355
+2020-02-23 21:29:13,383 root  INFO     Total Ref (w spaces): 734597
+2020-02-23 21:29:13,383 root  INFO     
+2020-02-23 21:29:16,444 root  INFO     Total Num: 3500
+2020-02-23 21:29:16,445 root  INFO     Accuracy (w spaces): 0.944857
+2020-02-23 21:29:16,445 root  INFO     Accuracy (w/o spaces): 0.950571
+2020-02-23 21:29:16,445 root  INFO     Edit Dist (w spaces): 0.965433
+2020-02-23 21:29:16,445 root  INFO     Total Correct (w spaces): 3307
+2020-02-23 21:29:16,445 root  INFO     Total Correct (w/o spaces): 3327
+2020-02-23 21:29:16,445 root  INFO     Total Edit Dist (w spaces): 26163
+2020-02-23 21:29:16,445 root  INFO     Total Ref (w spaces): 756872
+2020-02-23 21:29:16,445 root  INFO     
+2020-02-23 21:29:19,893 root  INFO     Total Num: 3600
+2020-02-23 21:29:19,893 root  INFO     Accuracy (w spaces): 0.944167
+2020-02-23 21:29:19,893 root  INFO     Accuracy (w/o spaces): 0.949444
+2020-02-23 21:29:19,893 root  INFO     Edit Dist (w spaces): 0.964649
+2020-02-23 21:29:19,893 root  INFO     Total Correct (w spaces): 3399
+2020-02-23 21:29:19,893 root  INFO     Total Correct (w/o spaces): 3418
+2020-02-23 21:29:19,893 root  INFO     Total Edit Dist (w spaces): 27544
+2020-02-23 21:29:19,893 root  INFO     Total Ref (w spaces): 779153
+2020-02-23 21:29:19,893 root  INFO     
+2020-02-23 21:29:22,861 root  INFO     Total Num: 3700
+2020-02-23 21:29:22,861 root  INFO     Accuracy (w spaces): 0.944054
+2020-02-23 21:29:22,861 root  INFO     Accuracy (w/o spaces): 0.950000
+2020-02-23 21:29:22,861 root  INFO     Edit Dist (w spaces): 0.964953
+2020-02-23 21:29:22,861 root  INFO     Total Correct (w spaces): 3493
+2020-02-23 21:29:22,861 root  INFO     Total Correct (w/o spaces): 3515
+2020-02-23 21:29:22,861 root  INFO     Total Edit Dist (w spaces): 28072
+2020-02-23 21:29:22,861 root  INFO     Total Ref (w spaces): 800990
+2020-02-23 21:29:22,861 root  INFO     
+2020-02-23 21:29:25,480 root  INFO     Total Num: 3800
+2020-02-23 21:29:25,480 root  INFO     Accuracy (w spaces): 0.944474
+2020-02-23 21:29:25,480 root  INFO     Accuracy (w/o spaces): 0.950263
+2020-02-23 21:29:25,480 root  INFO     Edit Dist (w spaces): 0.965307
+2020-02-23 21:29:25,480 root  INFO     Total Correct (w spaces): 3589
+2020-02-23 21:29:25,480 root  INFO     Total Correct (w/o spaces): 3611
+2020-02-23 21:29:25,480 root  INFO     Total Edit Dist (w spaces): 28532
+2020-02-23 21:29:25,480 root  INFO     Total Ref (w spaces): 822404
+2020-02-23 21:29:25,480 root  INFO     
+2020-02-23 21:29:28,331 root  INFO     Total Num: 3900
+2020-02-23 21:29:28,331 root  INFO     Accuracy (w spaces): 0.945385
+2020-02-23 21:29:28,331 root  INFO     Accuracy (w/o spaces): 0.951026
+2020-02-23 21:29:28,331 root  INFO     Edit Dist (w spaces): 0.965440
+2020-02-23 21:29:28,331 root  INFO     Total Correct (w spaces): 3687
+2020-02-23 21:29:28,331 root  INFO     Total Correct (w/o spaces): 3709
+2020-02-23 21:29:28,332 root  INFO     Total Edit Dist (w spaces): 29124
+2020-02-23 21:29:28,332 root  INFO     Total Ref (w spaces): 842701
+2020-02-23 21:29:28,332 root  INFO     
+2020-02-23 21:29:31,450 root  INFO     Total Num: 4000
+2020-02-23 21:29:31,450 root  INFO     Accuracy (w spaces): 0.945250
+2020-02-23 21:29:31,450 root  INFO     Accuracy (w/o spaces): 0.950750
+2020-02-23 21:29:31,450 root  INFO     Edit Dist (w spaces): 0.965669
+2020-02-23 21:29:31,450 root  INFO     Total Correct (w spaces): 3781
+2020-02-23 21:29:31,450 root  INFO     Total Correct (w/o spaces): 3803
+2020-02-23 21:29:31,450 root  INFO     Total Edit Dist (w spaces): 29662
+2020-02-23 21:29:31,450 root  INFO     Total Ref (w spaces): 864005
+2020-02-23 21:29:31,450 root  INFO     
+2020-02-23 21:29:34,688 root  INFO     Total Num: 4100
+2020-02-23 21:29:34,688 root  INFO     Accuracy (w spaces): 0.944634
+2020-02-23 21:29:34,688 root  INFO     Accuracy (w/o spaces): 0.950000
+2020-02-23 21:29:34,689 root  INFO     Edit Dist (w spaces): 0.965481
+2020-02-23 21:29:34,689 root  INFO     Total Correct (w spaces): 3873
+2020-02-23 21:29:34,689 root  INFO     Total Correct (w/o spaces): 3895
+2020-02-23 21:29:34,689 root  INFO     Total Edit Dist (w spaces): 30531
+2020-02-23 21:29:34,689 root  INFO     Total Ref (w spaces): 884472
+2020-02-23 21:29:34,689 root  INFO     
+2020-02-23 21:29:37,482 root  INFO     Total Num: 4200
+2020-02-23 21:29:37,483 root  INFO     Accuracy (w spaces): 0.944762
+2020-02-23 21:29:37,483 root  INFO     Accuracy (w/o spaces): 0.950238
+2020-02-23 21:29:37,483 root  INFO     Edit Dist (w spaces): 0.965769
+2020-02-23 21:29:37,483 root  INFO     Total Correct (w spaces): 3968
+2020-02-23 21:29:37,483 root  INFO     Total Correct (w/o spaces): 3991
+2020-02-23 21:29:37,483 root  INFO     Total Edit Dist (w spaces): 30989
+2020-02-23 21:29:37,483 root  INFO     Total Ref (w spaces): 905293
+2020-02-23 21:29:37,483 root  INFO     
+2020-02-23 21:29:41,160 root  INFO     Total Num: 4300
+2020-02-23 21:29:41,160 root  INFO     Accuracy (w spaces): 0.944651
+2020-02-23 21:29:41,160 root  INFO     Accuracy (w/o spaces): 0.950000
+2020-02-23 21:29:41,160 root  INFO     Edit Dist (w spaces): 0.965642
+2020-02-23 21:29:41,160 root  INFO     Total Correct (w spaces): 4062
+2020-02-23 21:29:41,160 root  INFO     Total Correct (w/o spaces): 4085
+2020-02-23 21:29:41,160 root  INFO     Total Edit Dist (w spaces): 31851
+2020-02-23 21:29:41,160 root  INFO     Total Ref (w spaces): 927036
+2020-02-23 21:29:41,161 root  INFO     
+2020-02-23 21:29:44,471 root  INFO     Total Num: 4400
+2020-02-23 21:29:44,471 root  INFO     Accuracy (w spaces): 0.944545
+2020-02-23 21:29:44,471 root  INFO     Accuracy (w/o spaces): 0.950000
+2020-02-23 21:29:44,471 root  INFO     Edit Dist (w spaces): 0.965736
+2020-02-23 21:29:44,471 root  INFO     Total Correct (w spaces): 4156
+2020-02-23 21:29:44,471 root  INFO     Total Correct (w/o spaces): 4180
+2020-02-23 21:29:44,471 root  INFO     Total Edit Dist (w spaces): 32498
+2020-02-23 21:29:44,472 root  INFO     Total Ref (w spaces): 948454
+2020-02-23 21:29:44,472 root  INFO     
+2020-02-23 21:29:47,392 root  INFO     Total Num: 4500
+2020-02-23 21:29:47,393 root  INFO     Accuracy (w spaces): 0.944444
+2020-02-23 21:29:47,393 root  INFO     Accuracy (w/o spaces): 0.950000
+2020-02-23 21:29:47,393 root  INFO     Edit Dist (w spaces): 0.965829
+2020-02-23 21:29:47,393 root  INFO     Total Correct (w spaces): 4250
+2020-02-23 21:29:47,393 root  INFO     Total Correct (w/o spaces): 4275
+2020-02-23 21:29:47,393 root  INFO     Total Edit Dist (w spaces): 33139
+2020-02-23 21:29:47,393 root  INFO     Total Ref (w spaces): 969790
+2020-02-23 21:29:47,393 root  INFO     
+2020-02-23 21:29:50,506 root  INFO     Total Num: 4600
+2020-02-23 21:29:50,507 root  INFO     Accuracy (w spaces): 0.944348
+2020-02-23 21:29:50,507 root  INFO     Accuracy (w/o spaces): 0.949783
+2020-02-23 21:29:50,507 root  INFO     Edit Dist (w spaces): 0.965616
+2020-02-23 21:29:50,507 root  INFO     Total Correct (w spaces): 4344
+2020-02-23 21:29:50,507 root  INFO     Total Correct (w/o spaces): 4369
+2020-02-23 21:29:50,507 root  INFO     Total Edit Dist (w spaces): 34075
+2020-02-23 21:29:50,507 root  INFO     Total Ref (w spaces): 991021
+2020-02-23 21:29:50,507 root  INFO     
+2020-02-23 21:29:53,968 root  INFO     Total Num: 4700
+2020-02-23 21:29:53,968 root  INFO     Accuracy (w spaces): 0.943617
+2020-02-23 21:29:53,968 root  INFO     Accuracy (w/o spaces): 0.949362
+2020-02-23 21:29:53,968 root  INFO     Edit Dist (w spaces): 0.965378
+2020-02-23 21:29:53,968 root  INFO     Total Correct (w spaces): 4435
+2020-02-23 21:29:53,968 root  INFO     Total Correct (w/o spaces): 4462
+2020-02-23 21:29:53,968 root  INFO     Total Edit Dist (w spaces): 35085
+2020-02-23 21:29:53,968 root  INFO     Total Ref (w spaces): 1013380
+2020-02-23 21:29:53,968 root  INFO     
+2020-02-23 21:29:57,313 root  INFO     Total Num: 4800
+2020-02-23 21:29:57,314 root  INFO     Accuracy (w spaces): 0.942292
+2020-02-23 21:29:57,314 root  INFO     Accuracy (w/o spaces): 0.948750
+2020-02-23 21:29:57,314 root  INFO     Edit Dist (w spaces): 0.965214
+2020-02-23 21:29:57,314 root  INFO     Total Correct (w spaces): 4523
+2020-02-23 21:29:57,314 root  INFO     Total Correct (w/o spaces): 4554
+2020-02-23 21:29:57,314 root  INFO     Total Edit Dist (w spaces): 35943
+2020-02-23 21:29:57,314 root  INFO     Total Ref (w spaces): 1033262
+2020-02-23 21:29:57,314 root  INFO     
+2020-02-23 21:30:00,446 root  INFO     Total Num: 4900
+2020-02-23 21:30:00,446 root  INFO     Accuracy (w spaces): 0.942449
+2020-02-23 21:30:00,447 root  INFO     Accuracy (w/o spaces): 0.949184
+2020-02-23 21:30:00,447 root  INFO     Edit Dist (w spaces): 0.965311
+2020-02-23 21:30:00,447 root  INFO     Total Correct (w spaces): 4618
+2020-02-23 21:30:00,447 root  INFO     Total Correct (w/o spaces): 4651
+2020-02-23 21:30:00,447 root  INFO     Total Edit Dist (w spaces): 36580
+2020-02-23 21:30:00,447 root  INFO     Total Ref (w spaces): 1054513
+2020-02-23 21:30:00,447 root  INFO     
+2020-02-23 21:30:03,464 root  INFO     Total Num: 5000
+2020-02-23 21:30:03,465 root  INFO     Accuracy (w spaces): 0.942800
+2020-02-23 21:30:03,465 root  INFO     Accuracy (w/o spaces): 0.949600
+2020-02-23 21:30:03,465 root  INFO     Edit Dist (w spaces): 0.965303
+2020-02-23 21:30:03,465 root  INFO     Total Correct (w spaces): 4714
+2020-02-23 21:30:03,465 root  INFO     Total Correct (w/o spaces): 4748
+2020-02-23 21:30:03,465 root  INFO     Total Edit Dist (w spaces): 37340
+2020-02-23 21:30:03,465 root  INFO     Total Ref (w spaces): 1076185
+2020-02-23 21:30:03,465 root  INFO     
+2020-02-23 21:30:06,563 root  INFO     Total Num: 5100
+2020-02-23 21:30:06,563 root  INFO     Accuracy (w spaces): 0.942157
+2020-02-23 21:30:06,563 root  INFO     Accuracy (w/o spaces): 0.948824
+2020-02-23 21:30:06,563 root  INFO     Edit Dist (w spaces): 0.965308
+2020-02-23 21:30:06,563 root  INFO     Total Correct (w spaces): 4805
+2020-02-23 21:30:06,563 root  INFO     Total Correct (w/o spaces): 4839
+2020-02-23 21:30:06,563 root  INFO     Total Edit Dist (w spaces): 38038
+2020-02-23 21:30:06,564 root  INFO     Total Ref (w spaces): 1096463
+2020-02-23 21:30:06,564 root  INFO     
+2020-02-23 21:30:09,485 root  INFO     Total Num: 5200
+2020-02-23 21:30:09,485 root  INFO     Accuracy (w spaces): 0.941923
+2020-02-23 21:30:09,485 root  INFO     Accuracy (w/o spaces): 0.948846
+2020-02-23 21:30:09,485 root  INFO     Edit Dist (w spaces): 0.965507
+2020-02-23 21:30:09,485 root  INFO     Total Correct (w spaces): 4898
+2020-02-23 21:30:09,485 root  INFO     Total Correct (w/o spaces): 4934
+2020-02-23 21:30:09,485 root  INFO     Total Edit Dist (w spaces): 38551
+2020-02-23 21:30:09,485 root  INFO     Total Ref (w spaces): 1117632
+2020-02-23 21:30:09,486 root  INFO     
+2020-02-23 21:30:12,729 root  INFO     Total Num: 5300
+2020-02-23 21:30:12,729 root  INFO     Accuracy (w spaces): 0.942075
+2020-02-23 21:30:12,729 root  INFO     Accuracy (w/o spaces): 0.948868
+2020-02-23 21:30:12,729 root  INFO     Edit Dist (w spaces): 0.965535
+2020-02-23 21:30:12,730 root  INFO     Total Correct (w spaces): 4993
+2020-02-23 21:30:12,730 root  INFO     Total Correct (w/o spaces): 5029
+2020-02-23 21:30:12,730 root  INFO     Total Edit Dist (w spaces): 39279
+2020-02-23 21:30:12,730 root  INFO     Total Ref (w spaces): 1139691
+2020-02-23 21:30:12,730 root  INFO     
+2020-02-23 21:30:15,900 root  INFO     Total Num: 5400
+2020-02-23 21:30:15,900 root  INFO     Accuracy (w spaces): 0.941111
+2020-02-23 21:30:15,900 root  INFO     Accuracy (w/o spaces): 0.948333
+2020-02-23 21:30:15,901 root  INFO     Edit Dist (w spaces): 0.965548
+2020-02-23 21:30:15,901 root  INFO     Total Correct (w spaces): 5082
+2020-02-23 21:30:15,901 root  INFO     Total Correct (w/o spaces): 5121
+2020-02-23 21:30:15,901 root  INFO     Total Edit Dist (w spaces): 40020
+2020-02-23 21:30:15,901 root  INFO     Total Ref (w spaces): 1161615
+2020-02-23 21:30:15,901 root  INFO     
+2020-02-23 21:30:19,416 root  INFO     Total Num: 5500
+2020-02-23 21:30:19,416 root  INFO     Accuracy (w spaces): 0.941091
+2020-02-23 21:30:19,416 root  INFO     Accuracy (w/o spaces): 0.948545
+2020-02-23 21:30:19,416 root  INFO     Edit Dist (w spaces): 0.965403
+2020-02-23 21:30:19,416 root  INFO     Total Correct (w spaces): 5176
+2020-02-23 21:30:19,416 root  INFO     Total Correct (w/o spaces): 5217
+2020-02-23 21:30:19,416 root  INFO     Total Edit Dist (w spaces): 40940
+2020-02-23 21:30:19,416 root  INFO     Total Ref (w spaces): 1183324
+2020-02-23 21:30:19,416 root  INFO     
+2020-02-23 21:30:22,385 root  INFO     Total Num: 5600
+2020-02-23 21:30:22,385 root  INFO     Accuracy (w spaces): 0.940714
+2020-02-23 21:30:22,385 root  INFO     Accuracy (w/o spaces): 0.948393
+2020-02-23 21:30:22,386 root  INFO     Edit Dist (w spaces): 0.965345
+2020-02-23 21:30:22,386 root  INFO     Total Correct (w spaces): 5268
+2020-02-23 21:30:22,386 root  INFO     Total Correct (w/o spaces): 5311
+2020-02-23 21:30:22,386 root  INFO     Total Edit Dist (w spaces): 41749
+2020-02-23 21:30:22,386 root  INFO     Total Ref (w spaces): 1204715
+2020-02-23 21:30:22,386 root  INFO     
+2020-02-23 21:30:23,184 root  INFO     ------------------------------------
+2020-02-23 21:30:23,184 root  INFO     Final
+2020-02-23 21:30:23,184 root  INFO     Total Num: 5638
+2020-02-23 21:30:23,184 root  INFO     Accuracy (w spaces): 0.940759
+2020-02-23 21:30:23,184 root  INFO     Accuracy (w/o spaces): 0.948386
+2020-02-23 21:30:23,184 root  INFO     Edit Dist (w spaces): 0.965476
+2020-02-23 21:30:23,185 root  INFO     Total Correct (w spaces): 5304
+2020-02-23 21:30:23,185 root  INFO     Total Correct (w/o spaces): 5347
+2020-02-23 21:30:23,185 root  INFO     Total Edit Dist (w spaces): 41855
+2020-02-23 21:30:23,185 root  INFO     Total Ref (w spaces): 1212361
+2020-02-23 21:30:23,192 root  INFO     Jobs finished
+2020-02-24 08:01:39,007 root  INFO     Script being executed: scripts/evaluation/evaluate_image.py
+2020-02-24 08:01:55,106 root  INFO     Total Num: 100
+2020-02-24 08:01:55,106 root  INFO     Accuracy (w spaces): 0.880000
+2020-02-24 08:01:55,106 root  INFO     Accuracy (w/o spaces): 0.890000
+2020-02-24 08:01:55,106 root  INFO     Edit Dist (w spaces): 0.966270
+2020-02-24 08:01:55,106 root  INFO     Total Correct (w spaces): 88
+2020-02-24 08:01:55,106 root  INFO     Total Correct (w/o spaces): 89
+2020-02-24 08:01:55,106 root  INFO     Total Edit Dist (w spaces): 1366
+2020-02-24 08:01:55,106 root  INFO     Total Ref (w spaces): 40498
+2020-02-24 08:01:55,106 root  INFO     
+2020-02-24 08:02:05,553 root  INFO     Total Num: 200
+2020-02-24 08:02:05,554 root  INFO     Accuracy (w spaces): 0.880000
+2020-02-24 08:02:05,554 root  INFO     Accuracy (w/o spaces): 0.890000
+2020-02-24 08:02:05,554 root  INFO     Edit Dist (w spaces): 0.963132
+2020-02-24 08:02:05,554 root  INFO     Total Correct (w spaces): 176
+2020-02-24 08:02:05,554 root  INFO     Total Correct (w/o spaces): 178
+2020-02-24 08:02:05,554 root  INFO     Total Edit Dist (w spaces): 2853
+2020-02-24 08:02:05,554 root  INFO     Total Ref (w spaces): 77384
+2020-02-24 08:02:05,554 root  INFO     
+2020-02-24 08:02:15,471 root  INFO     Total Num: 300
+2020-02-24 08:02:15,471 root  INFO     Accuracy (w spaces): 0.900000
+2020-02-24 08:02:15,471 root  INFO     Accuracy (w/o spaces): 0.906667
+2020-02-24 08:02:15,471 root  INFO     Edit Dist (w spaces): 0.968362
+2020-02-24 08:02:15,471 root  INFO     Total Correct (w spaces): 270
+2020-02-24 08:02:15,471 root  INFO     Total Correct (w/o spaces): 272
+2020-02-24 08:02:15,471 root  INFO     Total Edit Dist (w spaces): 3678
+2020-02-24 08:02:15,472 root  INFO     Total Ref (w spaces): 116252
+2020-02-24 08:02:15,472 root  INFO     
+2020-02-24 08:02:25,292 root  INFO     Total Num: 400
+2020-02-24 08:02:25,292 root  INFO     Accuracy (w spaces): 0.907500
+2020-02-24 08:02:25,292 root  INFO     Accuracy (w/o spaces): 0.915000
+2020-02-24 08:02:25,292 root  INFO     Edit Dist (w spaces): 0.970143
+2020-02-24 08:02:25,292 root  INFO     Total Correct (w spaces): 363
+2020-02-24 08:02:25,292 root  INFO     Total Correct (w/o spaces): 366
+2020-02-24 08:02:25,292 root  INFO     Total Edit Dist (w spaces): 4633
+2020-02-24 08:02:25,292 root  INFO     Total Ref (w spaces): 155171
+2020-02-24 08:02:25,292 root  INFO     
+2020-02-24 08:02:36,881 root  INFO     Total Num: 500
+2020-02-24 08:02:36,881 root  INFO     Accuracy (w spaces): 0.908000
+2020-02-24 08:02:36,881 root  INFO     Accuracy (w/o spaces): 0.920000
+2020-02-24 08:02:36,881 root  INFO     Edit Dist (w spaces): 0.966529
+2020-02-24 08:02:36,881 root  INFO     Total Correct (w spaces): 454
+2020-02-24 08:02:36,882 root  INFO     Total Correct (w/o spaces): 460
+2020-02-24 08:02:36,882 root  INFO     Total Edit Dist (w spaces): 6523
+2020-02-24 08:02:36,882 root  INFO     Total Ref (w spaces): 194887
+2020-02-24 08:02:36,882 root  INFO     
+2020-02-24 08:02:49,659 root  INFO     Total Num: 600
+2020-02-24 08:02:49,659 root  INFO     Accuracy (w spaces): 0.903333
+2020-02-24 08:02:49,659 root  INFO     Accuracy (w/o spaces): 0.920000
+2020-02-24 08:02:49,660 root  INFO     Edit Dist (w spaces): 0.966052
+2020-02-24 08:02:49,660 root  INFO     Total Correct (w spaces): 542
+2020-02-24 08:02:49,660 root  INFO     Total Correct (w/o spaces): 552
+2020-02-24 08:02:49,660 root  INFO     Total Edit Dist (w spaces): 7949
+2020-02-24 08:02:49,660 root  INFO     Total Ref (w spaces): 234152
+2020-02-24 08:02:49,660 root  INFO     
+2020-02-24 08:02:59,902 root  INFO     Total Num: 700
+2020-02-24 08:02:59,902 root  INFO     Accuracy (w spaces): 0.905714
+2020-02-24 08:02:59,902 root  INFO     Accuracy (w/o spaces): 0.920000
+2020-02-24 08:02:59,902 root  INFO     Edit Dist (w spaces): 0.966435
+2020-02-24 08:02:59,903 root  INFO     Total Correct (w spaces): 634
+2020-02-24 08:02:59,903 root  INFO     Total Correct (w/o spaces): 644
+2020-02-24 08:02:59,903 root  INFO     Total Edit Dist (w spaces): 9127
+2020-02-24 08:02:59,903 root  INFO     Total Ref (w spaces): 271919
+2020-02-24 08:02:59,903 root  INFO     
+2020-02-24 08:03:11,004 root  INFO     Total Num: 800
+2020-02-24 08:03:11,005 root  INFO     Accuracy (w spaces): 0.905000
+2020-02-24 08:03:11,005 root  INFO     Accuracy (w/o spaces): 0.921250
+2020-02-24 08:03:11,005 root  INFO     Edit Dist (w spaces): 0.968273
+2020-02-24 08:03:11,005 root  INFO     Total Correct (w spaces): 724
+2020-02-24 08:03:11,005 root  INFO     Total Correct (w/o spaces): 737
+2020-02-24 08:03:11,005 root  INFO     Total Edit Dist (w spaces): 9856
+2020-02-24 08:03:11,005 root  INFO     Total Ref (w spaces): 310651
+2020-02-24 08:03:11,005 root  INFO     
+2020-02-24 08:03:21,330 root  INFO     Total Num: 900
+2020-02-24 08:03:21,330 root  INFO     Accuracy (w spaces): 0.906667
+2020-02-24 08:03:21,330 root  INFO     Accuracy (w/o spaces): 0.922222
+2020-02-24 08:03:21,330 root  INFO     Edit Dist (w spaces): 0.967063
+2020-02-24 08:03:21,330 root  INFO     Total Correct (w spaces): 816
+2020-02-24 08:03:21,330 root  INFO     Total Correct (w/o spaces): 830
+2020-02-24 08:03:21,330 root  INFO     Total Edit Dist (w spaces): 11418
+2020-02-24 08:03:21,330 root  INFO     Total Ref (w spaces): 346667
+2020-02-24 08:03:21,330 root  INFO     
+2020-02-24 08:03:34,046 root  INFO     Total Num: 1000
+2020-02-24 08:03:34,047 root  INFO     Accuracy (w spaces): 0.906000
+2020-02-24 08:03:34,047 root  INFO     Accuracy (w/o spaces): 0.920000
+2020-02-24 08:03:34,047 root  INFO     Edit Dist (w spaces): 0.964907
+2020-02-24 08:03:34,047 root  INFO     Total Correct (w spaces): 906
+2020-02-24 08:03:34,047 root  INFO     Total Correct (w/o spaces): 920
+2020-02-24 08:03:34,047 root  INFO     Total Edit Dist (w spaces): 13614
+2020-02-24 08:03:34,047 root  INFO     Total Ref (w spaces): 387943
+2020-02-24 08:03:34,047 root  INFO     
+2020-02-24 08:03:44,920 root  INFO     Total Num: 1100
+2020-02-24 08:03:44,920 root  INFO     Accuracy (w spaces): 0.906364
+2020-02-24 08:03:44,920 root  INFO     Accuracy (w/o spaces): 0.920000
+2020-02-24 08:03:44,920 root  INFO     Edit Dist (w spaces): 0.963977
+2020-02-24 08:03:44,920 root  INFO     Total Correct (w spaces): 997
+2020-02-24 08:03:44,920 root  INFO     Total Correct (w/o spaces): 1012
+2020-02-24 08:03:44,920 root  INFO     Total Edit Dist (w spaces): 15331
+2020-02-24 08:03:44,920 root  INFO     Total Ref (w spaces): 425585
+2020-02-24 08:03:44,920 root  INFO     
+2020-02-24 08:03:55,594 root  INFO     Total Num: 1200
+2020-02-24 08:03:55,594 root  INFO     Accuracy (w spaces): 0.905833
+2020-02-24 08:03:55,594 root  INFO     Accuracy (w/o spaces): 0.920833
+2020-02-24 08:03:55,594 root  INFO     Edit Dist (w spaces): 0.965016
+2020-02-24 08:03:55,595 root  INFO     Total Correct (w spaces): 1087
+2020-02-24 08:03:55,595 root  INFO     Total Correct (w/o spaces): 1105
+2020-02-24 08:03:55,595 root  INFO     Total Edit Dist (w spaces): 16272
+2020-02-24 08:03:55,595 root  INFO     Total Ref (w spaces): 465128
+2020-02-24 08:03:55,595 root  INFO     
+2020-02-24 08:04:05,319 root  INFO     Total Num: 1300
+2020-02-24 08:04:05,319 root  INFO     Accuracy (w spaces): 0.909231
+2020-02-24 08:04:05,319 root  INFO     Accuracy (w/o spaces): 0.925385
+2020-02-24 08:04:05,319 root  INFO     Edit Dist (w spaces): 0.967224
+2020-02-24 08:04:05,319 root  INFO     Total Correct (w spaces): 1182
+2020-02-24 08:04:05,319 root  INFO     Total Correct (w/o spaces): 1203
+2020-02-24 08:04:05,319 root  INFO     Total Edit Dist (w spaces): 16563
+2020-02-24 08:04:05,319 root  INFO     Total Ref (w spaces): 505335
+2020-02-24 08:04:05,319 root  INFO     
+2020-02-24 08:04:16,522 root  INFO     Total Num: 1400
+2020-02-24 08:04:16,522 root  INFO     Accuracy (w spaces): 0.907857
+2020-02-24 08:04:16,523 root  INFO     Accuracy (w/o spaces): 0.923571
+2020-02-24 08:04:16,523 root  INFO     Edit Dist (w spaces): 0.967825
+2020-02-24 08:04:16,523 root  INFO     Total Correct (w spaces): 1271
+2020-02-24 08:04:16,523 root  INFO     Total Correct (w/o spaces): 1293
+2020-02-24 08:04:16,523 root  INFO     Total Edit Dist (w spaces): 17494
+2020-02-24 08:04:16,523 root  INFO     Total Ref (w spaces): 543706
+2020-02-24 08:04:16,523 root  INFO     
+2020-02-24 08:04:25,951 root  INFO     Total Num: 1500
+2020-02-24 08:04:25,951 root  INFO     Accuracy (w spaces): 0.906000
+2020-02-24 08:04:25,952 root  INFO     Accuracy (w/o spaces): 0.921333
+2020-02-24 08:04:25,952 root  INFO     Edit Dist (w spaces): 0.968298
+2020-02-24 08:04:25,952 root  INFO     Total Correct (w spaces): 1359
+2020-02-24 08:04:25,952 root  INFO     Total Correct (w/o spaces): 1382
+2020-02-24 08:04:25,952 root  INFO     Total Edit Dist (w spaces): 18435
+2020-02-24 08:04:25,952 root  INFO     Total Ref (w spaces): 581511
+2020-02-24 08:04:25,952 root  INFO     
+2020-02-24 08:04:36,164 root  INFO     Total Num: 1600
+2020-02-24 08:04:36,164 root  INFO     Accuracy (w spaces): 0.904375
+2020-02-24 08:04:36,164 root  INFO     Accuracy (w/o spaces): 0.918750
+2020-02-24 08:04:36,164 root  INFO     Edit Dist (w spaces): 0.966710
+2020-02-24 08:04:36,164 root  INFO     Total Correct (w spaces): 1447
+2020-02-24 08:04:36,164 root  INFO     Total Correct (w/o spaces): 1470
+2020-02-24 08:04:36,164 root  INFO     Total Edit Dist (w spaces): 20588
+2020-02-24 08:04:36,164 root  INFO     Total Ref (w spaces): 618443
+2020-02-24 08:04:36,164 root  INFO     
+2020-02-24 08:04:46,789 root  INFO     Total Num: 1700
+2020-02-24 08:04:46,789 root  INFO     Accuracy (w spaces): 0.904706
+2020-02-24 08:04:46,789 root  INFO     Accuracy (w/o spaces): 0.920000
+2020-02-24 08:04:46,789 root  INFO     Edit Dist (w spaces): 0.967803
+2020-02-24 08:04:46,789 root  INFO     Total Correct (w spaces): 1538
+2020-02-24 08:04:46,789 root  INFO     Total Correct (w/o spaces): 1564
+2020-02-24 08:04:46,789 root  INFO     Total Edit Dist (w spaces): 21192
+2020-02-24 08:04:46,789 root  INFO     Total Ref (w spaces): 658202
+2020-02-24 08:04:46,789 root  INFO     
+2020-02-24 08:05:02,999 root  INFO     Total Num: 1800
+2020-02-24 08:05:02,999 root  INFO     Accuracy (w spaces): 0.903889
+2020-02-24 08:05:03,000 root  INFO     Accuracy (w/o spaces): 0.919444
+2020-02-24 08:05:03,000 root  INFO     Edit Dist (w spaces): 0.965945
+2020-02-24 08:05:03,000 root  INFO     Total Correct (w spaces): 1627
+2020-02-24 08:05:03,000 root  INFO     Total Correct (w/o spaces): 1655
+2020-02-24 08:05:03,000 root  INFO     Total Edit Dist (w spaces): 23772
+2020-02-24 08:05:03,000 root  INFO     Total Ref (w spaces): 698045
+2020-02-24 08:05:03,000 root  INFO     
+2020-02-24 08:05:19,814 root  INFO     Total Num: 1900
+2020-02-24 08:05:19,814 root  INFO     Accuracy (w spaces): 0.903684
+2020-02-24 08:05:19,814 root  INFO     Accuracy (w/o spaces): 0.918947
+2020-02-24 08:05:19,814 root  INFO     Edit Dist (w spaces): 0.964529
+2020-02-24 08:05:19,814 root  INFO     Total Correct (w spaces): 1717
+2020-02-24 08:05:19,814 root  INFO     Total Correct (w/o spaces): 1746
+2020-02-24 08:05:19,814 root  INFO     Total Edit Dist (w spaces): 26179
+2020-02-24 08:05:19,814 root  INFO     Total Ref (w spaces): 738042
+2020-02-24 08:05:19,815 root  INFO     
+2020-02-24 08:05:31,568 root  INFO     Total Num: 2000
+2020-02-24 08:05:31,568 root  INFO     Accuracy (w spaces): 0.906000
+2020-02-24 08:05:31,569 root  INFO     Accuracy (w/o spaces): 0.921000
+2020-02-24 08:05:31,569 root  INFO     Edit Dist (w spaces): 0.964865
+2020-02-24 08:05:31,569 root  INFO     Total Correct (w spaces): 1812
+2020-02-24 08:05:31,569 root  INFO     Total Correct (w/o spaces): 1842
+2020-02-24 08:05:31,569 root  INFO     Total Edit Dist (w spaces): 27417
+2020-02-24 08:05:31,569 root  INFO     Total Ref (w spaces): 780343
+2020-02-24 08:05:31,569 root  INFO     
+2020-02-24 08:05:41,161 root  INFO     Total Num: 2100
+2020-02-24 08:05:41,161 root  INFO     Accuracy (w spaces): 0.908571
+2020-02-24 08:05:41,161 root  INFO     Accuracy (w/o spaces): 0.922857
+2020-02-24 08:05:41,161 root  INFO     Edit Dist (w spaces): 0.965690
+2020-02-24 08:05:41,161 root  INFO     Total Correct (w spaces): 1908
+2020-02-24 08:05:41,161 root  INFO     Total Correct (w/o spaces): 1938
+2020-02-24 08:05:41,161 root  INFO     Total Edit Dist (w spaces): 28023
+2020-02-24 08:05:41,161 root  INFO     Total Ref (w spaces): 816762
+2020-02-24 08:05:41,161 root  INFO     
+2020-02-24 08:06:02,889 root  INFO     Total Num: 2200
+2020-02-24 08:06:02,889 root  INFO     Accuracy (w spaces): 0.907273
+2020-02-24 08:06:02,889 root  INFO     Accuracy (w/o spaces): 0.922727
+2020-02-24 08:06:02,889 root  INFO     Edit Dist (w spaces): 0.963788
+2020-02-24 08:06:02,889 root  INFO     Total Correct (w spaces): 1996
+2020-02-24 08:06:02,889 root  INFO     Total Correct (w/o spaces): 2030
+2020-02-24 08:06:02,889 root  INFO     Total Edit Dist (w spaces): 31081
+2020-02-24 08:06:02,889 root  INFO     Total Ref (w spaces): 858309
+2020-02-24 08:06:02,889 root  INFO     
+2020-02-24 08:06:17,967 root  INFO     Total Num: 2300
+2020-02-24 08:06:17,967 root  INFO     Accuracy (w spaces): 0.906957
+2020-02-24 08:06:17,967 root  INFO     Accuracy (w/o spaces): 0.922174
+2020-02-24 08:06:17,967 root  INFO     Edit Dist (w spaces): 0.961834
+2020-02-24 08:06:17,967 root  INFO     Total Correct (w spaces): 2086
+2020-02-24 08:06:17,967 root  INFO     Total Correct (w/o spaces): 2121
+2020-02-24 08:06:17,967 root  INFO     Total Edit Dist (w spaces): 34339
+2020-02-24 08:06:17,967 root  INFO     Total Ref (w spaces): 899727
+2020-02-24 08:06:17,967 root  INFO     
+2020-02-24 08:06:28,800 root  INFO     Total Num: 2400
+2020-02-24 08:06:28,800 root  INFO     Accuracy (w spaces): 0.908333
+2020-02-24 08:06:28,800 root  INFO     Accuracy (w/o spaces): 0.923333
+2020-02-24 08:06:28,800 root  INFO     Edit Dist (w spaces): 0.961410
+2020-02-24 08:06:28,800 root  INFO     Total Correct (w spaces): 2180
+2020-02-24 08:06:28,800 root  INFO     Total Correct (w/o spaces): 2216
+2020-02-24 08:06:28,800 root  INFO     Total Edit Dist (w spaces): 36294
+2020-02-24 08:06:28,800 root  INFO     Total Ref (w spaces): 940514
+2020-02-24 08:06:28,801 root  INFO     
+2020-02-24 08:06:39,272 root  INFO     Total Num: 2500
+2020-02-24 08:06:39,272 root  INFO     Accuracy (w spaces): 0.908800
+2020-02-24 08:06:39,273 root  INFO     Accuracy (w/o spaces): 0.923600
+2020-02-24 08:06:39,273 root  INFO     Edit Dist (w spaces): 0.961343
+2020-02-24 08:06:39,273 root  INFO     Total Correct (w spaces): 2272
+2020-02-24 08:06:39,273 root  INFO     Total Correct (w/o spaces): 2309
+2020-02-24 08:06:39,273 root  INFO     Total Edit Dist (w spaces): 37821
+2020-02-24 08:06:39,273 root  INFO     Total Ref (w spaces): 978377
+2020-02-24 08:06:39,273 root  INFO     
+2020-02-24 08:06:49,542 root  INFO     Total Num: 2600
+2020-02-24 08:06:49,542 root  INFO     Accuracy (w spaces): 0.909615
+2020-02-24 08:06:49,542 root  INFO     Accuracy (w/o spaces): 0.924615
+2020-02-24 08:06:49,542 root  INFO     Edit Dist (w spaces): 0.961997
+2020-02-24 08:06:49,542 root  INFO     Total Correct (w spaces): 2365
+2020-02-24 08:06:49,542 root  INFO     Total Correct (w/o spaces): 2404
+2020-02-24 08:06:49,543 root  INFO     Total Edit Dist (w spaces): 38619
+2020-02-24 08:06:49,543 root  INFO     Total Ref (w spaces): 1016216
+2020-02-24 08:06:49,543 root  INFO     
+2020-02-24 08:07:00,218 root  INFO     Total Num: 2700
+2020-02-24 08:07:00,218 root  INFO     Accuracy (w spaces): 0.909259
+2020-02-24 08:07:00,218 root  INFO     Accuracy (w/o spaces): 0.924815
+2020-02-24 08:07:00,218 root  INFO     Edit Dist (w spaces): 0.962277
+2020-02-24 08:07:00,218 root  INFO     Total Correct (w spaces): 2455
+2020-02-24 08:07:00,218 root  INFO     Total Correct (w/o spaces): 2497
+2020-02-24 08:07:00,218 root  INFO     Total Edit Dist (w spaces): 39735
+2020-02-24 08:07:00,219 root  INFO     Total Ref (w spaces): 1053338
+2020-02-24 08:07:00,219 root  INFO     
+2020-02-24 08:07:11,411 root  INFO     Total Num: 2800
+2020-02-24 08:07:11,411 root  INFO     Accuracy (w spaces): 0.908929
+2020-02-24 08:07:11,411 root  INFO     Accuracy (w/o spaces): 0.924643
+2020-02-24 08:07:11,411 root  INFO     Edit Dist (w spaces): 0.963032
+2020-02-24 08:07:11,411 root  INFO     Total Correct (w spaces): 2545
+2020-02-24 08:07:11,411 root  INFO     Total Correct (w/o spaces): 2589
+2020-02-24 08:07:11,411 root  INFO     Total Edit Dist (w spaces): 40467
+2020-02-24 08:07:11,411 root  INFO     Total Ref (w spaces): 1094656
+2020-02-24 08:07:11,411 root  INFO     
+2020-02-24 08:07:23,651 root  INFO     Total Num: 2900
+2020-02-24 08:07:23,651 root  INFO     Accuracy (w spaces): 0.907241
+2020-02-24 08:07:23,651 root  INFO     Accuracy (w/o spaces): 0.923793
+2020-02-24 08:07:23,651 root  INFO     Edit Dist (w spaces): 0.962790
+2020-02-24 08:07:23,652 root  INFO     Total Correct (w spaces): 2631
+2020-02-24 08:07:23,652 root  INFO     Total Correct (w/o spaces): 2679
+2020-02-24 08:07:23,652 root  INFO     Total Edit Dist (w spaces): 42182
+2020-02-24 08:07:23,652 root  INFO     Total Ref (w spaces): 1133619
+2020-02-24 08:07:23,652 root  INFO     
+2020-02-24 08:07:33,896 root  INFO     Total Num: 3000
+2020-02-24 08:07:33,896 root  INFO     Accuracy (w spaces): 0.907667
+2020-02-24 08:07:33,896 root  INFO     Accuracy (w/o spaces): 0.924000
+2020-02-24 08:07:33,896 root  INFO     Edit Dist (w spaces): 0.962997
+2020-02-24 08:07:33,896 root  INFO     Total Correct (w spaces): 2723
+2020-02-24 08:07:33,896 root  INFO     Total Correct (w/o spaces): 2772
+2020-02-24 08:07:33,897 root  INFO     Total Edit Dist (w spaces): 43389
+2020-02-24 08:07:33,897 root  INFO     Total Ref (w spaces): 1172573
+2020-02-24 08:07:33,897 root  INFO     
+2020-02-24 08:07:44,056 root  INFO     Total Num: 3100
+2020-02-24 08:07:44,056 root  INFO     Accuracy (w spaces): 0.908065
+2020-02-24 08:07:44,056 root  INFO     Accuracy (w/o spaces): 0.924194
+2020-02-24 08:07:44,056 root  INFO     Edit Dist (w spaces): 0.963575
+2020-02-24 08:07:44,056 root  INFO     Total Correct (w spaces): 2815
+2020-02-24 08:07:44,056 root  INFO     Total Correct (w/o spaces): 2865
+2020-02-24 08:07:44,056 root  INFO     Total Edit Dist (w spaces): 44089
+2020-02-24 08:07:44,057 root  INFO     Total Ref (w spaces): 1210395
+2020-02-24 08:07:44,057 root  INFO     
+2020-02-24 08:07:54,941 root  INFO     Total Num: 3200
+2020-02-24 08:07:54,941 root  INFO     Accuracy (w spaces): 0.909687
+2020-02-24 08:07:54,941 root  INFO     Accuracy (w/o spaces): 0.925625
+2020-02-24 08:07:54,942 root  INFO     Edit Dist (w spaces): 0.964218
+2020-02-24 08:07:54,942 root  INFO     Total Correct (w spaces): 2911
+2020-02-24 08:07:54,942 root  INFO     Total Correct (w/o spaces): 2962
+2020-02-24 08:07:54,942 root  INFO     Total Edit Dist (w spaces): 44783
+2020-02-24 08:07:54,942 root  INFO     Total Ref (w spaces): 1251566
+2020-02-24 08:07:54,942 root  INFO     
+2020-02-24 08:08:04,731 root  INFO     Total Num: 3300
+2020-02-24 08:08:04,731 root  INFO     Accuracy (w spaces): 0.910303
+2020-02-24 08:08:04,731 root  INFO     Accuracy (w/o spaces): 0.925758
+2020-02-24 08:08:04,731 root  INFO     Edit Dist (w spaces): 0.964675
+2020-02-24 08:08:04,731 root  INFO     Total Correct (w spaces): 3004
+2020-02-24 08:08:04,731 root  INFO     Total Correct (w/o spaces): 3055
+2020-02-24 08:08:04,731 root  INFO     Total Edit Dist (w spaces): 45612
+2020-02-24 08:08:04,731 root  INFO     Total Ref (w spaces): 1291210
+2020-02-24 08:08:04,731 root  INFO     
+2020-02-24 08:08:17,210 root  INFO     Total Num: 3400
+2020-02-24 08:08:17,210 root  INFO     Accuracy (w spaces): 0.910294
+2020-02-24 08:08:17,210 root  INFO     Accuracy (w/o spaces): 0.925882
+2020-02-24 08:08:17,210 root  INFO     Edit Dist (w spaces): 0.965230
+2020-02-24 08:08:17,210 root  INFO     Total Correct (w spaces): 3095
+2020-02-24 08:08:17,210 root  INFO     Total Correct (w/o spaces): 3148
+2020-02-24 08:08:17,210 root  INFO     Total Edit Dist (w spaces): 46300
+2020-02-24 08:08:17,210 root  INFO     Total Ref (w spaces): 1331617
+2020-02-24 08:08:17,211 root  INFO     
+2020-02-24 08:08:28,506 root  INFO     Total Num: 3500
+2020-02-24 08:08:28,506 root  INFO     Accuracy (w spaces): 0.910000
+2020-02-24 08:08:28,506 root  INFO     Accuracy (w/o spaces): 0.926286
+2020-02-24 08:08:28,506 root  INFO     Edit Dist (w spaces): 0.965238
+2020-02-24 08:08:28,506 root  INFO     Total Correct (w spaces): 3185
+2020-02-24 08:08:28,506 root  INFO     Total Correct (w/o spaces): 3242
+2020-02-24 08:08:28,506 root  INFO     Total Edit Dist (w spaces): 47694
+2020-02-24 08:08:28,506 root  INFO     Total Ref (w spaces): 1372034
+2020-02-24 08:08:28,506 root  INFO     
+2020-02-24 08:08:39,788 root  INFO     Total Num: 3600
+2020-02-24 08:08:39,788 root  INFO     Accuracy (w spaces): 0.909722
+2020-02-24 08:08:39,788 root  INFO     Accuracy (w/o spaces): 0.926111
+2020-02-24 08:08:39,788 root  INFO     Edit Dist (w spaces): 0.965373
+2020-02-24 08:08:39,788 root  INFO     Total Correct (w spaces): 3275
+2020-02-24 08:08:39,788 root  INFO     Total Correct (w/o spaces): 3334
+2020-02-24 08:08:39,788 root  INFO     Total Edit Dist (w spaces): 48908
+2020-02-24 08:08:39,788 root  INFO     Total Ref (w spaces): 1412415
+2020-02-24 08:08:39,788 root  INFO     
+2020-02-24 08:08:50,796 root  INFO     Total Num: 3700
+2020-02-24 08:08:50,796 root  INFO     Accuracy (w spaces): 0.910000
+2020-02-24 08:08:50,796 root  INFO     Accuracy (w/o spaces): 0.926757
+2020-02-24 08:08:50,796 root  INFO     Edit Dist (w spaces): 0.965803
+2020-02-24 08:08:50,796 root  INFO     Total Correct (w spaces): 3367
+2020-02-24 08:08:50,796 root  INFO     Total Correct (w/o spaces): 3429
+2020-02-24 08:08:50,796 root  INFO     Total Edit Dist (w spaces): 49654
+2020-02-24 08:08:50,796 root  INFO     Total Ref (w spaces): 1451989
+2020-02-24 08:08:50,796 root  INFO     
+2020-02-24 08:09:00,349 root  INFO     Total Num: 3800
+2020-02-24 08:09:00,349 root  INFO     Accuracy (w spaces): 0.911316
+2020-02-24 08:09:00,349 root  INFO     Accuracy (w/o spaces): 0.927368
+2020-02-24 08:09:00,349 root  INFO     Edit Dist (w spaces): 0.966235
+2020-02-24 08:09:00,349 root  INFO     Total Correct (w spaces): 3463
+2020-02-24 08:09:00,350 root  INFO     Total Correct (w/o spaces): 3524
+2020-02-24 08:09:00,350 root  INFO     Total Edit Dist (w spaces): 50337
+2020-02-24 08:09:00,350 root  INFO     Total Ref (w spaces): 1490815
+2020-02-24 08:09:00,350 root  INFO     
+2020-02-24 08:09:10,715 root  INFO     Total Num: 3900
+2020-02-24 08:09:10,715 root  INFO     Accuracy (w spaces): 0.912051
+2020-02-24 08:09:10,715 root  INFO     Accuracy (w/o spaces): 0.928462
+2020-02-24 08:09:10,715 root  INFO     Edit Dist (w spaces): 0.966431
+2020-02-24 08:09:10,715 root  INFO     Total Correct (w spaces): 3557
+2020-02-24 08:09:10,715 root  INFO     Total Correct (w/o spaces): 3621
+2020-02-24 08:09:10,715 root  INFO     Total Edit Dist (w spaces): 51280
+2020-02-24 08:09:10,715 root  INFO     Total Ref (w spaces): 1527608
+2020-02-24 08:09:10,715 root  INFO     
+2020-02-24 08:09:22,241 root  INFO     Total Num: 4000
+2020-02-24 08:09:22,241 root  INFO     Accuracy (w spaces): 0.912250
+2020-02-24 08:09:22,241 root  INFO     Accuracy (w/o spaces): 0.928500
+2020-02-24 08:09:22,242 root  INFO     Edit Dist (w spaces): 0.966466
+2020-02-24 08:09:22,242 root  INFO     Total Correct (w spaces): 3649
+2020-02-24 08:09:22,242 root  INFO     Total Correct (w/o spaces): 3714
+2020-02-24 08:09:22,242 root  INFO     Total Edit Dist (w spaces): 52522
+2020-02-24 08:09:22,242 root  INFO     Total Ref (w spaces): 1566251
+2020-02-24 08:09:22,242 root  INFO     
+2020-02-24 08:09:32,485 root  INFO     Total Num: 4100
+2020-02-24 08:09:32,485 root  INFO     Accuracy (w spaces): 0.911707
+2020-02-24 08:09:32,485 root  INFO     Accuracy (w/o spaces): 0.927805
+2020-02-24 08:09:32,485 root  INFO     Edit Dist (w spaces): 0.966483
+2020-02-24 08:09:32,485 root  INFO     Total Correct (w spaces): 3738
+2020-02-24 08:09:32,485 root  INFO     Total Correct (w/o spaces): 3804
+2020-02-24 08:09:32,485 root  INFO     Total Edit Dist (w spaces): 53740
+2020-02-24 08:09:32,485 root  INFO     Total Ref (w spaces): 1603363
+2020-02-24 08:09:32,485 root  INFO     
+2020-02-24 08:09:41,854 root  INFO     Total Num: 4200
+2020-02-24 08:09:41,854 root  INFO     Accuracy (w spaces): 0.912381
+2020-02-24 08:09:41,854 root  INFO     Accuracy (w/o spaces): 0.928333
+2020-02-24 08:09:41,855 root  INFO     Edit Dist (w spaces): 0.966837
+2020-02-24 08:09:41,855 root  INFO     Total Correct (w spaces): 3832
+2020-02-24 08:09:41,855 root  INFO     Total Correct (w/o spaces): 3899
+2020-02-24 08:09:41,855 root  INFO     Total Edit Dist (w spaces): 54424
+2020-02-24 08:09:41,855 root  INFO     Total Ref (w spaces): 1641093
+2020-02-24 08:09:41,855 root  INFO     
+2020-02-24 08:09:54,472 root  INFO     Total Num: 4300
+2020-02-24 08:09:54,472 root  INFO     Accuracy (w spaces): 0.912326
+2020-02-24 08:09:54,472 root  INFO     Accuracy (w/o spaces): 0.928372
+2020-02-24 08:09:54,472 root  INFO     Edit Dist (w spaces): 0.966815
+2020-02-24 08:09:54,472 root  INFO     Total Correct (w spaces): 3923
+2020-02-24 08:09:54,472 root  INFO     Total Correct (w/o spaces): 3992
+2020-02-24 08:09:54,472 root  INFO     Total Edit Dist (w spaces): 55767
+2020-02-24 08:09:54,473 root  INFO     Total Ref (w spaces): 1680499
+2020-02-24 08:09:54,473 root  INFO     
+2020-02-24 08:10:05,621 root  INFO     Total Num: 4400
+2020-02-24 08:10:05,621 root  INFO     Accuracy (w spaces): 0.912273
+2020-02-24 08:10:05,621 root  INFO     Accuracy (w/o spaces): 0.928409
+2020-02-24 08:10:05,621 root  INFO     Edit Dist (w spaces): 0.966951
+2020-02-24 08:10:05,621 root  INFO     Total Correct (w spaces): 4014
+2020-02-24 08:10:05,621 root  INFO     Total Correct (w/o spaces): 4085
+2020-02-24 08:10:05,621 root  INFO     Total Edit Dist (w spaces): 56822
+2020-02-24 08:10:05,621 root  INFO     Total Ref (w spaces): 1719328
+2020-02-24 08:10:05,621 root  INFO     
+2020-02-24 08:10:15,309 root  INFO     Total Num: 4500
+2020-02-24 08:10:15,309 root  INFO     Accuracy (w spaces): 0.912667
+2020-02-24 08:10:15,309 root  INFO     Accuracy (w/o spaces): 0.928667
+2020-02-24 08:10:15,309 root  INFO     Edit Dist (w spaces): 0.967074
+2020-02-24 08:10:15,309 root  INFO     Total Correct (w spaces): 4107
+2020-02-24 08:10:15,309 root  INFO     Total Correct (w/o spaces): 4179
+2020-02-24 08:10:15,309 root  INFO     Total Edit Dist (w spaces): 57884
+2020-02-24 08:10:15,309 root  INFO     Total Ref (w spaces): 1758001
+2020-02-24 08:10:15,309 root  INFO     
+2020-02-24 08:10:26,538 root  INFO     Total Num: 4600
+2020-02-24 08:10:26,538 root  INFO     Accuracy (w spaces): 0.912174
+2020-02-24 08:10:26,539 root  INFO     Accuracy (w/o spaces): 0.928696
+2020-02-24 08:10:26,539 root  INFO     Edit Dist (w spaces): 0.966873
+2020-02-24 08:10:26,539 root  INFO     Total Correct (w spaces): 4196
+2020-02-24 08:10:26,539 root  INFO     Total Correct (w/o spaces): 4272
+2020-02-24 08:10:26,539 root  INFO     Total Edit Dist (w spaces): 59512
+2020-02-24 08:10:26,539 root  INFO     Total Ref (w spaces): 1796498
+2020-02-24 08:10:26,539 root  INFO     
+2020-02-24 08:10:38,129 root  INFO     Total Num: 4700
+2020-02-24 08:10:38,129 root  INFO     Accuracy (w spaces): 0.911702
+2020-02-24 08:10:38,129 root  INFO     Accuracy (w/o spaces): 0.928085
+2020-02-24 08:10:38,129 root  INFO     Edit Dist (w spaces): 0.966502
+2020-02-24 08:10:38,129 root  INFO     Total Correct (w spaces): 4285
+2020-02-24 08:10:38,129 root  INFO     Total Correct (w/o spaces): 4362
+2020-02-24 08:10:38,130 root  INFO     Total Edit Dist (w spaces): 61540
+2020-02-24 08:10:38,130 root  INFO     Total Ref (w spaces): 1837141
+2020-02-24 08:10:38,130 root  INFO     
+2020-02-24 08:10:49,707 root  INFO     Total Num: 4800
+2020-02-24 08:10:49,707 root  INFO     Accuracy (w spaces): 0.910417
+2020-02-24 08:10:49,707 root  INFO     Accuracy (w/o spaces): 0.927500
+2020-02-24 08:10:49,707 root  INFO     Edit Dist (w spaces): 0.966369
+2020-02-24 08:10:49,707 root  INFO     Total Correct (w spaces): 4370
+2020-02-24 08:10:49,707 root  INFO     Total Correct (w/o spaces): 4452
+2020-02-24 08:10:49,707 root  INFO     Total Edit Dist (w spaces): 62996
+2020-02-24 08:10:49,707 root  INFO     Total Ref (w spaces): 1873178
+2020-02-24 08:10:49,707 root  INFO     
+2020-02-24 08:11:00,218 root  INFO     Total Num: 4900
+2020-02-24 08:11:00,218 root  INFO     Accuracy (w spaces): 0.910204
+2020-02-24 08:11:00,218 root  INFO     Accuracy (w/o spaces): 0.927347
+2020-02-24 08:11:00,219 root  INFO     Edit Dist (w spaces): 0.965815
+2020-02-24 08:11:00,219 root  INFO     Total Correct (w spaces): 4460
+2020-02-24 08:11:00,219 root  INFO     Total Correct (w/o spaces): 4544
+2020-02-24 08:11:00,219 root  INFO     Total Edit Dist (w spaces): 65350
+2020-02-24 08:11:00,219 root  INFO     Total Ref (w spaces): 1911682
+2020-02-24 08:11:00,219 root  INFO     
+2020-02-24 08:11:12,012 root  INFO     Total Num: 5000
+2020-02-24 08:11:12,012 root  INFO     Accuracy (w spaces): 0.910400
+2020-02-24 08:11:12,012 root  INFO     Accuracy (w/o spaces): 0.927600
+2020-02-24 08:11:12,012 root  INFO     Edit Dist (w spaces): 0.965808
+2020-02-24 08:11:12,013 root  INFO     Total Correct (w spaces): 4552
+2020-02-24 08:11:12,013 root  INFO     Total Correct (w/o spaces): 4638
+2020-02-24 08:11:12,013 root  INFO     Total Edit Dist (w spaces): 66709
+2020-02-24 08:11:12,013 root  INFO     Total Ref (w spaces): 1951003
+2020-02-24 08:11:12,013 root  INFO     
+2020-02-24 08:11:23,874 root  INFO     Total Num: 5100
+2020-02-24 08:11:23,875 root  INFO     Accuracy (w spaces): 0.909216
+2020-02-24 08:11:23,875 root  INFO     Accuracy (w/o spaces): 0.926471
+2020-02-24 08:11:23,875 root  INFO     Edit Dist (w spaces): 0.965987
+2020-02-24 08:11:23,875 root  INFO     Total Correct (w spaces): 4637
+2020-02-24 08:11:23,875 root  INFO     Total Correct (w/o spaces): 4725
+2020-02-24 08:11:23,875 root  INFO     Total Edit Dist (w spaces): 67610
+2020-02-24 08:11:23,875 root  INFO     Total Ref (w spaces): 1987766
+2020-02-24 08:11:23,875 root  INFO     
+2020-02-24 08:11:34,742 root  INFO     Total Num: 5200
+2020-02-24 08:11:34,742 root  INFO     Accuracy (w spaces): 0.908462
+2020-02-24 08:11:34,742 root  INFO     Accuracy (w/o spaces): 0.925769
+2020-02-24 08:11:34,742 root  INFO     Edit Dist (w spaces): 0.966180
+2020-02-24 08:11:34,742 root  INFO     Total Correct (w spaces): 4724
+2020-02-24 08:11:34,742 root  INFO     Total Correct (w/o spaces): 4814
+2020-02-24 08:11:34,742 root  INFO     Total Edit Dist (w spaces): 68525
+2020-02-24 08:11:34,742 root  INFO     Total Ref (w spaces): 2026152
+2020-02-24 08:11:34,742 root  INFO     
+2020-02-24 08:11:47,113 root  INFO     Total Num: 5300
+2020-02-24 08:11:47,113 root  INFO     Accuracy (w spaces): 0.907358
+2020-02-24 08:11:47,113 root  INFO     Accuracy (w/o spaces): 0.925660
+2020-02-24 08:11:47,113 root  INFO     Edit Dist (w spaces): 0.966052
+2020-02-24 08:11:47,113 root  INFO     Total Correct (w spaces): 4809
+2020-02-24 08:11:47,113 root  INFO     Total Correct (w/o spaces): 4906
+2020-02-24 08:11:47,114 root  INFO     Total Edit Dist (w spaces): 70141
+2020-02-24 08:11:47,114 root  INFO     Total Ref (w spaces): 2066156
+2020-02-24 08:11:47,114 root  INFO     
+2020-02-24 08:12:00,017 root  INFO     Total Num: 5400
+2020-02-24 08:12:00,017 root  INFO     Accuracy (w spaces): 0.906667
+2020-02-24 08:12:00,017 root  INFO     Accuracy (w/o spaces): 0.925370
+2020-02-24 08:12:00,017 root  INFO     Edit Dist (w spaces): 0.965981
+2020-02-24 08:12:00,017 root  INFO     Total Correct (w spaces): 4896
+2020-02-24 08:12:00,017 root  INFO     Total Correct (w/o spaces): 4997
+2020-02-24 08:12:00,017 root  INFO     Total Edit Dist (w spaces): 71641
+2020-02-24 08:12:00,017 root  INFO     Total Ref (w spaces): 2105921
+2020-02-24 08:12:00,017 root  INFO     
+2020-02-24 08:12:13,060 root  INFO     Total Num: 5500
+2020-02-24 08:12:13,060 root  INFO     Accuracy (w spaces): 0.905636
+2020-02-24 08:12:13,060 root  INFO     Accuracy (w/o spaces): 0.925273
+2020-02-24 08:12:13,060 root  INFO     Edit Dist (w spaces): 0.965786
+2020-02-24 08:12:13,060 root  INFO     Total Correct (w spaces): 4981
+2020-02-24 08:12:13,060 root  INFO     Total Correct (w/o spaces): 5089
+2020-02-24 08:12:13,061 root  INFO     Total Edit Dist (w spaces): 73399
+2020-02-24 08:12:13,061 root  INFO     Total Ref (w spaces): 2145264
+2020-02-24 08:12:13,061 root  INFO     
+2020-02-24 08:12:23,997 root  INFO     Total Num: 5600
+2020-02-24 08:12:23,997 root  INFO     Accuracy (w spaces): 0.905714
+2020-02-24 08:12:23,997 root  INFO     Accuracy (w/o spaces): 0.925179
+2020-02-24 08:12:23,997 root  INFO     Edit Dist (w spaces): 0.965620
+2020-02-24 08:12:23,997 root  INFO     Total Correct (w spaces): 5072
+2020-02-24 08:12:23,997 root  INFO     Total Correct (w/o spaces): 5181
+2020-02-24 08:12:23,997 root  INFO     Total Edit Dist (w spaces): 75088
+2020-02-24 08:12:23,997 root  INFO     Total Ref (w spaces): 2184070
+2020-02-24 08:12:23,997 root  INFO     
+2020-02-24 08:12:26,971 root  INFO     ------------------------------------
+2020-02-24 08:12:26,971 root  INFO     Final
+2020-02-24 08:12:26,971 root  INFO     Total Num: 5638
+2020-02-24 08:12:26,972 root  INFO     Accuracy (w spaces): 0.905995
+2020-02-24 08:12:26,972 root  INFO     Accuracy (w/o spaces): 0.925328
+2020-02-24 08:12:26,972 root  INFO     Edit Dist (w spaces): 0.965755
+2020-02-24 08:12:26,972 root  INFO     Total Correct (w spaces): 5108
+2020-02-24 08:12:26,972 root  INFO     Total Correct (w/o spaces): 5217
+2020-02-24 08:12:26,972 root  INFO     Total Edit Dist (w spaces): 75268
+2020-02-24 08:12:26,972 root  INFO     Total Ref (w spaces): 2197943
+2020-02-24 08:12:26,980 root  INFO     Jobs finished

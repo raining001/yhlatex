@@ -1,0 +1,18 @@
+2020-02-23 17:53:19,371 root  INFO     Script being executed: scripts/evaluation/evaluate_bleu.py
+2020-02-23 17:54:44,918 root  INFO     Script being executed: scripts/evaluation/evaluate_bleu.py
+2020-02-23 17:55:16,528 root  INFO     Script being executed: scripts/evaluation/evaluate_bleu.py
+2020-02-23 17:55:24,742 root  INFO     Script being executed: scripts/evaluation/evaluate_bleu.py
+2020-02-23 17:55:34,266 root  INFO     Script being executed: scripts/evaluation/evaluate_bleu.py
+2020-02-23 17:55:36,725 root  INFO     b'BLEU = 92.69, 97.5/94.8/92.4/90.1 (BP=0.990, ratio=0.990, hyp_len=218632, ref_len=220855)\n'
+2020-02-23 17:55:36,725 root  INFO     Jobs finished
+2020-02-23 18:03:19,172 root  INFO     Script being executed: scripts/evaluation/evaluate_bleu.py
+2020-02-23 18:03:25,084 root  INFO     Script being executed: scripts/evaluation/evaluate_bleu.py
+2020-02-23 18:03:30,334 root  INFO     Script being executed: scripts/evaluation/evaluate_bleu.py
+2020-02-23 18:03:32,753 root  INFO     b'BLEU = 92.73, 97.6/95.0/92.6/90.4 (BP=0.988, ratio=0.988, hyp_len=218256, ref_len=220855)\n'
+2020-02-23 18:03:32,754 root  INFO     Jobs finished
+2020-02-23 22:09:10,210 root  INFO     Script being executed: scripts/evaluation/evaluate_bleu.py
+2020-02-23 22:09:10,210 root  INFO     results/multi/results/filter_data/pred_10_l60.txt
+2020-02-23 22:10:10,462 root  INFO     Script being executed: scripts/evaluation/evaluate_bleu.py
+2020-02-23 22:10:10,462 root  INFO     results/multi/results/filter_data/l60/pred_10_l60.txt
+2020-02-23 22:10:12,698 root  INFO     b'BLEU = 92.73, 97.6/95.0/92.6/90.4 (BP=0.988, ratio=0.988, hyp_len=218256, ref_len=220855)\n'
+2020-02-23 22:10:12,698 root  INFO     Jobs finished

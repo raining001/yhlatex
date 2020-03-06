@@ -36,10 +36,10 @@ def process_args(args):
                         type=str,  default='error_lab/ref.txt')
 
     parser.add_argument('--pred', dest='pred_txt',
-                        type=str,  default='error_lab/less60_pred.txt')
+                        type=str,  default='error_lab/pred.txt')
 
     parser.add_argument('--output-dir', dest='output_dir',
-                        type=str,  default='results/baseline_large/results/')
+                        type=str,  default='error_lab/')
     parser.add_argument('--replace', dest='replace', action='store_true',
                         help=('Replace flag, if set to false, will ignore the already existing images.'
                         ))
