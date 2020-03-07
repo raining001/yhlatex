@@ -126,10 +126,10 @@ class RNNDecoderBase(DecoderBase):
                 attn_type=attn_type, attn_func=attn_func
             )
 
-            # self.attn1 = RowAttention(
-            #     hidden_size, coverage=coverage_attn,
-            #     attn_type=attn_type, attn_func=attn_func
-            # )
+            self.attn1 = RowAttention(
+                hidden_size, coverage=coverage_attn,
+                attn_type=attn_type, attn_func=attn_func
+            )
             # self.attn_col = ColAttention(
             #     hidden_size, coverage=coverage_attn,
             #     attn_type=attn_type, attn_func=attn_func
@@ -207,7 +207,7 @@ class RNNDecoderBase(DecoderBase):
         self.state["hidden"] = tuple(h.detach() for h in self.state["hidden"])
         self.state["input_feed"] = self.state["input_feed"].detach()
 
-    def forward(self, tgt, memory_bank, mem, memory_lengths=None, step=None,
+    def forward(self, tgt, memory_bank, memory_lengths=None, step=None,
                 **kwargs):
         """
         Args:
@@ -228,8 +228,6 @@ class RNNDecoderBase(DecoderBase):
         """
 
         # c 的size是 bz, 512,attn是将整个w x h 内的值加权和为一个值，因为有512个通道，所以最后为512
-
-        self.mem = mem
         dec_state, dec_outs, attns = self._run_forward_pass(
             tgt, memory_bank, memory_lengths=memory_lengths)
 
@@ -303,9 +301,8 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
         dec_outs = []
         attns = {}
         if self.attn is not None:
-            # attns["rowstd"] = []
+            attns["rowstd"] = []
             attns["rowcolstd"] = []
-            attns["std"] = []
         if self.copy_attn is not None or self._reuse_copy_attn:
             attns["copy"] = []
         if self._coverage:
@@ -328,38 +325,30 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
                                                                             # dec_state 是lstm中cell和hidden 也就是ht-1 (h,c) 因为有两层，所以h和c的size(2,bz, 512)
                                                                             # rnn_output 为双层lstm的输出，也就是dec_state（h,c）中h的第二个值h[1]，两者相等！！
                                                                             # 由于h[0]和h[1]做了stack，所以h(2, bz 512)没有 h[1]
-            if self.attentional:
 
+            if self.attentional:
                 row_memory = memory_bank[0]
 
                 col_memory = memory_bank[1]
 
-                # c1, p_attn = self.attn1(    # ot, #p_attn是已经softmax的权重
-                #     rnn_output,
-                #     row_memory.transpose(0, 1),
-                #     memory_lengths=memory_lengths)
-                # attns["rowstd"].append(p_attn)
-                #
-                # p_attn = p_attn.view(p_attn.size(2), p_attn.size(0), p_attn.size(1))
+                c1, p_attn = self.attn1(    # ot, #p_attn是已经softmax的权重
+                    rnn_output,
+                    row_memory.transpose(0, 1),
+                    memory_lengths=memory_lengths)
+                attns["rowstd"].append(p_attn)
+
+                p_attn = p_attn.view(p_attn.size(2), p_attn.size(0), p_attn.size(1))
                 # print('p_attn', p_attn.size())
-                # col_memory_ = torch.mul(p_attn, col_memory)
-
-                # memory = row_memory + col_memory_
-                memory = row_memory + col_memory
-
-                # print('mem', self.mem.size())
-                # print('res', memory_bank- self.mem)
-                # if all(self.mem == memory_bank):
-                #     print('success!')
-                # else:
-                #     print('no')
+                col_memory_ = torch.mul(p_attn, col_memory)
+                row_memory_ = torch.mul(p_attn, row_memory)
+                memory = row_memory_ + col_memory_
 
                 decoder_output, p_attn = self.attn(    # ot
                     rnn_output,
                     memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
                 attns["rowcolstd"].append(p_attn)
-                attns["std"].append(p_attn)
+
                 #
                 # decoder_output, p_attn = self.attn_col(    # ot
                 #     c1,

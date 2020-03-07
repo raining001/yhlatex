@@ -616,6 +616,7 @@ class Translator(object):
                                .long() \
                                .fill_(memory_bank[0].size(0))
 
+
         elif src_lengths is None:
             assert not isinstance(memory_bank, tuple), \
                 'Ensemble decoding only supported for text data'

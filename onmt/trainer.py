@@ -350,7 +350,7 @@ class Trainer(object):
                                report_stats):
         if self.accum_count > 1:
             self.optim.zero_grad()
-
+        count = []
         for k, batch in enumerate(true_batches):
             target_size = batch.tgt.size(0)
             # Truncated BPTT: reminder not compatible with accum > 1
@@ -373,8 +373,11 @@ class Trainer(object):
                 if self.accum_count == 1:
                     self.optim.zero_grad()
 
+
                 outputs, attns = self.model(src, tgt, src_lengths, bptt=bptt,
                                             with_align=self.with_align)
+
+
                 bptt = True
 
                 # 3. Compute loss.

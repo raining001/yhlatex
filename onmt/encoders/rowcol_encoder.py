@@ -156,18 +156,15 @@ class RCEncoder(EncoderBase):
         # 这里添加了位置信息，在每一行的开头会有一个用第几行数初始化，与原来每行的特征向量做个拼接之后在进行rowencoder
         # out, hidden_t = self.rowcol(src, 0)
         # out, hidden_t = self.rowcol_2(src)
-        out, hidden_t, mem = self.rowcol_3(src)
-
+        out, hidden_t = self.rowcol_3(src)
         #没有位置信息
         # out, hidden_t = self.rowencoder(src)
         # out, hidden_t = self.origin_encoder(src, batch_size)
-
         # out += src.view(src.size(2)*src.size(3), src.size(0), src.size(1))
         # out = self.layer_norm(out) (layers*directions) x batch x dim.
-
         # out, hidden_t = self.colencoder(src)        #out (HxW, bz, 512) hidden_t (4, 20, 256) --(2个正向2个反向， bz, c/2)  因为两层，且双向，所以会有4个，
 
-        return hidden_t, out, lengths,mem
+        return hidden_t, out, lengths
 
 
 
@@ -213,6 +210,27 @@ class RCEncoder(EncoderBase):
 
 
 
+    def rowcol_4(self, src):
+        all_outputs = []
+        col_outputs = []
+        for row in range(src.size(2)):
+            inp = src[:, :, row, :].transpose(0, 2).transpose(1, 2)     # (bz, 512, W).(W, 512, bz).#(W, bz, 512)
+            outputs, hidden_t = self.rnn(inp)
+            all_outputs.append(outputs)
+        row_out = torch.stack(all_outputs, 0)
+        #
+        for col in range(src.size(3)):
+            inp = src[:, :, :, col].transpose(0, 2).transpose(1, 2)    # (bz, 512, H).(H, 512, bz).#(H, bz, 512)
+            outputs, hidden_t2 = self.rnn2(inp)
+            col_outputs.append(outputs)
+        col_out = torch.stack(col_outputs, 1)
+        print('out_row', row_out.size())
+        print('out_col', col_out.size())
+        out_row = row_out.view(row_out.size(0) * row_out.size(1), row_out.size(2), row_out.size(3))
+        out_col = col_out.view(col_out.size(0) * col_out.size(1), col_out.size(2),  col_out.size(3))
+        return (out_row, out_col), hidden_t
+
+
 
     def rowcol_3(self, src):
         all_outputs = []
@@ -228,10 +246,13 @@ class RCEncoder(EncoderBase):
             outputs, hidden_t2 = self.rnn2(inp)
             col_outputs.append(outputs)
         col_out = torch.stack(col_outputs, 1)
+        # print('out_row', row_out.size())
+        # print('out_col', col_out.size())
         out_row = row_out.view(row_out.size(0) * row_out.size(1), row_out.size(2), row_out.size(3))
         out_col = col_out.view(col_out.size(0) * col_out.size(1), col_out.size(2),  col_out.size(3))
-        memory_bank = out_row + out_col
-        return (out_row, out_col), hidden_t, memory_bank
+
+        # exit(1)
+        return (out_row, out_col), hidden_t
 
 
     def rowcol_2(self, src):
