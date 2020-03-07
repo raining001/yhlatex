@@ -42,16 +42,18 @@ class NMTModel(nn.Module):
         """
         dec_in = tgt[:-1]  # exclude last target from inputs
 
-        enc_state, memory_bank, lengths = self.encoder(src, lengths)
-
+        # enc_state, memory_bank, lengths = self.encoder(src, lengths)
+        enc_state, memory_bank, lengths, mem = self.encoder(src, lengths)
 
         if type(memory_bank) == tuple:
             if bptt is False:
                 self.decoder.init_state(src, memory_bank[0], enc_state)
-            dec_out, attns = self.decoder(dec_in, memory_bank,
+            # dec_out, attns = self.decoder(dec_in, memory_bank,
+            #                               memory_lengths=lengths,
+            #                               with_align=with_align)
+            dec_out, attns = self.decoder(dec_in, memory_bank,mem,
                                           memory_lengths=lengths,
                                           with_align=with_align)
-
 
         else:
             if bptt is False:
