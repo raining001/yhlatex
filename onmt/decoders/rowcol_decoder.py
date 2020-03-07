@@ -4,6 +4,7 @@ import torch.nn as nn
 from onmt.models.stacked_rnn import StackedLSTM, StackedGRU
 from onmt.modules import context_gate_factory
 from onmt.modules.rowcol_attention import RowAttention, ColAttention
+from onmt.modules.global_attention import GlobalAttention
 from onmt.utils.rnn_factory import rnn_factory
 
 from onmt.utils.misc import aeq
@@ -120,19 +121,19 @@ class RNNDecoderBase(DecoderBase):
                 raise ValueError("Cannot use coverage term with no attention.")
             self.attn = None
         else:
-            # self.attn = GlobalAttention(
+            self.attn = GlobalAttention(
+                hidden_size, coverage=coverage_attn,
+                attn_type=attn_type, attn_func=attn_func
+            )
+
+            self.attn1 = RowAttention(
+                hidden_size, coverage=coverage_attn,
+                attn_type=attn_type, attn_func=attn_func
+            )
+            # self.attn_col = ColAttention(
             #     hidden_size, coverage=coverage_attn,
             #     attn_type=attn_type, attn_func=attn_func
             # )
-
-            self.attn = RowAttention(
-                hidden_size, coverage=coverage_attn,
-                attn_type=attn_type, attn_func=attn_func
-            )
-            self.attn_col = ColAttention(
-                hidden_size, coverage=coverage_attn,
-                attn_type=attn_type, attn_func=attn_func
-            )
 
 
 
@@ -300,8 +301,8 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
         dec_outs = []
         attns = {}
         if self.attn is not None:
-            attns["std"] = []
-            attns["colstd"] = []
+            attns["rowstd"] = []
+            attns["rowcolstd"] = []
         if self.copy_attn is not None or self._reuse_copy_attn:
             attns["copy"] = []
         if self._coverage:
@@ -329,23 +330,31 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
 
                 col_memory = memory_bank[1]
 
-                c1, p_attn = self.attn(    # ot, #p_attn是已经softmax的权重
+                c1, p_attn = self.attn1(    # ot, #p_attn是已经softmax的权重
                     rnn_output,
                     row_memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
-                attns["std"].append(p_attn)
+                attns["rowstd"].append(p_attn)
 
                 p_attn = p_attn.view(p_attn.size(2), p_attn.size(0), p_attn.size(1))
+                print('p_attn', p_attn.size())
                 col_memory_ = torch.mul(p_attn, col_memory)
 
-                decoder_output, p_attn = self.attn_col(    # ot
-                    c1,
+                memory = row_memory + col_memory_
+
+                decoder_output, p_attn = self.attn(    # ot
                     rnn_output,
-                    col_memory_.transpose(0, 1),
+                    memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
+                attns["rowcolstd"].append(p_attn)
 
-
-                attns["colstd"].append(p_attn)
+                #
+                # decoder_output, p_attn = self.attn_col(    # ot
+                #     c1,
+                #     rnn_output,
+                #     col_memory_.transpose(0, 1),
+                #     memory_lengths=memory_lengths)
+                # attns["colstd"].append(p_attn)
 
             else:
                 decoder_output = rnn_output

@@ -169,6 +169,10 @@ class RCEncoder(EncoderBase):
 
         return hidden_t, out, lengths
 
+
+
+
+
     def res_row(self, src):
         all_outputs = []
         for row in range(src.size(2)):
