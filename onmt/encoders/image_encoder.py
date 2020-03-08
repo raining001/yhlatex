@@ -56,6 +56,10 @@ class ImageEncoder(EncoderBase):
                            dropout=dropout,
                            bidirectional=bidirectional)
 
+        self.rnn2 = nn.LSTM(src_size, int(src_size / self.num_directions),
+                           num_layers=num_layers,
+                           dropout=dropout,
+                           bidirectional=bidirectional)
 
         if self.multi_scale:
             src_size = 256
@@ -141,6 +145,7 @@ class ImageEncoder(EncoderBase):
         # out = src.view(src.size(2)*src.size(3), src.size(0), src.size(1))
 
         # 这里添加了位置信息，在每一行的开头会有一个用第几行数初始化，与原来每行的特征向量做个拼接之后在进行rowencoder
+        out, hidden_t = self.rowcol_origin(src)
 
         # out, hidden_t = self.rowcol(src, 0
         # print(('src1', src.size()))
@@ -152,7 +157,7 @@ class ImageEncoder(EncoderBase):
 
         # out, hidden_t = self.rowencoder(src)
 
-        out, hidden_t = self.origin_encoder(src, batch_size)
+        # out, hidden_t = self.origin_encoder(src, batch_size)
 
         # out += src.view(src.size(2)*src.size(3), src.size(0), src.size(1))
         # out = self.layer_norm(out) (layers*directions) x batch x dim.
@@ -167,8 +172,29 @@ class ImageEncoder(EncoderBase):
 
             return hidden_t, (out, hightout), lengths
         else:
-
             return hidden_t, out, lengths
+
+
+
+    def rowcol_origin(self, src):
+        all_outputs = []
+        col_outputs = []
+        for row in range(src.size(2)):
+            inp = src[:, :, row, :].transpose(0, 2).transpose(1, 2)     # (bz, 512, W).(W, 512, bz).#(W, bz, 512)
+            outputs, hidden_t = self.rnn(inp)
+            all_outputs.append(outputs)
+        out = torch.stack(all_outputs, 0)
+        #
+        for col in range(src.size(3)):
+            inp = src[:, :, :, col].transpose(0, 2).transpose(1, 2)    # (bz, 512, H).(H, 512, bz).#(H, bz, 512)
+            outputs, hidden_t2 = self.rnn2(inp)
+            col_outputs.append(outputs)
+        out_col = torch.stack(col_outputs, 1)
+
+        out = out + out_col
+        out = out.view(out.size(0) * out.size(1), out.size(2), out.size(3))
+        return out, hidden_t2
+
 
     def colencoder(self, src):
         col_outputs = []

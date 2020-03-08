@@ -127,10 +127,16 @@ class RNNDecoderBase(DecoderBase):
                 attn_type=attn_type, attn_func=attn_func
             )
             attn_type="mlp"
-            self.attn1 = RowAttention(
+            # self.attn1 = RowAttention(
+            #     hidden_size, coverage=coverage_attn,
+            #     attn_type=attn_type, attn_func=attn_func
+            # )
+
+            self.attn_col = ColAttention(
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
             )
+
             # self.attn_col = ColAttention(
             #     hidden_size, coverage=coverage_attn,
             #     attn_type=attn_type, attn_func=attn_func
@@ -302,7 +308,8 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
         dec_outs = []
         attns = {}
         if self.attn is not None:
-            attns["rowstd"] = []
+            # attns["rowstd"] = []
+            attns["colstd"] = []
             attns["rowcolstd"] = []
         if self.copy_attn is not None or self._reuse_copy_attn:
             attns["copy"] = []
@@ -332,11 +339,11 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
 
                 col_memory = memory_bank[1]
 
-                c1, p_attn = self.attn1(    # ot, #p_attn是已经softmax的权重
+                c1, p_attn = self.attn_col(    # ot, #p_attn是已经softmax的权重
                     rnn_output,
-                    row_memory.transpose(0, 1),
+                    col_memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
-                attns["rowstd"].append(p_attn)
+                attns["colstd"].append(p_attn)
 
                 p_attn = p_attn.view(p_attn.size(2), p_attn.size(0), p_attn.size(1))
                 # print('p_attn', p_attn.size())
@@ -344,14 +351,11 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
                 # row_memory_ = torch.mul(p_attn, row_memory)
                 memory = row_memory + col_memory_
 
-
                 # decoder_output, p_attn = self.attn(    # ot
                 #     c1.squeeze(1),
                 #     memory.transpose(0, 1),
                 #     memory_lengths=memory_lengths)
                 # attns["rowcolstd"].append(p_attn)
-
-
 
                 decoder_output, p_attn = self.attn(    # ot
                     rnn_output,
@@ -393,7 +397,7 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
                     decoder_output, memory_bank.transpose(0, 1))
                 attns["copy"] += [copy_attn]
             elif self._reuse_copy_attn:
-                attns["copy"] = attns["std"]
+                attns["copy"] = attns["rowcolstd"]
 
         return dec_state, dec_outs, attns
 

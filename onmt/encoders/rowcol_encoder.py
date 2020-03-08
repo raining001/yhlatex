@@ -157,7 +157,9 @@ class RCEncoder(EncoderBase):
         # out, hidden_t = self.rowcol(src, 0)
         # out, hidden_t = self.rowcol_2(src)
         out, hidden_t = self.rowcol_3(src)
+        # out, hidden_t = self.rowcol_origin(src)
         #没有位置信息
+
         # out, hidden_t = self.rowencoder(src)
         # out, hidden_t = self.origin_encoder(src, batch_size)
         # out += src.view(src.size(2)*src.size(3), src.size(0), src.size(1))
@@ -252,7 +254,8 @@ class RCEncoder(EncoderBase):
         out_col = col_out.view(col_out.size(0) * col_out.size(1), col_out.size(2),  col_out.size(3))
 
         # exit(1)
-        return (out_row, out_col), hidden_t
+
+        return (out_row, out_col), hidden_t2
 
 
     def rowcol_2(self, src):
@@ -386,6 +389,24 @@ class RCEncoder(EncoderBase):
 
 
 
+    def rowcol_origin(self, src ):
+        all_outputs = []
+        col_outputs = []
+        for row in range(src.size(2)):
+            inp = src[:, :, row, :].transpose(0, 2).transpose(1, 2)     # (bz, 512, W).(W, 512, bz).#(W, bz, 512)
+            outputs, hidden_t = self.rnn(inp)
+            all_outputs.append(outputs)
+        out = torch.stack(all_outputs, 0)
+        #
+        for col in range(src.size(3)):
+            inp = src[:, :, :, col].transpose(0, 2).transpose(1, 2)    # (bz, 512, H).(H, 512, bz).#(H, bz, 512)
+            outputs, hidden_t2 = self.rnn2(inp)
+            col_outputs.append(outputs)
+        out_col = torch.stack(col_outputs, 1)
+
+        out = out + out_col
+
+        return out, hidden_t2
 
     def origin_encoder(self, src, batch_size):
         all_outputs = []
