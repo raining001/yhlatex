@@ -3,7 +3,7 @@ import torch.nn as nn
 
 from onmt.models.stacked_rnn import StackedLSTM, StackedGRU
 from onmt.modules import context_gate_factory
-from onmt.modules.rowcol_attention import RowAttention, ColAttention
+from onmt.modules.rowcol_attention import RowcolAttention, ColAttention
 from onmt.modules.global_attention import GlobalAttention
 from onmt.utils.rnn_factory import rnn_factory
 
@@ -121,11 +121,17 @@ class RNNDecoderBase(DecoderBase):
                 raise ValueError("Cannot use coverage term with no attention.")
             self.attn = None
         else:
+            #
+            # self.attn = GlobalAttention(
+            #     hidden_size, coverage=coverage_attn,
+            #     attn_type=attn_type, attn_func=attn_func
+            # )
 
-            self.attn = GlobalAttention(
+            self.attn = RowcolAttention(
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
             )
+
             # attn_type="mlp"
             # self.attn1 = RowAttention(
             #     hidden_size, coverage=coverage_attn,
@@ -353,7 +359,8 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
                 memory = row_memory + col_memory_
 
                 decoder_output, p_attn = self.attn(    # ot
-                    c1.squeeze(1),
+                    c1,
+                    rnn_output,
                     memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
                 attns["rowcolstd"].append(p_attn)
