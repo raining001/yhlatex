@@ -1,6 +1,0 @@
-r _ { \nu } ( \theta ) = C   \frac { \left( \eta ( \theta ) \right) ^ { 1 / 3 } } { \operatorname { s i n } \theta } \, ,
-( \eta ( \theta ) )
-( \eta ( \theta ) )^ { 1 / 3 }
-\frac { ( \eta ( \theta ) ) ^ { 1 / 3 } } { \operatorname { s i n } \theta }
-\frac { ( \eta ( \theta ) ) ^ { 1 / 3 } } { \operatorname { s i n } \theta }
-\frac { ( \eta ( \theta ) ) } { \operatorname { s i n } \theta }
