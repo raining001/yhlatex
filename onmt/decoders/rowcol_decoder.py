@@ -126,7 +126,7 @@ class RNNDecoderBase(DecoderBase):
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
             )
-            attn_type="mlp"
+            # attn_type="mlp"
             # self.attn1 = RowAttention(
             #     hidden_size, coverage=coverage_attn,
             #     attn_type=attn_type, attn_func=attn_func
@@ -343,25 +343,26 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
                     rnn_output,
                     col_memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
-                attns["colstd"].append(p_attn)
+                attns["colstd"].append(p_attn.squeeze(1))
 
                 p_attn = p_attn.view(p_attn.size(2), p_attn.size(0), p_attn.size(1))
                 # print('p_attn', p_attn.size())
                 col_memory_ = torch.mul(p_attn, col_memory)
+
                 # row_memory_ = torch.mul(p_attn, row_memory)
                 memory = row_memory + col_memory_
 
-                # decoder_output, p_attn = self.attn(    # ot
-                #     c1.squeeze(1),
-                #     memory.transpose(0, 1),
-                #     memory_lengths=memory_lengths)
-                # attns["rowcolstd"].append(p_attn)
-
                 decoder_output, p_attn = self.attn(    # ot
-                    rnn_output,
+                    c1.squeeze(1),
                     memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
                 attns["rowcolstd"].append(p_attn)
+
+                # decoder_output, p_attn = self.attn(    # ot
+                #     rnn_output,
+                #     memory.transpose(0, 1),
+                #     memory_lengths=memory_lengths)
+                # attns["rowcolstd"].append(p_attn)
 
 
 

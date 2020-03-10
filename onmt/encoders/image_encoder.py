@@ -145,8 +145,8 @@ class ImageEncoder(EncoderBase):
         # out = src.view(src.size(2)*src.size(3), src.size(0), src.size(1))
 
         # 这里添加了位置信息，在每一行的开头会有一个用第几行数初始化，与原来每行的特征向量做个拼接之后在进行rowencoder
-        out, hidden_t = self.rowcol_origin(src)
-
+        # out, hidden_t = self.rowcol_origin(src)
+        out, hidden_t = self.colencoder(src)
         # out, hidden_t = self.rowcol(src, 0
         # print(('src1', src.size()))
 
@@ -202,7 +202,7 @@ class ImageEncoder(EncoderBase):
             inp = src[:, :, :, col].transpose(0, 2).transpose(1, 2)    # (bz, 512, H).(H, 512, bz).#(H, bz, 512)
             outputs, hidden_t2 = self.rnn2(inp)
             col_outputs.append(outputs)
-        # print('col_outputs', col_outputs[0].size())
+        print('col_outputs', col_outputs[0].size())
         out = torch.cat(col_outputs, 0)
         return out, hidden_t2
 

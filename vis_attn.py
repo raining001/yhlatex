@@ -2,13 +2,15 @@ from onmt.visual_atten import vis_img_with_attention
 import click
 
 @click.command()
-@click.option('--image', default="data/im2text/images/481534e498.png",
+@click.option('--image', default="data/images/275155eeba.png",
               help='Path to image to OCR')
 @click.option('--attns', default="error_lab/attn.txt",
               help='Path to model json config')
 @click.option('--output', default="error_lab/",
               help='Dir for results and model weights')
-def main(image, attns, output):
+@click.option('--latex', default="error_lab/pred.txt",
+              help='Dir for results and model weights')
+def main(image, attns, output, latex):
     attn = []
     with open(attns) as f:
         for idx, line in enumerate(f):
@@ -17,11 +19,19 @@ def main(image, attns, output):
     # print(attn)
     dir_output = output
     img_path = image
+    latex = latex
     #
-    # hyps = ['m', '_', '{', '3', '/', '2', '}', '\\sim', '\\frac', '{', 'e', '^', '{', '2', 'A', '_', '{', 'S', 'U', 'S', 'Y',
-    #  '}', '\\Lambda', '_', '{', 'S', 'U', 'S', 'Y', '}', '^', '{', '2', '}', '}', '}', '{', 'M', '_', '{', '4', '}',
-    #  '}', '\\,', '.', '</s>']
+    hyps = readlatex(latex)
+    print(hyps)
     vis_img_with_attention(hyps, attn, img_path, dir_output)
+
+
+def readlatex(filename):
+    with open(filename) as f:
+        formulas = []
+        for idx, line in enumerate(f):
+            formulas = line.split()
+    return formulas
 
 if __name__ == "__main__":
     main()

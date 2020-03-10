@@ -656,6 +656,8 @@ class Translator(object):
         if not self.copy_attn:
             if "std" in dec_attn:
                 attn = dec_attn["std"]
+            elif "colstd" in dec_attn or "rowcolstd" in dec_attn:
+                attn = dec_attn
             else:
                 attn = None
             log_probs = self.model.generator(dec_out.squeeze(0))
@@ -742,12 +744,17 @@ class Translator(object):
                 src_map=src_map,
                 step=step,
                 batch_offset=decode_strategy.batch_offset)
+            if type(attn) == dict:
+                attn_col = attn["colstd"]
+                attn = attn["rowcolstd"]
 
             if attn_debug:
                 self.debug_probs(log_probs, step)
+            else:
+                self.debug_probs(log_probs, step)
 
 
-            decode_strategy.advance(log_probs, attn)
+            decode_strategy.advance(log_probs, attn_col)
             any_finished = decode_strategy.is_finished.any()
             if any_finished:
                 decode_strategy.update_finished()

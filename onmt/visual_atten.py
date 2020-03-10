@@ -24,7 +24,7 @@ def getWH(img_w, img_h):
     return int(img_w), int(img_h)
 
 
-def vis_attention_slices(atten, img_path, path_to_save_attention):
+def vis_attention_slices(atten, img_path, path_to_save_attention, hyps):
     '''
     可视化所有的 attention slices，保存为 png
     '''
@@ -38,7 +38,7 @@ def vis_attention_slices(atten, img_path, path_to_save_attention):
 
 def getFileNameToSave(path_to_save_attention, i):
     return path_to_save_attention+"_"+str(i)+".png"
-
+    # return path_to_save_attention+"_"+hyp+".png"
 
 def getOutArray(attentionVector, att_w, att_h):
     '''
@@ -181,7 +181,7 @@ def vis_img_with_attention(hyps, atten, img_path, dir_output):
     #
     path_to_save_attention = dir_output+"vis/vis_"+img_path.split('/')[-1][:-4]
     print(path_to_save_attention)
-    vis_attention_slices(atten, img_path, path_to_save_attention)
+    vis_attention_slices(atten, img_path, path_to_save_attention, hyps)
     vis_attention_gif(img_path, path_to_save_attention, hyps, atten)
 
 
