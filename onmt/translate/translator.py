@@ -750,11 +750,9 @@ class Translator(object):
 
             if attn_debug:
                 self.debug_probs(log_probs, step)
-            else:
-                self.debug_probs(log_probs, step)
 
 
-            decode_strategy.advance(log_probs, attn_col)
+            decode_strategy.advance(log_probs, attn)
             any_finished = decode_strategy.is_finished.any()
             if any_finished:
                 decode_strategy.update_finished()

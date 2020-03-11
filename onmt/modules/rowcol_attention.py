@@ -419,7 +419,7 @@ class RowcolAttention(nn.Module):
             self.v = nn.Linear(dim, 1, bias=False)
         # mlp wants it with bias
         out_bias = self.attn_type == "mlp"
-        self.linear_out = nn.Linear(dim * 3, dim, bias=out_bias)
+        self.linear_out = nn.Linear(dim * 2, dim, bias=out_bias)
 
         if coverage:
             self.linear_cover = nn.Linear(1, dim, bias=False)
@@ -526,13 +526,12 @@ class RowcolAttention(nn.Module):
 
         # each context vector c_t is the weighted average
         # over all the source hidden states
-        c = torch.bmm(align_vectors, memory_bank)
+        c2 = torch.bmm(align_vectors, memory_bank)
 
-        # c = c1 + c2
+        c = c1 + c2
         # c （5, 1, 512）
         # concatenate
-        concat_c = torch.cat([c, c1, source], 2).view(batch*target_l, dim*3)  #ot = tanh(Wc[ht; ct])
-
+        concat_c = torch.cat([c, source], 2).view(batch*target_l, dim*2)  #ot = tanh(Wc[ht; ct])
         attn_h = self.linear_out(concat_c).view(batch, target_l, dim)
         if self.attn_type in ["general", "dot"]:
             attn_h = torch.tanh(attn_h)

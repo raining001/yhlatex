@@ -126,7 +126,7 @@ class RNNDecoderBase(DecoderBase):
             #     hidden_size, coverage=coverage_attn,
             #     attn_type=attn_type, attn_func=attn_func
             # )
-
+            #
             self.attn = RowcolAttention(
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
@@ -315,8 +315,10 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
         attns = {}
         if self.attn is not None:
             # attns["rowstd"] = []
-            attns["colstd"] = []
-            attns["rowcolstd"] = []
+            # attns["colstd"] = []
+            # attns["rowcolstd"] = []
+            attns["std1"] = []
+            attns["std2"] = []
         if self.copy_attn is not None or self._reuse_copy_attn:
             attns["copy"] = []
         if self._coverage:
@@ -340,47 +342,70 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
                                                                             # rnn_output 为双层lstm的输出，也就是dec_state（h,c）中h的第二个值h[1]，两者相等！！
                                                                             # 由于h[0]和h[1]做了stack，所以h(2, bz 512)没有 h[1]
 
-            if self.attentional:
-                row_memory = memory_bank[0]
+            # 20200310
+            # if self.attentional:
+            #     row_memory = memory_bank[0]
+            #
+            #     col_memory = memory_bank[1]
+            #
+            #     c1, p_attn = self.attn_col(    # ot, #p_attn是已经softmax的权重
+            #         rnn_output,
+            #         col_memory.transpose(0, 1),
+            #         memory_lengths=memory_lengths)
+            #     attns["colstd"].append(p_attn.squeeze(1))
+            #
+            #     p_attn = p_attn.view(p_attn.size(2), p_attn.size(0), p_attn.size(1))
+            #     # print('p_attn', p_attn.size())
+            #     col_memory_ = torch.mul(p_attn, col_memory)
+            #
+            #     # row_memory_ = torch.mul(p_attn, row_memory)
+            #     memory = row_memory + col_memory_
+            #     #
+            #     decoder_output, p_attn = self.attn(    # ot
+            #         c1,
+            #         rnn_output,
+            #         memory.transpose(0, 1),
+            #         memory_lengths=memory_lengths)
+            #     attns["rowcolstd"].append(p_attn)
+            #
+            #     # decoder_output, p_attn = self.attn(    # ot
+            #     #     c1.squeeze(1),
+            #     #     memory.transpose(0, 1),
+            #     #     memory_lengths=memory_lengths)
+            #     # attns["rowcolstd"].append(p_attn)
+            #     #
+            #     # decoder_output, p_attn = self.attn_col(    # ot
+            #     #     c1,
+            #     #     rnn_output,
+            #     #     col_memory_.transpose(0, 1),
+            #     #     memory_lengths=memory_lengths)
+            #     # attns["colstd"].append(p_attn)
 
-                col_memory = memory_bank[1]
+
+            if self.attentional:
 
                 c1, p_attn = self.attn_col(    # ot, #p_attn是已经softmax的权重
                     rnn_output,
-                    col_memory.transpose(0, 1),
+                    memory_bank.transpose(0, 1),
                     memory_lengths=memory_lengths)
-                attns["colstd"].append(p_attn.squeeze(1))
+                attns["std1"].append(p_attn.squeeze(1))
 
                 p_attn = p_attn.view(p_attn.size(2), p_attn.size(0), p_attn.size(1))
                 # print('p_attn', p_attn.size())
-                col_memory_ = torch.mul(p_attn, col_memory)
+                memory_ = torch.mul(p_attn, memory_bank)
 
                 # row_memory_ = torch.mul(p_attn, row_memory)
-                memory = row_memory + col_memory_
-
+                # memory = row_memory + memory_
+                #
                 decoder_output, p_attn = self.attn(    # ot
                     c1,
                     rnn_output,
-                    memory.transpose(0, 1),
+                    memory_.transpose(0, 1),
                     memory_lengths=memory_lengths)
-                attns["rowcolstd"].append(p_attn)
-
-                # decoder_output, p_attn = self.attn(    # ot
-                #     rnn_output,
-                #     memory.transpose(0, 1),
-                #     memory_lengths=memory_lengths)
-                # attns["rowcolstd"].append(p_attn)
+                attns["std2"].append(p_attn)
 
 
 
-
-                #
-                # decoder_output, p_attn = self.attn_col(    # ot
-                #     c1,
-                #     rnn_output,
-                #     col_memory_.transpose(0, 1),
-                #     memory_lengths=memory_lengths)
-                # attns["colstd"].append(p_attn)
 
             else:
                 decoder_output = rnn_output

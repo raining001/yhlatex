@@ -155,8 +155,8 @@ class RCEncoder(EncoderBase):
 
         # 这里添加了位置信息，在每一行的开头会有一个用第几行数初始化，与原来每行的特征向量做个拼接之后在进行rowencoder
         # out, hidden_t = self.rowcol(src, 0)
-        # out, hidden_t = self.rowcol_2(src)
-        out, hidden_t = self.rowcol_3(src)
+        # out, hidden_t = self.rowcol_3(src)
+        out, hidden_t = self.rowcol_origin(src)
         # out, hidden_t = self.rowcol_origin(src)
         #没有位置信息
 
@@ -405,6 +405,7 @@ class RCEncoder(EncoderBase):
         out_col = torch.stack(col_outputs, 1)
 
         out = out + out_col
+        out = out.view(out.size(0) * out.size(1), out.size(2), out.size(3))
 
         return out, hidden_t2
 

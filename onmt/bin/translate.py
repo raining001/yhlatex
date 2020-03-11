@@ -36,16 +36,46 @@ def translate(opt):
             )
 
 
+def translate_bo(opt):
+    ArgumentParser.validate_translate_opts(opt)
+    logger = init_logger(opt.log_file)
+
+    translator = build_translator(opt, report_score=True)
+    src_shards = split_corpus(opt.src, opt.shard_size)   # opt.src data/im2latex/src-test.txt  10000
+    tgt_shards = split_corpus(opt.tgt, opt.shard_size)   # opt.tgt None   opt.shard_size 10000
+    shard_pairs = zip(src_shards, tgt_shards)
+
+    # opt.attn_debug = True
+    for i, (src_shard, tgt_shard) in enumerate(shard_pairs):
+        logger.info("Translating shard %d." % i)
+
+        translator.translate(
+            src=src_shard,
+            tgt=tgt_shard,
+            src_dir=opt.src_dir,
+            batch_size=opt.batch_size,
+            batch_type=opt.batch_type,
+            attn_debug=opt.attn_debug,
+            attn_view=opt.attn_view,
+            align_debug=opt.align_debug,
+            multi_scale=opt.multi_scale
+            )
+
+
+
+
 def _get_parser():
     parser = ArgumentParser(description='translate.py')
     opts.config_opts(parser)
     opts.translate_opts(parser)
+
     return parser
 
 
 def main():
     parser = _get_parser()
     opt = parser.parse_args()
+    # if opt.boost
     translate(opt)
 
 

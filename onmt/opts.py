@@ -742,6 +742,8 @@ def translate_opts(parser):
                    "decoded sentences")
     group.add('--attn_view', '-attn_view', action="store_true",
               help='show atten pig')
+    group.add('--boost', '-boost', action="store_true",
+              help='use multi models')
     # group.add('--add_m', '-add_m', action="store_true",
     #           help='')
     #
