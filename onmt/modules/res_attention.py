@@ -351,7 +351,7 @@ class ResAttention_2(nn.Module):
 
 
 
-# 使用c2作为最后的输出
+# 使用c2作为最后的输出，
 class ResAttention_3(nn.Module):
 
     def __init__(self, dim, coverage=False, attn_type="dot",
@@ -375,7 +375,7 @@ class ResAttention_3(nn.Module):
             self.v = nn.Linear(dim, 1, bias=False)
         # mlp wants it with bias
         out_bias = self.attn_type == "mlp"
-        self.linear_out = nn.Linear(dim * 2, dim, bias=out_bias)
+        self.linear_out = nn.Linear(dim , dim, bias=out_bias)
 
         if coverage:
             self.linear_cover = nn.Linear(1, dim, bias=False)
@@ -466,7 +466,7 @@ class ResAttention_3(nn.Module):
         # print('source', source.size())
         # print('memory_bank', memory_bank.size())
 
-        align = self.score(source+c1, memory_bank)     # 对应公式  计算attention权重公式
+        align = self.score(c1, memory_bank)     # 对应公式  计算attention权重公式
         # print('align', align.size())               # align torch.Size([bz, 1, WxH])
 
         if memory_lengths is not None:
@@ -485,10 +485,11 @@ class ResAttention_3(nn.Module):
         # over all the source hidden states
         c2 = torch.bmm(align_vectors, memory_bank)
 
-        # c = c1 + c2
+        c = c1 + c2
         # c （5, 1, 512）
         # concatenate
-        concat_c = torch.cat([c2, source], 2).view(batch*target_l, dim*2)  #ot = tanh(Wc[ht; ct])
+        # concat_c = torch.cat([c2, source], 2).view(batch*target_l, dim*2)  #ot = tanh(Wc[ht; ct])
+        concat_c = c.view(batch*target_l, dim)
         attn_h = self.linear_out(concat_c).view(batch, target_l, dim)
         if self.attn_type in ["general", "dot"]:
             attn_h = torch.tanh(attn_h)

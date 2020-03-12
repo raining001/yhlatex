@@ -182,7 +182,7 @@ def vis_img_with_attention(hyps, atten, img_path, dir_output):
     path_to_save_attention = dir_output+"vis/vis_"+img_path.split('/')[-1][:-4]
     print(path_to_save_attention)
     vis_attention_slices(atten, img_path, path_to_save_attention, hyps)
-    vis_attention_gif(img_path, path_to_save_attention, hyps, atten)
+    # vis_attention_gif(img_path, path_to_save_attention, hyps, atten)
 
 
 

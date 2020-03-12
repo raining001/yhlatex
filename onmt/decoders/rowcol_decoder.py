@@ -140,7 +140,7 @@ class RNNDecoderBase(DecoderBase):
             #     hidden_size, coverage=coverage_attn,
             #     attn_type=attn_type, attn_func=attn_func
             # )
-
+            #
             self.attn = ResAttention_3(
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
