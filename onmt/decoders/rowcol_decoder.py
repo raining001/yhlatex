@@ -5,7 +5,7 @@ from onmt.models.stacked_rnn import StackedLSTM, StackedGRU
 from onmt.modules import context_gate_factory
 from onmt.modules.rowcol_attention import RowcolAttention, ColAttention
 from onmt.modules.global_attention import GlobalAttention
-from onmt.modules.res_attention import ResAttention
+from onmt.modules.res_attention import ResAttention, ResAttention_2
 from onmt.utils.rnn_factory import rnn_factory
 
 from onmt.utils.misc import aeq
@@ -132,7 +132,11 @@ class RNNDecoderBase(DecoderBase):
             #     hidden_size, coverage=coverage_attn,
             #     attn_type=attn_type, attn_func=attn_func
             # )
-            self.attn = ResAttention(
+            # self.attn = ResAttention(
+            #     hidden_size, coverage=coverage_attn,
+            #     attn_type=attn_type, attn_func=attn_func
+            # )
+            self.attn = ResAttention_2(
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
             )

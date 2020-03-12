@@ -182,7 +182,7 @@ class ResAttention_2(nn.Module):
 
     def __init__(self, dim, coverage=False, attn_type="dot",
                  attn_func="softmax"):
-        super(ResAttention, self).__init__()
+        super(ResAttention_2, self).__init__()
 
         self.dim = dim
         assert attn_type in ["dot", "general", "mlp"], (
@@ -292,7 +292,7 @@ class ResAttention_2(nn.Module):
         # print('source', source.size())
         # print('memory_bank', memory_bank.size())
 
-        align = self.score(c1, memory_bank)     # 对应公式  计算attention权重公式
+        align = self.score(source, memory_bank)     # 对应公式  计算attention权重公式
         # print('align', align.size())               # align torch.Size([bz, 1, WxH])
 
         if memory_lengths is not None:
