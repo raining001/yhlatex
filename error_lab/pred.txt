@@ -1,1 +1,0 @@
-\lambda > \lambda _ { c } = \frac { \pi ^ { 3 / 2 } } { \Lambda }

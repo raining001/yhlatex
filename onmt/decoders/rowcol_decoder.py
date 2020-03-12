@@ -5,6 +5,7 @@ from onmt.models.stacked_rnn import StackedLSTM, StackedGRU
 from onmt.modules import context_gate_factory
 from onmt.modules.rowcol_attention import RowcolAttention, ColAttention
 from onmt.modules.global_attention import GlobalAttention
+from onmt.modules.res_attention import ResAttention
 from onmt.utils.rnn_factory import rnn_factory
 
 from onmt.utils.misc import aeq
@@ -127,7 +128,11 @@ class RNNDecoderBase(DecoderBase):
             #     attn_type=attn_type, attn_func=attn_func
             # )
             #
-            self.attn = RowcolAttention(
+            # self.attn = RowcolAttention(
+            #     hidden_size, coverage=coverage_attn,
+            #     attn_type=attn_type, attn_func=attn_func
+            # )
+            self.attn = ResAttention(
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
             )
@@ -315,10 +320,10 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
         attns = {}
         if self.attn is not None:
             # attns["rowstd"] = []
-            # attns["colstd"] = []
-            # attns["rowcolstd"] = []
-            attns["std1"] = []
-            attns["std2"] = []
+            attns["colstd"] = []
+            attns["rowcolstd"] = []
+            # attns["std1"] = []
+            # attns["std2"] = []
         if self.copy_attn is not None or self._reuse_copy_attn:
             attns["copy"] = []
         if self._coverage:
@@ -388,21 +393,23 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
                     rnn_output,
                     memory_bank.transpose(0, 1),
                     memory_lengths=memory_lengths)
-                attns["std1"].append(p_attn.squeeze(1))
+                attns["colstd"].append(p_attn.squeeze(1))
 
                 p_attn = p_attn.view(p_attn.size(2), p_attn.size(0), p_attn.size(1))
                 # print('p_attn', p_attn.size())
-                memory_ = torch.mul(p_attn, memory_bank)
+                # 0311 没有残差的attn
+                # memory_ = torch.mul(p_attn, memory_bank)
 
+                res_memory = memory_bank + torch.mul(p_attn, memory_bank)
                 # row_memory_ = torch.mul(p_attn, row_memory)
                 # memory = row_memory + memory_
                 #
                 decoder_output, p_attn = self.attn(    # ot
                     c1,
                     rnn_output,
-                    memory_.transpose(0, 1),
+                    res_memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
-                attns["std2"].append(p_attn)
+                attns["rowcolstd"].append(p_attn)
 
 
 
