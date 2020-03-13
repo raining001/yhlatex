@@ -746,13 +746,17 @@ class Translator(object):
                 batch_offset=decode_strategy.batch_offset)
             if type(attn) == dict:
                 attn_col = attn["colstd"]
-                attn = attn["rowcolstd"]
+                attn_ = attn["rowcolstd"]
+                # print('attn_', attn_)
+                # print('attn_col', attn_col.size())
+                # attn_ = attn_col + torch.mul(attn_col, attn_)
 
+                # attn_ = torch.softmax(attn_, -1)
             if attn_debug:
                 self.debug_probs(log_probs, step)
 
 
-            decode_strategy.advance(log_probs, attn)
+            decode_strategy.advance(log_probs, attn_col)
             any_finished = decode_strategy.is_finished.any()
             if any_finished:
                 decode_strategy.update_finished()

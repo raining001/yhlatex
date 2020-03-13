@@ -136,15 +136,16 @@ class RNNDecoderBase(DecoderBase):
             #     hidden_size, coverage=coverage_attn,
             #     attn_type=attn_type, attn_func=attn_func
             # )
-            # self.attn = ResAttention_2(
-            #     hidden_size, coverage=coverage_attn,
-            #     attn_type=attn_type, attn_func=attn_func
-            # )
-            #
-            self.attn = ResAttention_3(
+            attn_type = "mlp"
+            self.attn = ResAttention_2(
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
             )
+
+            # self.attn = ResAttention_3(
+            #     hidden_size, coverage=coverage_attn,
+            #     attn_type=attn_type, attn_func=attn_func
+            # )
             # attn_type="mlp"
             # self.attn1 = RowAttention(
             #     hidden_size, coverage=coverage_attn,
@@ -160,9 +161,6 @@ class RNNDecoderBase(DecoderBase):
             #     hidden_size, coverage=coverage_attn,
             #     attn_type=attn_type, attn_func=attn_func
             # )
-
-
-
 
 
         if copy_attn and not reuse_copy_attn:
@@ -418,9 +416,6 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
                     res_memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
                 attns["rowcolstd"].append(p_attn)
-
-
-
 
             else:
                 decoder_output = rnn_output

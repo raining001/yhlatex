@@ -59,6 +59,16 @@ def getOutArray(attentionVector, att_w, att_h):
         loc_x = int(pos / att_w)
         loc_y = int(pos % att_w)
         att_pos = att[i]
+        # if att_pos > 1/len(positions):
+        #     att_pos = 0.9
+        # else:
+        #     att_pos = 0.1
+        # if att_pos > 0.00005:
+        #     att_pos = 0.9
+        # else:
+        #     att_pos = 0
+        # # outarray[loc_x, loc_y] = (1- att_pos) * 255.
+        # outarray[loc_x, loc_y] = att_pos * 255.
         outarray[loc_x, loc_y] = (1 - att_pos) * 255.
         # (1 - att_pos) * 255. 而不是直接 att_pos * 255
         # 因为颜色值越小越暗，而权重需要越大越暗

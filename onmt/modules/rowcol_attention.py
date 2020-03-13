@@ -225,8 +225,6 @@ class ColAttention(nn.Module):
             self.linear_query = nn.Linear(dim, dim, bias=True)
             self.v = nn.Linear(dim, 1, bias=False)
         # mlp wants it with bias
-        out_bias = self.attn_type == "mlp"
-        self.linear_out = nn.Linear(dim * 2, dim, bias=out_bias)
 
         if coverage:
             self.linear_cover = nn.Linear(1, dim, bias=False)

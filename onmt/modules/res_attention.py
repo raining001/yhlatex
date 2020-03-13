@@ -147,7 +147,6 @@ class ResAttention(nn.Module):
         attn_h = self.linear_out(concat_c).view(batch, target_l, dim)
         if self.attn_type in ["general", "dot"]:
             attn_h = torch.tanh(attn_h)
-
         if one_step:
 
             attn_h = attn_h.squeeze(1)
@@ -306,11 +305,9 @@ class ResAttention_2(nn.Module):
         else:
             align_vectors = sparsemax(align.view(batch*target_l, source_l), -1)
         align_vectors = align_vectors.view(batch, target_l, source_l)
-
         # each context vector c_t is the weighted average
         # over all the source hidden states
         c2 = torch.bmm(align_vectors, memory_bank)
-
         c = c1 + c2
         # c （5, 1, 512）
         # concatenate
@@ -318,9 +315,7 @@ class ResAttention_2(nn.Module):
         attn_h = self.linear_out(concat_c).view(batch, target_l, dim)
         if self.attn_type in ["general", "dot"]:
             attn_h = torch.tanh(attn_h)
-
         if one_step:
-
             attn_h = attn_h.squeeze(1)
             align_vectors = align_vectors.squeeze(1)
 
@@ -346,8 +341,6 @@ class ResAttention_2(nn.Module):
             aeq(batch, batch_)
             aeq(source_l, source_l_)
         return attn_h, align_vectors
-
-
 
 
 
