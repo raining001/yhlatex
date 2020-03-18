@@ -2,12 +2,10 @@ import torch
 import torch.nn as nn
 
 from onmt.models.stacked_rnn import StackedLSTM, StackedGRU
-from onmt.modules import context_gate_factory
-from onmt.modules.rowcol_attention import RowcolAttention, ColAttention
-from onmt.modules.global_attention import GlobalAttention
-from onmt.modules.res_attention import ResAttention, ResAttention_2, ResAttention_3
+from onmt.modules import context_gate_factory, GlobalAttention
+from onmt.modules.global_attention import GlobalAttention_2
 from onmt.utils.rnn_factory import rnn_factory
-
+from onmt.modules.rowcol_attention import ColAttention
 from onmt.utils.misc import aeq
 
 
@@ -122,45 +120,10 @@ class RNNDecoderBase(DecoderBase):
                 raise ValueError("Cannot use coverage term with no attention.")
             self.attn = None
         else:
-            #
-            # self.attn = GlobalAttention(
-            #     hidden_size, coverage=coverage_attn,
-            #     attn_type=attn_type, attn_func=attn_func
-            # )
-            #
-            self.attn = RowcolAttention(
+            self.attn = GlobalAttention(
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
             )
-            # self.attn = ResAttention(
-            #     hidden_size, coverage=coverage_attn,
-            #     attn_type=attn_type, attn_func=attn_func
-            # )
-            # attn_type = "mlp"
-            # self.attn = ResAttention_2(
-            #     hidden_size, coverage=coverage_attn,
-            #     attn_type=attn_type, attn_func=attn_func
-            # )
-
-            # self.attn = ResAttention_3(
-            #     hidden_size, coverage=coverage_attn,
-            #     attn_type=attn_type, attn_func=attn_func
-            # )
-            # attn_type="mlp"
-            # self.attn1 = RowAttention(
-            #     hidden_size, coverage=coverage_attn,
-            #     attn_type=attn_type, attn_func=attn_func
-            # )
-
-            self.attn_col = ColAttention(
-                hidden_size, coverage=coverage_attn,
-                attn_type=attn_type, attn_func=attn_func
-            )
-
-            # self.attn_col = ColAttention(
-            #     hidden_size, coverage=coverage_attn,
-            #     attn_type=attn_type, attn_func=attn_func
-            # )
 
 
         if copy_attn and not reuse_copy_attn:
@@ -259,6 +222,7 @@ class RNNDecoderBase(DecoderBase):
         if not isinstance(dec_state, tuple):
             dec_state = (dec_state,)
         self.state["hidden"] = dec_state
+
         self.state["input_feed"] = dec_outs[-1].unsqueeze(0)
         self.state["coverage"] = None
         if "coverage" in attns:
@@ -282,7 +246,7 @@ class RNNDecoderBase(DecoderBase):
         self.embeddings.update_dropout(dropout)
 
 
-class ROWCOLRNNDecoder(RNNDecoderBase):
+class SAM_Decoder(RNNDecoderBase):
     """Input feeding based decoder.
 
     See :class:`~onmt.decoders.decoder.RNNDecoderBase` for options.
@@ -325,11 +289,7 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
         dec_outs = []
         attns = {}
         if self.attn is not None:
-            # attns["rowstd"] = []
-            attns["colstd"] = []
-            attns["rowcolstd"] = []
-            # attns["std1"] = []
-            # attns["std2"] = []
+            attns["std"] = []
         if self.copy_attn is not None or self._reuse_copy_attn:
             attns["copy"] = []
         if self._coverage:
@@ -344,7 +304,12 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
 
         # Input feed concatenates hidden state with
         # input at every time step.
-        for emb_t in emb.split(1):
+        memory_bank, s_attns = memory_bank[0], memory_bank[1]
+
+        for i, emb_t in enumerate(emb.split(1)):
+
+            s_attn = s_attns[:, :, i].unsqueeze(2)
+            attn_memory = torch.mul(s_attn, memory_bank)
             decoder_input = torch.cat([emb_t.squeeze(0), input_feed], 1)   # decoder_input 对应论文[yt-1, ot-1] emb_t.squeeze(0) 为 yt-1,input_feed为 ot-1
 
             rnn_output, dec_state = self.rnn(decoder_input, dec_state)      #对应论文公式ht = RNN(ht−1; [yt−1; ot−1])
@@ -353,70 +318,12 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
                                                                             # rnn_output 为双层lstm的输出，也就是dec_state（h,c）中h的第二个值h[1]，两者相等！！
                                                                             # 由于h[0]和h[1]做了stack，所以h(2, bz 512)没有 h[1]
 
-            # 20200310
-            # if self.attentional:
-            #     row_memory = memory_bank[0]
-            #
-            #     col_memory = memory_bank[1]
-            #
-            #     c1, p_attn = self.attn_col(    # ot, #p_attn是已经softmax的权重
-            #         rnn_output,
-            #         col_memory.transpose(0, 1),
-            #         memory_lengths=memory_lengths)
-            #     attns["colstd"].append(p_attn.squeeze(1))
-            #
-            #     p_attn = p_attn.view(p_attn.size(2), p_attn.size(0), p_attn.size(1))
-            #     # print('p_attn', p_attn.size())
-            #     col_memory_ = torch.mul(p_attn, col_memory)
-            #
-            #     # row_memory_ = torch.mul(p_attn, row_memory)
-            #     memory = row_memory + col_memory_
-            #     #
-            #     decoder_output, p_attn = self.attn(    # ot
-            #         c1,
-            #         rnn_output,
-            #         memory.transpose(0, 1),
-            #         memory_lengths=memory_lengths)
-            #     attns["rowcolstd"].append(p_attn)
-            #
-            #     # decoder_output, p_attn = self.attn(    # ot
-            #     #     c1.squeeze(1),
-            #     #     memory.transpose(0, 1),
-            #     #     memory_lengths=memory_lengths)
-            #     # attns["rowcolstd"].append(p_attn)
-            #     #
-            #     # decoder_output, p_attn = self.attn_col(    # ot
-            #     #     c1,
-            #     #     rnn_output,
-            #     #     col_memory_.transpose(0, 1),
-            #     #     memory_lengths=memory_lengths)
-            #     # attns["colstd"].append(p_attn)
-
-
             if self.attentional:
-
-                c1, p_attn = self.attn_col(    # ot, #p_attn是已经softmax的权重
-                    rnn_output,
-                    memory_bank.transpose(0, 1),
-                    memory_lengths=memory_lengths)
-                attns["colstd"].append(p_attn.squeeze(1))
-
-                p_attn = p_attn.view(p_attn.size(2), p_attn.size(0), p_attn.size(1))
-                # print('p_attn', p_attn.size())
-                # 0311 没有残差的attn
-                # memory_ = torch.mul(p_attn, memory_bank)
-
-                res_memory = memory_bank + torch.mul(p_attn, memory_bank)
-                # row_memory_ = torch.mul(p_attn, row_memory)
-                # memory = row_memory + memory_
-                #
                 decoder_output, p_attn = self.attn(    # ot
-                    c1,
                     rnn_output,
-                    res_memory.transpose(0, 1),
+                    attn_memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
-                attns["rowcolstd"].append(p_attn)
-
+                attns["std"].append(p_attn)
             else:
                 decoder_output = rnn_output
             if self.context_gate is not None:
@@ -425,6 +332,7 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
                 decoder_output = self.context_gate(
                     decoder_input, rnn_output, decoder_output
                 )
+
             decoder_output = self.dropout(decoder_output)
             input_feed = decoder_output
 
@@ -437,10 +345,10 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
 
             if self.copy_attn is not None:
                 _, copy_attn = self.copy_attn(
-                    decoder_output, memory_bank.transpose(0, 1))
+                    decoder_output, attn_memory.transpose(0, 1))
                 attns["copy"] += [copy_attn]
             elif self._reuse_copy_attn:
-                attns["copy"] = attns["rowcolstd"]
+                attns["copy"] = attns["std"]
 
         return dec_state, dec_outs, attns
 
@@ -460,3 +368,5 @@ class ROWCOLRNNDecoder(RNNDecoderBase):
         self.dropout.p = dropout
         self.rnn.dropout.p = dropout
         self.embeddings.update_dropout(dropout)
+
+

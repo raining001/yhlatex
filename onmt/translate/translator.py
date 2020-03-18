@@ -747,6 +747,8 @@ class Translator(object):
             if type(attn) == dict:
                 attn_col = attn["colstd"]
                 attn_ = attn["rowcolstd"]
+                print('attn_', attn_.size())
+                exit(1)
                 # print('attn_', attn_)
                 # print('attn_col', attn_col.size())
                 # attn_ = attn_col + torch.mul(attn_col, attn_)
@@ -756,7 +758,7 @@ class Translator(object):
                 self.debug_probs(log_probs, step)
 
 
-            decode_strategy.advance(log_probs, attn_col)
+            decode_strategy.advance(log_probs, attn_)
             any_finished = decode_strategy.is_finished.any()
             if any_finished:
                 decode_strategy.update_finished()

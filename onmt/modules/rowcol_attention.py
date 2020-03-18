@@ -526,7 +526,7 @@ class RowcolAttention(nn.Module):
         c = c1 + c2
         # c （5, 1, 512）
         # concatenate
-        concat_c = torch.cat([c, source], 2).view(batch*target_l, dim*2)  #ot = tanh(Wc[ht; ct])
+        concat_c = torch.cat([c1, source], 2).view(batch*target_l, dim*2)  #ot = tanh(Wc[ht; ct])
         attn_h = self.linear_out(concat_c).view(batch, target_l, dim)
         if self.attn_type in ["general", "dot"]:
             attn_h = torch.tanh(attn_h)

@@ -63,9 +63,11 @@ def getOutArray(attentionVector, att_w, att_h):
         #     att_pos = 0.9
         # else:
         #     att_pos = 0.1
-        # if att_pos > 0.00005:
+        # if att_pos > 0.1:
+        #     att_pos = 0
+        # elif att_pos > 1/len(positions):
         #     att_pos = 0.9
-        # else:
+        # if att_pos < 1/len(positions):
         #     att_pos = 0
         # # outarray[loc_x, loc_y] = (1- att_pos) * 255.
         # outarray[loc_x, loc_y] = att_pos * 255.

@@ -60,10 +60,10 @@ def model_opts(parser):
     # Encoder-Decoder Options
     group = parser.add_argument_group('Model- Encoder-Decoder')
     group.add('--model_type', '-model_type', default='text',
-              choices=['img', 'imgdense', 'rc', 'transformer', 'gru'],
+              choices=['img', 'imgdense', 'rc', 'transformer', 'gru', 'sam'],
               help="Type of source model to use. Allows "
                    "the system to incorporate non-text inputs. "
-                   "Options are [img|imgdense|rc|transformer].")
+                   "Options are [img|imgdense|rc|transformer|'gru'|'sam'].")
     group.add('--model_dtype', '-model_dtype', default='fp32',
               choices=['fp32', 'fp16'],
               help='Data type of the model.')
@@ -216,6 +216,10 @@ def model_opts(parser):
     group.add('--multi_scale', '-multi_scale', action="store_true",
               help='')
     group.add('--rowcol', '-rowcol', action="store_true",
+              help='')
+    group.add('--simple', '-simple', action="store_true",
+              help='')
+    group.add('--sam', '-sam', action="store_true",
               help='')
 
 

@@ -97,6 +97,10 @@ def build_decoder(opt, embeddings):
         dec_type = 'multi_decoder'
     if opt.rowcol:
         dec_type = 'rowcol'
+    if opt.simple:
+        dec_type = 'simple'
+    if opt.sam:
+        dec_type = 'sam'
     return str2dec[dec_type].from_opt(opt, embeddings)
 
 

@@ -3,8 +3,9 @@ import torch.nn as nn
 
 from onmt.models.stacked_rnn import StackedLSTM, StackedGRU
 from onmt.modules import context_gate_factory, GlobalAttention
+from onmt.modules.global_attention import GlobalAttention_2
 from onmt.utils.rnn_factory import rnn_factory
-
+from onmt.modules.rowcol_attention import ColAttention
 from onmt.utils.misc import aeq
 
 
@@ -119,7 +120,11 @@ class RNNDecoderBase(DecoderBase):
                 raise ValueError("Cannot use coverage term with no attention.")
             self.attn = None
         else:
-            self.attn = GlobalAttention(
+            # self.attn = GlobalAttention(
+            #     hidden_size, coverage=coverage_attn,
+            #     attn_type=attn_type, attn_func=attn_func
+            # )
+            self.attn = ColAttention(
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
             )
@@ -241,10 +246,6 @@ class RNNDecoderBase(DecoderBase):
     def update_dropout(self, dropout):
         self.dropout.p = dropout
         self.embeddings.update_dropout(dropout)
-
-
-
-
 
 
 class StdRNNDecoder(RNNDecoderBase):
@@ -407,8 +408,6 @@ class InputFeedRNNDecoder(RNNDecoderBase):
                     memory_lengths=memory_lengths)
                 attns["std"].append(p_attn)
 
-
-
             else:
                 decoder_output = rnn_output
             if self.context_gate is not None:
@@ -452,3 +451,107 @@ class InputFeedRNNDecoder(RNNDecoderBase):
         self.dropout.p = dropout
         self.rnn.dropout.p = dropout
         self.embeddings.update_dropout(dropout)
+
+
+class SimpleRNNDecoder(RNNDecoderBase):
+
+    def _run_forward_pass(self, tgt, memory_bank, memory_lengths=None):
+        """
+        See StdRNNDecoder._run_forward_pass() for description
+        of arguments and return values.
+        """
+        # Additional args check.
+        input_feed = self.state["input_feed"].squeeze(0)
+        input_feed_batch, _ = input_feed.size()
+        _, tgt_batch, _ = tgt.size()
+        aeq(tgt_batch, input_feed_batch)
+        # END Additional args check.
+
+        dec_outs = []
+        attns = {}
+        if self.attn is not None:
+            attns["std"] = []
+        if self.copy_attn is not None or self._reuse_copy_attn:
+            attns["copy"] = []
+        if self._coverage:
+            attns["coverage"] = []
+
+        emb = self.embeddings(tgt)
+        assert emb.dim() == 3  # len x batch x embedding_dim
+
+        dec_state = self.state["hidden"]
+        coverage = self.state["coverage"].squeeze(0) \
+            if self.state["coverage"] is not None else None
+
+        # Input feed concatenates hidden state with
+        # input at every time step.
+        for emb_t in emb.split(1):
+
+            decoder_input = torch.cat([emb_t.squeeze(0), input_feed], 1)   # decoder_input 对应论文[yt-1, ot-1] emb_t.squeeze(0) 为 yt-1,input_feed为 ot-1
+
+            rnn_output, dec_state = self.rnn(decoder_input, dec_state)      #对应论文公式ht = RNN(ht−1; [yt−1; ot−1])
+                                                                            # [yt−1; ot−1]= decode_input torch.Size([bz, 592])
+                                                                            # dec_state 是lstm中cell和hidden 也就是ht-1 (h,c) 因为有两层，所以h和c的size(2,bz, 512)
+                                                                            # rnn_output 为双层lstm的输出，也就是dec_state（h,c）中h的第二个值h[1]，两者相等！！
+                                                                            # 由于h[0]和h[1]做了stack，所以h(2, bz 512)没有 h[1]
+            if self.attentional:
+                c, p_attn = self.attn(    # ot
+                    rnn_output,
+                    memory_bank.transpose(0, 1),
+                    memory_lengths=memory_lengths)
+                attns["std"].append(p_attn)
+            else:
+                decoder_output = rnn_output
+            if self.context_gate is not None:
+                # TODO: context gate should be employed
+                # instead of second RNN transform.
+                decoder_output = self.context_gate(
+                    decoder_input, rnn_output, decoder_output
+                )
+            # decoder_output = self.dropout(decoder_output)
+            input_feed = c.squeeze(1)
+
+            dec_outs += [rnn_output]
+
+            # Update the coverage attention.
+            if self._coverage:
+                coverage = p_attn if coverage is None else p_attn + coverage
+                attns["coverage"] += [coverage]
+
+            if self.copy_attn is not None:
+                _, copy_attn = self.copy_attn(
+                    decoder_output, memory_bank.transpose(0, 1))
+                attns["copy"] += [copy_attn]
+            elif self._reuse_copy_attn:
+                attns["copy"] = attns["std"]
+
+        return dec_state, dec_outs, attns
+
+    def _build_rnn(self, rnn_type, input_size,
+                   hidden_size, num_layers, dropout):
+        assert rnn_type != "SRU", "SRU doesn't support input feed! " \
+            "Please set -input_feed 0!"
+        stacked_cell = StackedLSTM if rnn_type == "LSTM" else StackedGRU
+        return stacked_cell(num_layers, input_size, hidden_size, dropout)
+
+    @property
+    def _input_size(self):
+        """Using input feed by concatenating input with attention vectors."""
+        return self.embeddings.embedding_size + self.hidden_size
+
+    def update_dropout(self, dropout):
+        self.dropout.p = dropout
+        self.rnn.dropout.p = dropout
+        self.embeddings.update_dropout(dropout)
+
+
+
+
+
+
+
+
+
+
+
+
