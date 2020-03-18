@@ -187,6 +187,7 @@ class SAM(nn.Module):
         self.deconv0_bn = nn.BatchNorm2d(num_channels)
         self.deconv1_bn = nn.BatchNorm2d(num_channels)
 
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
         src = x
@@ -203,7 +204,8 @@ class SAM(nn.Module):
         x = F.relu(self.deconv1_bn(self.deconv1(x, output_size=xsize[1])), True)
         #  [bz, C, W, H/2]
         x = x + conv_feats[1]
-        attn = F.softmax(self.deconv2(x, output_size=xsize[0]), 1)
+        # attn = F.softmax(self.deconv2(x, output_size=xsize[0]), 1)
+        attn = F.sigmoid(self.deconv2(x, output_size=xsize[0]))
 
         return attn
 
