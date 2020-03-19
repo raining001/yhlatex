@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9968e56-5361-4738-aa36-acbb690f0734" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onmt/decoders/sam_decoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/onmt/decoders/sam_decoder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onmt/encoders/sam_encoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/onmt/encoders/sam_encoder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onmt/modules/global_attention.py" beforeDir="false" afterPath="$PROJECT_DIR$/onmt/modules/global_attention.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onmt/translate/translator.py" beforeDir="false" afterPath="$PROJECT_DIR$/onmt/translate/translator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vis_attn.py" beforeDir="false" afterPath="$PROJECT_DIR$/vis_attn.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,38 +21,26 @@
     <SUITE FILE_PATH="coverage/yhlatex$DenseNetEncoder.coverage" NAME="DenseNetEncoder Coverage Results" MODIFIED="1582014924758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/onmt/encoders" />
     <SUITE FILE_PATH="coverage/yhlatex$render_latex.coverage" NAME="render_latex Coverage Results" MODIFIED="1582726080192" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/yhlatex$evaluate_image.coverage" NAME="evaluate_image Coverage Results" MODIFIED="1582784650255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts/evaluation" />
-    <SUITE FILE_PATH="coverage/yhlatex$translate.coverage" NAME="translate Coverage Results" MODIFIED="1584496062322" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/yhlatex$train.coverage" NAME="train Coverage Results" MODIFIED="1584513177488" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/yhlatex$translate.coverage" NAME="translate Coverage Results" MODIFIED="1584521998523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/yhlatex$train.coverage" NAME="train Coverage Results" MODIFIED="1584609951617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/yhlatex$wrong_view.coverage" NAME="wrong_view Coverage Results" MODIFIED="1582503937088" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/yhlatex$multi_decoder.coverage" NAME="multi_decoder Coverage Results" MODIFIED="1582615188320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/onmt/decoders" />
     <SUITE FILE_PATH="coverage/yhlatex$image_encoder.coverage" NAME="image_encoder Coverage Results" MODIFIED="1582102986005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/onmt/encoders" />
     <SUITE FILE_PATH="coverage/yhlatex$rowcol_encoder.coverage" NAME="rowcol_encoder Coverage Results" MODIFIED="1582519662655" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/onmt/encoders" />
     <SUITE FILE_PATH="coverage/yhlatex$sam_encoder.coverage" NAME="sam_encoder Coverage Results" MODIFIED="1584496138598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/onmt/encoders" />
-    <SUITE FILE_PATH="coverage/yhlatex$vis_attn.coverage" NAME="vis_attn Coverage Results" MODIFIED="1584093000503" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/yhlatex$vis_attn.coverage" NAME="vis_attn Coverage Results" MODIFIED="1584522034822" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/yhlatex$translator.coverage" NAME="translator Coverage Results" MODIFIED="1582442140795" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/onmt/translate" />
     <SUITE FILE_PATH="coverage/yhlatex$opts.coverage" NAME="opts Coverage Results" MODIFIED="1584068013426" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/onmt" />
     <SUITE FILE_PATH="coverage/yhlatex$porcess_image.coverage" NAME="porcess_image Coverage Results" MODIFIED="1583564345563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/yhlatex$preprocess.coverage" NAME="preprocess Coverage Results" MODIFIED="1584499621755" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/yhlatex$preprocess.coverage" NAME="preprocess Coverage Results" MODIFIED="1584609940369" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/onmt/encoders/sam_encoder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="187" column="53" selection-start-line="187" selection-start-column="41" selection-end-line="187" selection-end-column="53" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="6" column="40" selection-start-line="6" selection-start-column="40" selection-end-line="6" selection-end-column="40" />
-              <folding>
-                <element signature="e#22#53#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="233">
+              <caret line="127" selection-start-line="127" selection-end-line="127" />
             </state>
           </provider>
         </entry>
@@ -53,8 +48,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/onmt/encoders/rowcol_encoder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-146">
-              <caret line="183" column="35" selection-start-line="183" selection-start-column="24" selection-end-line="183" selection-end-column="35" />
+            <state relative-caret-position="988">
+              <caret line="210" column="28" lean-forward="true" selection-start-line="210" selection-start-column="28" selection-end-line="210" selection-end-column="28" />
               <folding>
                 <element signature="e#21#42#0" expanded="true" />
               </folding>
@@ -63,74 +58,61 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/onmt/decoders/__init__.py">
+        <entry file="file://$PROJECT_DIR$/onmt/translate/translator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="8" column="43" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="43" />
+            <state relative-caret-position="-17">
+              <caret line="755" selection-start-line="755" selection-end-line="755" />
               <folding>
-                <element signature="e#32#137#0" expanded="true" />
+                <element signature="e#18572#19681#0" />
+                <element signature="e#21965#23686#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/onmt/model_builder.py">
+        <entry file="file://$PROJECT_DIR$/vis_attn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="100" column="27" lean-forward="true" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="27" />
+            <state relative-caret-position="52">
+              <caret line="4" column="60" selection-start-line="4" selection-start-column="60" selection-end-line="4" selection-end-column="60" />
+              <folding>
+                <element signature="e#0#52#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/onmt/opts.py">
+        <entry file="file://$PROJECT_DIR$/onmt/visual_atten.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="218" column="15" selection-start-line="218" selection-start-column="15" selection-end-line="218" selection-end-column="15" />
+            <state relative-caret-position="252">
+              <caret line="75" column="1" selection-start-line="75" selection-start-column="1" selection-end-line="75" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/onmt/decoders/sam_decoder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="311" column="56" lean-forward="true" selection-start-line="311" selection-end-line="312" />
+            <state relative-caret-position="213">
+              <caret line="434" column="27" lean-forward="true" selection-start-line="434" selection-start-column="27" selection-end-line="434" selection-end-column="27" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
                 <element signature="e#389#822#0" />
-                <element signature="e#5016#5510#0" />
-                <element signature="e#6659#6927#0" />
-                <element signature="e#12362#12477#0" />
+                <element signature="e#9837#13410#0" />
+                <marker date="1584609949505" expanded="true" signature="15703:15706" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/onmt/decoders/rowcol_decoder.py">
+        <entry file="file://$PROJECT_DIR$/preprocess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
-              <caret line="411" column="17" selection-start-line="411" selection-start-column="17" selection-end-line="411" selection-end-column="17" />
+            <state relative-caret-position="74">
+              <caret line="48" column="29" lean-forward="true" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="29" />
               <folding>
-                <element signature="e#0#12#0" expanded="true" />
-                <element signature="e#12465#12515#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/onmt/modules/rowcol_attention.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="207" column="8" selection-start-line="207" selection-start-column="8" selection-end-line="207" selection-end-column="8" />
-              <folding>
-                <element signature="e#50#62#0" expanded="true" />
-                <element signature="e#13807#14754#0" />
-                <element signature="e#14859#16462#0" />
-                <element signature="e#16556#20042#0" />
+                <element signature="e#22#58#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -147,12 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>dec_state</find>
-      <find>self.state</find>
-      <find>self.state[&quot;hidden&quot;]</find>
-      <find>Inputfeed</find>
-      <find>Input</find>
-      <find>input</find>
       <find>rowcol</find>
       <find>attn2</find>
       <find>dec_outs</find>
@@ -168,15 +144,21 @@
       <find>i</find>
       <find>cuda</find>
       <find>[&quot;col</find>
-      <find>memory_bank</find>
       <find>decoder</find>
       <find>simple</find>
       <find>self.state[&quot;input_feed&quot;]</find>
       <find>_run_forward_pass</find>
-      <find>input_feed</find>
       <find>print(</find>
       <find>print</find>
+      <find>attn</find>
+      <find>c=</find>
+      <find>p_attn</find>
+      <find>input_feed</find>
+      <find>decoder_output</find>
+      <find>_run_noattn_forward_pass</find>
       <find>maxT</find>
+      <find>memory_bank</find>
+      <find>view</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -205,25 +187,25 @@
         <option value="$PROJECT_DIR$/translate_bo.py" />
         <option value="$PROJECT_DIR$/onmt/bin/translate.py" />
         <option value="$PROJECT_DIR$/onmt/encoders/rowcol_encoder.py" />
-        <option value="$PROJECT_DIR$/train.py" />
-        <option value="$PROJECT_DIR$/vis_attn.py" />
         <option value="$PROJECT_DIR$/onmt/modules/res_attention.py" />
         <option value="$PROJECT_DIR$/onmt/visual_atten.py" />
         <option value="$PROJECT_DIR$/onmt/modules/rowcol_attention.py" />
-        <option value="$PROJECT_DIR$/onmt/modules/global_attention.py" />
         <option value="$PROJECT_DIR$/onmt/encoders/image_encoder.py" />
         <option value="$PROJECT_DIR$/onmt/decoders/decoder.py" />
         <option value="$PROJECT_DIR$/onmt/encoders/__init__.py" />
         <option value="$PROJECT_DIR$/onmt/utils/parse.py" />
-        <option value="$PROJECT_DIR$/onmt/translate/translator.py" />
         <option value="$PROJECT_DIR$/onmt/models/model.py" />
         <option value="$PROJECT_DIR$/onmt/decoders/__init__.py" />
         <option value="$PROJECT_DIR$/onmt/model_builder.py" />
         <option value="$PROJECT_DIR$/onmt/opts.py" />
-        <option value="$PROJECT_DIR$/preprocess.py" />
         <option value="$PROJECT_DIR$/onmt/decoders/rowcol_decoder.py" />
-        <option value="$PROJECT_DIR$/onmt/decoders/sam_decoder.py" />
+        <option value="$PROJECT_DIR$/vis_attn.py" />
+        <option value="$PROJECT_DIR$/onmt/translate/translator.py" />
+        <option value="$PROJECT_DIR$/onmt/modules/global_attention.py" />
+        <option value="$PROJECT_DIR$/train.py" />
         <option value="$PROJECT_DIR$/onmt/encoders/sam_encoder.py" />
+        <option value="$PROJECT_DIR$/preprocess.py" />
+        <option value="$PROJECT_DIR$/onmt/decoders/sam_decoder.py" />
       </list>
     </option>
   </component>
@@ -241,6 +223,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -281,7 +264,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -395,7 +377,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/translate.py" />
-      <option name="PARAMETERS" value="-data_type img -model results/0311/colrow_step_100000.pt -src_dir data/images/ -src error_lab/src-test.txt -output error_lab/pred.txt -max_length 150 -beam_size 5 -gpu 0 -verbose --batch_size 1 --attn_debug --attn_view" />
+      <option name="PARAMETERS" value="-data_type img -model results/0318/sigmoid/row_sam_step_15000.pt -src_dir data/images/ -src error_lab/src-test.txt -output error_lab/pred.txt -max_length 150 -beam_size 5 -gpu 0 -verbose --batch_size 1 --attn_debug --attn_view" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -436,9 +418,9 @@
       <list>
         <item itemvalue="Python.train" />
         <item itemvalue="Python.preprocess" />
-        <item itemvalue="Python.sam_encoder" />
-        <item itemvalue="Python.translate" />
         <item itemvalue="Python.vis_attn" />
+        <item itemvalue="Python.translate" />
+        <item itemvalue="Python.sam_encoder" />
       </list>
     </recent_temporary>
   </component>
@@ -490,12 +472,13 @@
       <workItem from="1584255729404" duration="7188000" />
       <workItem from="1584367771525" duration="765000" />
       <workItem from="1584423102478" duration="20375000" />
-      <workItem from="1584491116090" duration="14340000" />
+      <workItem from="1584491116090" duration="31012000" />
+      <workItem from="1584579423685" duration="20224000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="537332000" />
+    <option name="totallyTimeSpent" value="574228000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -510,12 +493,12 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21045576" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21313673" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32844576" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4966488" visible="true" weight="0.41055718" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4966488" visible="true" weight="0.37683284" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49865952" weight="0.44428152" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -523,7 +506,7 @@
       <window_info anchor="bottom" id="LuaCheck" order="7" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49731904" weight="0.3548387" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49731904" weight="0.38269794" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
       <window_info anchor="bottom" id="Terminal" order="12" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50268096" side_tool="true" weight="0.3548387" />
@@ -625,7 +608,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/onmt/translate/translator.py</url>
-          <line>787</line>
+          <line>791</line>
           <option name="timeStamp" value="128" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -659,19 +642,39 @@
           <option name="timeStamp" value="136" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/onmt/encoders/sam_encoder.py</url>
-          <line>208</line>
-          <option name="timeStamp" value="137" />
+          <url>file://$PROJECT_DIR$/onmt/decoders/sam_decoder.py</url>
+          <line>335</line>
+          <option name="timeStamp" value="149" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$USER_HOME$/.PyCharm2018.3/system/remote_sources/1258436626/-1294517414/torch/nn/modules/conv.py</url>
-          <line>779</line>
-          <option name="timeStamp" value="146" />
+          <url>file://$PROJECT_DIR$/onmt/translate/translator.py</url>
+          <line>750</line>
+          <option name="timeStamp" value="152" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$USER_HOME$/.PyCharm2018.3/system/remote_sources/1258436626/-1294517414/torch/nn/modules/conv.py</url>
-          <line>780</line>
-          <option name="timeStamp" value="147" />
+          <url>file://$PROJECT_DIR$/onmt/decoders/sam_decoder.py</url>
+          <line>325</line>
+          <option name="timeStamp" value="153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/onmt/translate/translator.py</url>
+          <line>741</line>
+          <option name="timeStamp" value="157" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/onmt/translate/translator.py</url>
+          <line>655</line>
+          <option name="timeStamp" value="158" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/onmt/decoders/sam_decoder.py</url>
+          <line>238</line>
+          <option name="timeStamp" value="159" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/onmt/decoders/sam_decoder.py</url>
+          <line>249</line>
+          <option name="timeStamp" value="160" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -683,23 +686,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/scripts/evaluation/evaluate_image.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="706">
-          <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/remote_sources/1258436626/1902907459/onmt/translate/decode_strategy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="69" column="13" selection-start-line="69" selection-start-column="13" selection-end-line="69" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/onmt/translate/decode_strategy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="94">
@@ -783,41 +769,6 @@
           <caret line="317" column="20" selection-start-line="317" selection-start-column="20" selection-end-line="317" selection-end-column="20" />
           <folding>
             <element signature="e#50#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vis_attn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/onmt/visual_atten.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1206">
-          <caret line="71" column="48" selection-start-line="71" selection-start-column="48" selection-end-line="71" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/porcess_image.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" selection-start-line="6" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/onmt/modules/global_attention.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-          <folding>
-            <element signature="e#50#62#0" expanded="true" />
-            <element signature="e#491#8240#0" />
           </folding>
         </state>
       </provider>
@@ -918,13 +869,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/remote_sources/1258436626/-1294517414/torch/nn/modules/conv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="765" column="8" selection-start-line="765" selection-start-column="8" selection-end-line="765" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/translate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -936,25 +880,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/onmt/translate/translator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="753" column="63" lean-forward="true" selection-start-line="753" selection-start-column="63" selection-end-line="753" selection-end-column="63" />
-          <folding>
-            <element signature="e#18572#19681#0" />
-            <element signature="e#21965#23686#0" />
-            <element signature="e#23744#24647#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/remote_sources/1258436626/-1294517414/torch/nn/modules/module.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="546" selection-start-line="546" selection-end-line="546" />
         </state>
       </provider>
     </entry>
@@ -1010,19 +935,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/onmt/modules/rowcol_attention.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="207" column="8" selection-start-line="207" selection-start-column="8" selection-end-line="207" selection-end-column="8" />
-          <folding>
-            <element signature="e#50#62#0" expanded="true" />
-            <element signature="e#13807#14754#0" />
-            <element signature="e#14859#16462#0" />
-            <element signature="e#16556#20042#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/onmt/decoders/rowcol_decoder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="71">
@@ -1041,54 +953,138 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess.py">
+    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/remote_sources/1258436626/-1294517414/torch/nn/modules/conv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
-          <folding>
-            <element signature="e#22#58#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="135">
+          <caret line="780" column="57" selection-start-line="780" selection-start-column="57" selection-end-line="780" selection-end-column="57" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/onmt/encoders/rowcol_encoder.py">
+    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/remote_sources/1258436626/-1294517414/torch/nn/modules/module.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-146">
-          <caret line="183" column="35" selection-start-line="183" selection-start-column="24" selection-end-line="183" selection-end-column="35" />
-          <folding>
-            <element signature="e#21#42#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="125">
+          <caret line="590" selection-start-line="590" selection-end-line="590" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onmt/inputters/datareader_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/porcess_image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-162">
+          <caret line="6" selection-start-line="6" selection-end-line="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
-          <caret line="6" column="40" selection-start-line="6" selection-start-column="40" selection-end-line="6" selection-end-column="40" />
+          <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
           <folding>
             <element signature="e#22#53#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/onmt/decoders/sam_decoder.py">
+    <entry file="file://$PROJECT_DIR$/onmt/translate/translator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="311" column="56" lean-forward="true" selection-start-line="311" selection-end-line="312" />
+        <state relative-caret-position="-17">
+          <caret line="755" selection-start-line="755" selection-end-line="755" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
-            <element signature="e#389#822#0" />
-            <element signature="e#5016#5510#0" />
-            <element signature="e#6659#6927#0" />
-            <element signature="e#12362#12477#0" />
+            <element signature="e#18572#19681#0" />
+            <element signature="e#21965#23686#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onmt/encoders/rowcol_encoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="988">
+          <caret line="210" column="28" lean-forward="true" selection-start-line="210" selection-start-column="28" selection-end-line="210" selection-end-column="28" />
+          <folding>
+            <element signature="e#21#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onmt/modules/rowcol_attention.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="456" column="24" selection-start-line="456" selection-start-column="20" selection-end-line="456" selection-end-column="24" />
+          <folding>
+            <element signature="e#50#62#0" expanded="true" />
+            <element signature="e#13807#14754#0" />
+            <element signature="e#16556#20042#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onmt/modules/global_attention.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="181" column="25" selection-start-line="181" selection-end-line="182" />
+          <folding>
+            <element signature="e#50#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/onmt/encoders/sam_encoder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="187" column="53" selection-start-line="187" selection-start-column="41" selection-end-line="187" selection-end-column="53" />
+        <state relative-caret-position="233">
+          <caret line="127" selection-start-line="127" selection-end-line="127" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onmt/visual_atten.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="75" column="1" selection-start-line="75" selection-start-column="1" selection-end-line="75" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vis_attn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="4" column="60" selection-start-line="4" selection-start-column="60" selection-end-line="4" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="48" column="29" lean-forward="true" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="29" />
+          <folding>
+            <element signature="e#22#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onmt/decoders/sam_decoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="434" column="27" lean-forward="true" selection-start-line="434" selection-start-column="27" selection-end-line="434" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#389#822#0" />
+            <element signature="e#9837#13410#0" />
+            <marker date="1584609949505" expanded="true" signature="15703:15706" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

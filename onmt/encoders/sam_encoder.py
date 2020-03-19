@@ -123,9 +123,8 @@ class SAM_Encoder(EncoderBase):
 
         # 这里添加了位置信息，在每一行的开头会有一个用第几行数初始化，与原来每行的特征向量做个拼接之后在进行rowencoder
         # out, hidden_t = self.rowcol_origin(src)
-
         s_atten = self.sam(src)
-        s_atten = s_atten.view(s_atten.size(2)*s_atten.size(3), s_atten.size(0), s_atten.size(1))
+
         out, hidden_t = self.rowencoder(src)
 
         return hidden_t, (out, s_atten), lengths
@@ -133,14 +132,15 @@ class SAM_Encoder(EncoderBase):
 
     def rowencoder(self, src):
         all_outputs = []
-
         for row in range(src.size(2)):
             inp = src[:, :, row, :].transpose(0, 2) \
                 .transpose(1, 2)
             outputs, hidden_t = self.rnn(inp)
-
-            all_outputs.append(outputs)
+            # print('outputs', outputs.size())
+            all_outputs.append(outputs)             # outputs torch.Size([W, bz, c])
         out = torch.cat(all_outputs, 0)
+        # print('out', out.size())                    # out torch.Size([WxH, bz, c])
+
         return out, hidden_t
 
 

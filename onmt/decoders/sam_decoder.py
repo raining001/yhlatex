@@ -120,11 +120,11 @@ class RNNDecoderBase(DecoderBase):
                 raise ValueError("Cannot use coverage term with no attention.")
             self.attn = None
         else:
-            self.attn = GlobalAttention(
-                hidden_size, coverage=coverage_attn,
-                attn_type=attn_type, attn_func=attn_func
-            )
-
+            # self.attn = GlobalAttention(
+            #     hidden_size, coverage=coverage_attn,
+            #     attn_type=attn_type, attn_func=attn_func
+            # )
+            self.attn = ""
 
         if copy_attn and not reuse_copy_attn:
             if copy_attn_type == "none" or copy_attn_type is None:
@@ -135,10 +135,17 @@ class RNNDecoderBase(DecoderBase):
             )
         else:
             self.copy_attn = None
+        dim = 512
+
+        self.linear_out = nn.Linear(dim * 2, dim)
+
+        self.pre_lstm = nn.LSTM(dim, int(dim / 2), bidirectional=True)
 
         self._reuse_copy_attn = reuse_copy_attn and copy_attn
         if self._reuse_copy_attn and not self.attentional:
             raise ValueError("Cannot reuse copy attention with no attention.")
+
+
 
     @classmethod
     def from_opt(cls, opt, embeddings):
@@ -215,7 +222,11 @@ class RNNDecoderBase(DecoderBase):
         """
 
         # c 的size是 bz, 512,attn是将整个w x h 内的值加权和为一个值，因为有512个通道，所以最后为512
-        dec_state, dec_outs, attns = self._run_forward_pass(
+        # dec_state, dec_outs, attns = self._run_forward_pass(
+        #     tgt, memory_bank, memory_lengths=memory_lengths)
+
+
+        dec_state, dec_outs, attns = self._run_noattn_forward_pass(
             tgt, memory_bank, memory_lengths=memory_lengths)
 
         # Update the state with the result.
@@ -290,6 +301,7 @@ class SAM_Decoder(RNNDecoderBase):
         attns = {}
         if self.attn is not None:
             attns["std"] = []
+            attns["s_attn"] = []
         if self.copy_attn is not None or self._reuse_copy_attn:
             attns["copy"] = []
         if self._coverage:
@@ -304,12 +316,16 @@ class SAM_Decoder(RNNDecoderBase):
 
         # Input feed concatenates hidden state with
         # input at every time step.
-        memory_bank, s_attns = memory_bank[0], memory_bank[1]
+        memory, s_attns = memory_bank[0], memory_bank[1]
 
         for i, emb_t in enumerate(emb.split(1)):
 
             s_attn = s_attns[:, :, i].unsqueeze(2)
-            attn_memory = torch.mul(s_attn, memory_bank)
+            s_attn_ = s_attn.squeeze(2)
+            s_attn_ = s_attn_.view(s_attn.size(1), s_attn.size(0))
+            attns["s_attn"].append(s_attn_)
+
+            attn_memory = torch.mul(s_attn, memory)
             decoder_input = torch.cat([emb_t.squeeze(0), input_feed], 1)   # decoder_input 对应论文[yt-1, ot-1] emb_t.squeeze(0) 为 yt-1,input_feed为 ot-1
 
             rnn_output, dec_state = self.rnn(decoder_input, dec_state)      #对应论文公式ht = RNN(ht−1; [yt−1; ot−1])
@@ -317,12 +333,14 @@ class SAM_Decoder(RNNDecoderBase):
                                                                             # dec_state 是lstm中cell和hidden 也就是ht-1 (h,c) 因为有两层，所以h和c的size(2,bz, 512)
                                                                             # rnn_output 为双层lstm的输出，也就是dec_state（h,c）中h的第二个值h[1]，两者相等！！
                                                                             # 由于h[0]和h[1]做了stack，所以h(2, bz 512)没有 h[1]
-
             if self.attentional:
                 decoder_output, p_attn = self.attn(    # ot
                     rnn_output,
                     attn_memory.transpose(0, 1),
                     memory_lengths=memory_lengths)
+                print('p_attn', p_attn.size())
+                print('decoder_output', decoder_output.size())
+
                 attns["std"].append(p_attn)
             else:
                 decoder_output = rnn_output
@@ -370,3 +388,98 @@ class SAM_Decoder(RNNDecoderBase):
         self.embeddings.update_dropout(dropout)
 
 
+    def _run_noattn_forward_pass(self, tgt, memory_bank, memory_lengths=None):
+        """
+        See StdRNNDecoder._run_forward_pass() for description
+        of arguments and return values.
+        """
+        # Additional args check.
+        input_feed = self.state["input_feed"].squeeze(0)
+        input_feed_batch, _ = input_feed.size()
+        _, tgt_batch, _ = tgt.size()
+        aeq(tgt_batch, input_feed_batch)
+        # END Additional args check.
+
+        dec_outs = []
+        attns = {}
+        if self.attn is not None:
+            attns["std"] = []
+            attns["s_attn"] = []
+        if self.copy_attn is not None or self._reuse_copy_attn:
+            attns["copy"] = []
+        if self._coverage:
+            attns["coverage"] = []
+
+        emb = self.embeddings(tgt)
+        assert emb.dim() == 3  # len x batch x embedding_dim
+
+        dec_state = self.state["hidden"]
+        coverage = self.state["coverage"].squeeze(0) \
+            if self.state["coverage"] is not None else None
+
+        # Input feed concatenates hidden state with
+        # input at every time step.
+        memory, s_attns = memory_bank[0], memory_bank[1]
+        s_attns = s_attns.view(s_attns.size(0), s_attns.size(1), -1)
+        nL, nB, nC = memory.size()
+        nT = s_attns.size()[1]
+
+        # Normalize
+        s_attns = s_attns / s_attns.view(nB, nT, -1).sum(2).view(nB,nT,1)
+
+        # weighted sum
+        C = torch.bmm(s_attns.view(nB, nT, nL), memory.transpose(1,0))
+        C = C.view(C.size(1), C.size(0), -1)
+
+        C, _ = self.pre_lstm(C)
+        C = self.dropout(C)
+        for i, emb_t in enumerate(emb.split(1)):
+            c = C[i,:,:]
+            decoder_input = torch.cat([emb_t.squeeze(0), input_feed], 1)   # decoder_input 对应论文[yt-1, ot-1] emb_t.squeeze(0) 为 yt-1,input_feed为 ot-1
+            rnn_output, dec_state = self.rnn(decoder_input, dec_state)      #对应论文公式ht = RNN(ht−1; [yt−1; ot−1])
+                                                                            # [yt−1; ot−1]= decode_input torch.Size([bz, 592])
+                                                                            # dec_state 是lstm中cell和hidden 也就是ht-1 (h,c) 因为有两层，所以h和c的size(2,bz, 512)
+                                                                            # rnn_output 为双层lstm的输出，也就是dec_state（h,c）中h的第二个值h[1]，两者相等！！
+                                                                            # 由于h[0]和h[1]做了stack，所以h(2, bz 512)没有 h[1]
+
+            # p_attn    torch.Size([20, 150])
+            # decoder_output         torch.Size([20, 512])
+            concat_c = torch.cat([c, rnn_output], 1)  # ot = tanh(Wc[ht; ct])
+
+            attn_h = self.linear_out(concat_c).view(nB, 512)
+
+            decoder_output = torch.tanh(attn_h)
+            p_attn = s_attns[:,i,:]
+
+            attns["std"].append(p_attn)
+            attns["s_attn"].append(p_attn)
+
+
+
+            # Check output sizes
+
+            if self.context_gate is not None:
+                # TODO: context gate should be employed
+                # instead of second RNN transform.
+                decoder_output = self.context_gate(
+                    decoder_input, rnn_output, decoder_output
+                )
+
+            decoder_output = self.dropout(decoder_output)
+            input_feed = decoder_output
+
+            dec_outs += [decoder_output]
+
+            # Update the coverage attention.
+            if self._coverage:
+                coverage = p_attn if coverage is None else p_attn + coverage
+                attns["coverage"] += [coverage]
+
+            if self.copy_attn is not None:
+                _, copy_attn = self.copy_attn(
+                    decoder_output, attn_memory.transpose(0, 1))
+                attns["copy"] += [copy_attn]
+            elif self._reuse_copy_attn:
+                attns["copy"] = attns["std"]
+
+        return dec_state, dec_outs, attns

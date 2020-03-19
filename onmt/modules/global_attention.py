@@ -196,12 +196,15 @@ class GlobalAttention(nn.Module):
         # each context vector c_t is the weighted average
         # over all the source hidden states
         c = torch.bmm(align_vectors, memory_bank)
+
         # c （5, 1, 512）
         # concatenate
+
 
         concat_c = torch.cat([c, source], 2).view(batch*target_l, dim*2)  #ot = tanh(Wc[ht; ct])
 
         attn_h = self.linear_out(concat_c).view(batch, target_l, dim)
+
         if self.attn_type in ["general", "dot"]:
             attn_h = torch.tanh(attn_h)
 

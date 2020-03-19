@@ -654,8 +654,12 @@ class Translator(object):
 
         # Generator forward.
         if not self.copy_attn:
-            if "std" in dec_attn:
+            if "s_attn" in dec_attn:
+                attn = dec_attn
+
+            elif "std" in dec_attn:
                 attn = dec_attn["std"]
+
             elif "colstd" in dec_attn or "rowcolstd" in dec_attn:
                 attn = dec_attn
             else:
@@ -745,11 +749,11 @@ class Translator(object):
                 step=step,
                 batch_offset=decode_strategy.batch_offset)
             if type(attn) == dict:
-                attn_col = attn["colstd"]
-                attn_ = attn["rowcolstd"]
-                print('attn_', attn_.size())
-                exit(1)
-                # print('attn_', attn_)
+                # attn_col = attn["colstd"]
+                # attn_ = attn["rowcolstd"]
+                attn_ = attn["std"]
+                s_attn = attn["s_attn"]
+
                 # print('attn_col', attn_col.size())
                 # attn_ = attn_col + torch.mul(attn_col, attn_)
 
@@ -758,7 +762,7 @@ class Translator(object):
                 self.debug_probs(log_probs, step)
 
 
-            decode_strategy.advance(log_probs, attn_)
+            decode_strategy.advance(log_probs, s_attn)
             any_finished = decode_strategy.is_finished.any()
             if any_finished:
                 decode_strategy.update_finished()
