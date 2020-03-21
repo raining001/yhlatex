@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import torch
 from onmt.utils.self_atten import Self_Attn
 from onmt.encoders.encoder import EncoderBase
+import math
 
 
 class SAM_Encoder(EncoderBase):
@@ -14,42 +15,14 @@ class SAM_Encoder(EncoderBase):
     def __init__(self, num_layers, bidirectional, rnn_size, dropout, multi_scale,
                  image_chanel_size=3):
         super(SAM_Encoder, self).__init__()
-        self.multi_scale = multi_scale
-        self.num_layers = num_layers
-        self.num_directions = 2 if bidirectional else 1
-        self.hidden_size = rnn_size
 
-        self.layer1 = nn.Conv2d(image_chanel_size, 64, kernel_size=(3, 3),
-                                padding=(1, 1), stride=(1, 1))
-        self.layer2 = nn.Conv2d(64, 128, kernel_size=(3, 3),
-                                padding=(1, 1), stride=(1, 1))
-        self.layer3 = nn.Conv2d(128, 256, kernel_size=(3, 3),
-                                padding=(1, 1), stride=(1, 1))
-        self.layer4 = nn.Conv2d(256, 256, kernel_size=(3, 3),
-                                padding=(1, 1), stride=(1, 1))
-        self.layer5 = nn.Conv2d(256, 512, kernel_size=(3, 3),
-                                padding=(1, 1), stride=(1, 1))
-        self.layer6 = nn.Conv2d(512, 512, kernel_size=(3, 3),
-                                padding=(1, 1), stride=(1, 1))
-
-
-        self.batch_norm1 = nn.BatchNorm2d(256)
-        self.batch_norm2 = nn.BatchNorm2d(512)
-        self.batch_norm3 = nn.BatchNorm2d(512)
-        # self.layer_norm  = nn.LayerNorm(512)
-
+        self.resnet = resnet45(compress_layer=True)
+        self.sam = SAM(maxT=160, depth=8)
         src_size = 512
-        dropout = dropout[0] if type(dropout) is list else dropout
-        # rnn_size 512
-        # num_directions 2
-        # rnn_size = 256
-        self.sam = SAM(maxT=160, depth=6, in_channels=512, num_channels=128)
-
-        self.rnn = nn.LSTM(src_size, int(src_size / self.num_directions),
+        self.rnn = nn.LSTM(src_size, int(src_size / 2),
                            num_layers=num_layers,
                            dropout=dropout,
                            bidirectional=bidirectional)
-
     @classmethod
     def from_opt(cls, opt, embeddings=None):
         """Alternate constructor.
@@ -79,56 +52,13 @@ class SAM_Encoder(EncoderBase):
         """Pass in needed options only when modify function definition."""
         pass
 
+
+
     def forward(self, src, lengths=None):
-        # print('src', src.size())
-        """See :func:`onmt.encoders.encoder.EncoderBase.forward()`"""
-        # (batch_size, 64, imgH, imgW)
-        batch_size = src.size(0)
-        # layer 1
-        src = F.relu(self.layer1(src[:, :, :, :] - 0.5), True)
-        # (batch_size, 64, imgH/2, imgW/2)
-        src = F.max_pool2d(src, kernel_size=(2, 2), stride=(2, 2))
-
-        # (batch_size, 128, imgH/2, imgW/2)
-        # layer 2
-        src = F.relu(self.layer2(src), True)
-        # (batch_size, 128, imgH/2/2, imgW/2/2)
-        src = F.max_pool2d(src, kernel_size=(2, 2), stride=(2, 2))
-        #  (batch_size, 256, imgH/2/2, imgW/2/2)
-        # layer 3
-        # batch norm 1
-        src = F.relu(self.batch_norm1(self.layer3(src)), True)
-        # (batch_size, 256, imgH/2/2, imgW/2/2)
-        # layer4
-        src = F.relu(self.layer4(src), True)
-        if self.multi_scale:
-            self.highsrc = src
-
-        # (batch_size, 256, imgH/2/2/2, imgW/2/2)
-        src = F.max_pool2d(src, kernel_size=(1, 2), stride=(1, 2))
-        # (batch_size, 512, imgH/2/2/2, imgW/2/2)
-        # layer 5
-        # batch norm 2
-        src = F.relu(self.batch_norm2(self.layer5(src)), True)
-
-        # (batch_size, 512, imgH/2/2/2, imgW/2/2/2)
-        src = F.max_pool2d(src, kernel_size=(2, 1), stride=(2, 1))
-        # (batch_size, 512, imgH/2/2/2, imgW/2/2/2)
-        src = F.relu(self.batch_norm3(self.layer6(src)), True)
-        # print('卷积后', src.size())
-        # hidden_t = 0
-        # # (batch_size, 512, H, W)
-        # print('src', src.size())
-        # out = src.view(src.size(2)*src.size(3), src.size(0), src.size(1))
-
-        # 这里添加了位置信息，在每一行的开头会有一个用第几行数初始化，与原来每行的特征向量做个拼接之后在进行rowencoder
-        # out, hidden_t = self.rowcol_origin(src)
-        s_atten = self.sam(src)
-
-        out, hidden_t = self.rowencoder(src)
-
-        return hidden_t, (out, s_atten), lengths
-
+        features = self.resnet(src)
+        s_atten = self.sam(features)
+        memory, hidden_t = self.rowencoder(features[-1])
+        return  hidden_t, (memory, s_atten), None
 
     def rowencoder(self, src):
         all_outputs = []
@@ -138,6 +68,7 @@ class SAM_Encoder(EncoderBase):
             outputs, hidden_t = self.rnn(inp)
             # print('outputs', outputs.size())
             all_outputs.append(outputs)             # outputs torch.Size([W, bz, c])
+
         out = torch.cat(all_outputs, 0)
         # print('out', out.size())                    # out torch.Size([WxH, bz, c])
 
@@ -146,17 +77,33 @@ class SAM_Encoder(EncoderBase):
 
 
 class SAM(nn.Module):
-    def __init__(self,  maxT, depth, in_channels, num_channels):
+    def __init__(self,  maxT, depth, in_channels=512, num_channels=64):
         super(SAM, self).__init__()
-        strides = []
         conv_ksizes = []
         deconv_ksizes = []
         # conv
-        strides = [(1,2) ,(2,1), (1,1)]
+        strides = [(2,2), (1,2) ,(2,1), (1,1)]
+
+        # strides = [(1, 1), (2, 2), (1, 1), (2, 2), (1, 1), (1, 1)]
+        channels = [(32,64), (64,128), (128,256), (256,512)]
+        fpn_stripe = [(1, 1), (2, 2), (1, 1), (1, 1)]
+        fpn = []
+
+        for i in range(4):
+            fpn.append(nn.Sequential(nn.Conv2d(channels[i][0], channels[i][1],
+                                              (3, 3),
+                                              fpn_stripe[i],
+                                              1, 1),
+                                     nn.BatchNorm2d(channels[i][1]),
+                                     nn.ReLU(True)))
+        self.fpn = nn.Sequential(*fpn)
+
+
+        depth = 8
         for i in range(0, int(depth / 2)):
             conv_ksizes.append((3, 3))
             deconv_ksizes.append((3,3))
-        padding = [(1,1),(1,1),(0,0)]
+        padding = [(1,1),(1,1),(1,1),(0,0)]
         convs = [nn.Sequential(nn.Conv2d(in_channels, num_channels,
                                         conv_ksizes[0],
                                         strides[0],
@@ -180,33 +127,160 @@ class SAM(nn.Module):
                                           kernel_size=(3, 3), stride=(1, 1), padding=(0, 0)).cuda()
         self.deconv1 = nn.ConvTranspose2d(num_channels, num_channels,
                                           kernel_size=(3, 3), stride=(2, 1), padding=(1, 1)).cuda()
-        self.deconv2 = nn.ConvTranspose2d(num_channels, maxT,
+        self.deconv2 = nn.ConvTranspose2d(num_channels, num_channels,
                                           kernel_size=(3, 3), stride=(1, 2), padding=(1, 1)).cuda()
+        self.deconv3 = nn.ConvTranspose2d(num_channels, maxT,
+                                          kernel_size=(3, 3), stride=(2, 2), padding=(1, 1)).cuda()
 
 
         self.deconv0_bn = nn.BatchNorm2d(num_channels)
         self.deconv1_bn = nn.BatchNorm2d(num_channels)
+        self.deconv2_bn = nn.BatchNorm2d(num_channels)
 
         self.sigmoid = nn.Sigmoid()
 
-    def forward(self, x):
-        src = x
+    def forward(self, input):
+
+        x = input[0]
+        for i in range(0, len(self.fpn)):
+            x = self.fpn[i](x) + input[i+1]
+
         conv_feats = []
         xsize = []
-        # 三个下采样，大小[bz, C, W, H] --> [bz, C, W, H/2] --> [bz, C, W/2, H/2] --> [bz, C, W/2-2, H/2-2]
         for i in range(0, len(self.convs)):
             xsize.append(x.size())
             conv_feats.append(x)
             x = self.convs[i](x)
-        x = F.relu(self.deconv0_bn(self.deconv0(x, output_size=xsize[2])), True)
-        # [bz, C, W / 2, H / 2]
+        x = F.relu(self.deconv0_bn(self.deconv0(x, output_size=xsize[3])), True)
+        x = x + conv_feats[3]
+        x = F.relu(self.deconv1_bn(self.deconv1(x, output_size=xsize[2])), True)
         x = x + conv_feats[2]
-        x = F.relu(self.deconv1_bn(self.deconv1(x, output_size=xsize[1])), True)
-        #  [bz, C, W, H/2]
+        x = F.relu(self.deconv2_bn(self.deconv2(x, output_size=xsize[1])), True)
         x = x + conv_feats[1]
+
         # attn = F.softmax(self.deconv2(x, output_size=xsize[0]), 1)
-        attn = F.sigmoid(self.deconv2(x, output_size=xsize[0]))
+        attn = F.sigmoid(self.deconv3(x, output_size=xsize[0]))
 
         return attn
 
 
+
+
+
+def conv1x1(in_planes,out_planes,stride=1):
+    return nn.Conv2d(in_planes,out_planes,kernel_size =1,stride =stride,bias=False)
+def conv3x3(in_planes, out_planes, stride=1):
+    "3x3 convolution with padding"
+    return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
+                     padding=1, bias=False)
+
+
+class BasicBlock(nn.Module):
+    expansion = 1
+
+    def __init__(self, inplanes, planes, stride=1, downsample=None):
+        super(BasicBlock, self).__init__()
+        self.conv1 = conv1x1(inplanes, planes)
+        self.bn1 = nn.BatchNorm2d(planes)
+        self.relu = nn.ReLU(inplace=True)
+        self.conv2 = conv3x3(planes, planes, stride)
+        self.bn2 = nn.BatchNorm2d(planes)
+        self.downsample = downsample
+        self.stride = stride
+
+    def forward(self, x):
+        residual = x
+
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
+
+        out = self.conv2(out)
+        out = self.bn2(out)
+
+        if self.downsample is not None:
+            residual = self.downsample(x)
+
+        out += residual
+        out = self.relu(out)
+
+        return out
+
+class ResNet(nn.Module):
+    # model = ResNet(BasicBlock, [3, 4, 6, 6, 3], strides, compress_layer)
+    # strides = [(1, 1), (1, 1), (2, 2), (2, 2), (2, 2), (2, 1)]
+    def __init__(self, block, compress_layer=True):
+        self.inplanes = 32
+        strides = [(1, 1), (2, 2), (1, 1), (2, 2), (1, 1), (1, 1)]
+        layers = [3, 4, 6, 6, 3]
+        super(ResNet, self).__init__()
+        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, stride=strides[0], padding=1,
+                               bias=False)
+        self.bn1 = nn.BatchNorm2d(32)
+        self.relu = nn.ReLU(inplace=True)
+
+        self.layer1 = self._make_layer(block, 32, layers[0], stride=strides[1])
+        self.layer2 = self._make_layer(block, 64, layers[1], stride=strides[2])
+        self.layer3 = self._make_layer(block, 128, layers[2], stride=strides[3])
+        self.layer4 = self._make_layer(block, 256, layers[3], stride=strides[4])
+        self.layer5 = self._make_layer(block, 512, layers[4], stride=strides[5])
+
+        self.compress_layer = compress_layer
+        if compress_layer:
+            # for handwritten
+            self.layer6 = nn.Sequential(
+                nn.Conv2d(512, 256, kernel_size=(3, 1), padding=(0, 0), stride=(1, 1)),
+                nn.BatchNorm2d(256),
+                nn.ReLU(inplace = True))
+
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
+                m.weight.data.normal_(0, math.sqrt(2. / n))
+            elif isinstance(m, nn.BatchNorm2d):
+                m.weight.data.fill_(1)
+                m.bias.data.zero_()
+
+    def _make_layer(self, block, planes, blocks, stride=1):
+        downsample = None
+        if stride != 1 or self.inplanes != planes * block.expansion:
+            downsample = nn.Sequential(
+                nn.Conv2d(self.inplanes, planes * block.expansion,
+                          kernel_size=1, stride=stride, bias=False),
+                nn.BatchNorm2d(planes * block.expansion),
+            )
+
+        layers = []
+        layers.append(block(self.inplanes, planes, stride, downsample))
+        self.inplanes = planes * block.expansion
+        for i in range(1, blocks):
+            layers.append(block(self.inplanes, planes))
+
+        return nn.Sequential(*layers)
+
+    def forward(self, x, multiscale = False):
+
+        # (batch_size, 64, imgH/2, imgW/2)
+        out_features = []
+        x = F.relu(self.bn1(self.conv1(x)), True)
+        # x = F.max_pool2d(x, kernel_size=(2, 2), stride=(2, 2))
+
+        x = self.layer1(x)
+        out_features.append(x)
+
+        x = self.layer2(x)
+        out_features.append(x)
+
+        x = self.layer3(x)
+        out_features.append(x)
+
+        x = self.layer4(x)
+        out_features.append(x)
+
+        x = self.layer5(x)
+        out_features.append(x)
+        return out_features
+
+def resnet45(compress_layer):
+    model = ResNet(BasicBlock, compress_layer)
+    return model
