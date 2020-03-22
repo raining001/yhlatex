@@ -19,10 +19,10 @@ class SAM_Encoder(EncoderBase):
         self.resnet = resnet45(compress_layer=True)
         self.sam = SAM(maxT=160, depth=8)
         src_size = 512
-        self.rnn = nn.LSTM(src_size, int(src_size / 2),
-                           num_layers=num_layers,
-                           dropout=dropout,
-                           bidirectional=bidirectional)
+        # self.rnn = nn.LSTM(src_size, int(src_size / 2),
+        #                    num_layers=num_layers,
+        #                    dropout=dropout,
+        #                    bidirectional=bidirectional)
     @classmethod
     def from_opt(cls, opt, embeddings=None):
         """Alternate constructor.
@@ -57,8 +57,10 @@ class SAM_Encoder(EncoderBase):
     def forward(self, src, lengths=None):
         features = self.resnet(src)
         s_atten = self.sam(features)
-        memory, hidden_t = self.rowencoder(features[-1])
-        return  hidden_t, (memory, s_atten), None
+        # memory, hidden_t = self.rowencoder(features[-1])
+        # print('hidden_t', hidden_t[0].size(), hidden_t[1].size())
+        hidden_t = (torch.zeros(4, src.size(0), 256).type_as(s_atten.data), torch.zeros(4, src.size(0), 256).type_as(s_atten.data))
+        return hidden_t, (features[-1], s_atten), None
 
     def rowencoder(self, src):
         all_outputs = []

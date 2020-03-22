@@ -101,24 +101,30 @@ import torch
 # @return int整型
 #
 class Solution:
-    def maxPresent(self , presentVec ):
-        if not presentVec:
-            return
-        presentVec.sort()
-        s = sum(presentVec) // 2
-        print(sum(presentVec))
-        print(s)
-        print(presentVec)
-        left = 0
-        right = 0
-        for i in presentVec:
-            if left > right:
-                right += i
-            else:
-                left += i
-            print(left, right)
-        return left - right if left > right else right - left
+    def selectPresent(self, presentVolumn):
+        n = len(presentVolumn)
+        if n == 0:
+            return 0
+        m = len(presentVolumn[0])
+        if m == 0:
+            return 0
+        for i in range(1, m):
+            presentVolumn[0][i] += presentVolumn[0][i - 1]
+        for j in range(1, n):
+            presentVolumn[j][0] += presentVolumn[j - 1][0]
+            for i in range(1, m):
+                presentVolumn[j][i] += self.minn(presentVolumn[j - 1][i - 1],
+                                                 presentVolumn[j - 1][i],
+                                                 presentVolumn[j][i - 1])
+        return presentVolumn
+
+    def minn(self, m, n, z):
+        if m < min(n, z):
+            return m
+        else:
+            return min(n, z)
+
 
 s = Solution()
-l = [41,467,334,1,169,224,478,358]
-print(s.maxPresent(l))
+l = [[1,2,3],[2,3,4]]
+print(s.selectPresent(l))

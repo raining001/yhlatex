@@ -7,7 +7,7 @@ from onmt.modules.global_attention import GlobalAttention_2
 from onmt.utils.rnn_factory import rnn_factory
 from onmt.modules.rowcol_attention import ColAttention
 from onmt.utils.misc import aeq
-
+import torch.nn.functional as F
 
 class DecoderBase(nn.Module):
     """Abstract class for decoders.
@@ -137,7 +137,7 @@ class RNNDecoderBase(DecoderBase):
             self.copy_attn = None
         dim = 512
 
-        self.linear_out = nn.Linear(dim * 2, dim)
+        # self.linear_out = nn.Linear(dim * 2, dim)
 
         self.pre_lstm = nn.LSTM(dim, int(dim / 2), bidirectional=True)
 
@@ -173,7 +173,6 @@ class RNNDecoderBase(DecoderBase):
             # We need to convert it to layers x batch x (directions*dim).
 
             if self.bidirectional_encoder:
-
                 hidden = torch.cat([hidden[0:hidden.size(0):2],             # 从0-4之间取数，间隔为2
                                     hidden[1:hidden.size(0):2]], 2)
             return hidden
@@ -225,9 +224,10 @@ class RNNDecoderBase(DecoderBase):
         # dec_state, dec_outs, attns = self._run_forward_pass(
         #     tgt, memory_bank, memory_lengths=memory_lengths)
 
-
+        #dec_state torch.Size([2, 20, 512])
         dec_state, dec_outs, attns = self._run_noattn_forward_pass(
             tgt, memory_bank, memory_lengths=memory_lengths)
+
 
         # Update the state with the result.
         if not isinstance(dec_state, tuple):
@@ -421,36 +421,41 @@ class SAM_Decoder(RNNDecoderBase):
         # input at every time step.
         memory, s_attns = memory_bank[0], memory_bank[1]
         s_attns = s_attns.view(s_attns.size(0), s_attns.size(1), -1)
+        memory = memory.view(memory.size(0), memory.size(1), -1)
+        memory = memory.transpose(0, 2).transpose(1, 2)
         nL, nB, nC = memory.size()
         nT = s_attns.size()[1]
-
         # Normalize
-        s_attns = s_attns / s_attns.view(nB, nT, -1).sum(2).view(nB,nT,1)
-
+        s_attns = s_attns / s_attns.view(nB, nT, -1).sum(2).view(nB, nT, 1)
+        # print('s_attns', s_attns.size())
         # weighted sum
-        C = torch.bmm(s_attns.view(nB, nT, nL), memory.transpose(1,0))
-        C = C.view(C.size(1), C.size(0), -1)
+        C = torch.bmm(s_attns.view(nB, nT, nL), memory.transpose(1, 0))
+        C  = C.view(C .size(1), C .size(0), -1)
 
         C, _ = self.pre_lstm(C)
-        C = self.dropout(C)
+        C = F.dropout(C, p = 0.3, training=self.training)
+
         for i, emb_t in enumerate(emb.split(1)):
             c = C[i,:,:]
-            decoder_input = torch.cat([emb_t.squeeze(0), input_feed], 1)   # decoder_input 对应论文[yt-1, ot-1] emb_t.squeeze(0) 为 yt-1,input_feed为 ot-1
-            rnn_output, dec_state = self.rnn(decoder_input, dec_state)      #对应论文公式ht = RNN(ht−1; [yt−1; ot−1])
-                                                                            # [yt−1; ot−1]= decode_input torch.Size([bz, 592])
-                                                                            # dec_state 是lstm中cell和hidden 也就是ht-1 (h,c) 因为有两层，所以h和c的size(2,bz, 512)
-                                                                            # rnn_output 为双层lstm的输出，也就是dec_state（h,c）中h的第二个值h[1]，两者相等！！
-                                                                            # 由于h[0]和h[1]做了stack，所以h(2, bz 512)没有 h[1]
 
-            # p_attn    torch.Size([20, 150])
-            # decoder_output         torch.Size([20, 512])
-            concat_c = torch.cat([c, rnn_output], 1)  # ot = tanh(Wc[ht; ct])
-
-            attn_h = self.linear_out(concat_c).view(nB, 512)
-
-            decoder_output = torch.tanh(attn_h)
+            rnn_output, dec_state = self.rnn(torch.cat((c, emb_t.squeeze(0)), dim=1), dec_state)
+            decoder_output = rnn_output
+            # decoder_input = torch.cat([emb_t.squeeze(0), input_feed], 1)   # decoder_input 对应论文[yt-1, ot-1] emb_t.squeeze(0) 为 yt-1,input_feed为 ot-1
+            # rnn_output, dec_state = self.rnn(decoder_input, dec_state)      #对应论文公式ht = RNN(ht−1; [yt−1; ot−1])
+            #                                                                 # [yt−1; ot−1]= decode_input torch.Size([bz, 592])
+            #                                                                 # dec_state 是lstm中cell和hidden 也就是ht-1 (h,c) 因为有两层，所以h和c的size(2,bz, 512)
+            #                                                                 # rnn_output 为双层lstm的输出，也就是dec_state（h,c）中h的第二个值h[1]，两者相等！！
+            #                                                                 # 由于h[0]和h[1]做了stack，所以h(2, bz 512)没有 h[1]
+            #
+            # # p_attn    torch.Size([20, 150])
+            # # decoder_output         torch.Size([20, 512])
+            # concat_c = torch.cat([c, rnn_output], 1)  # ot = tanh(Wc[ht; ct])
+            #
+            # attn_h = self.linear_out(concat_c).view(nB, 512)
+            #
+            # decoder_output = torch.tanh(attn_h)
             p_attn = s_attns[:,i,:]
-
+            #
             attns["std"].append(p_attn)
             attns["s_attn"].append(p_attn)
 
