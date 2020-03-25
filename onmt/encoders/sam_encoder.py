@@ -17,12 +17,12 @@ class SAM_Encoder(EncoderBase):
         super(SAM_Encoder, self).__init__()
 
         self.resnet = resnet45(compress_layer=True)
-        self.sam = SAM(maxT=160, depth=8)
+        # self.sam = SAM(maxT=160, depth=8)
         src_size = 512
-        # self.rnn = nn.LSTM(src_size, int(src_size / 2),
-        #                    num_layers=num_layers,
-        #                    dropout=dropout,
-        #                    bidirectional=bidirectional)
+        self.rnn = nn.LSTM(src_size, int(src_size / 2),
+                           num_layers=num_layers,
+                           dropout=dropout,
+                           bidirectional=bidirectional)
     @classmethod
     def from_opt(cls, opt, embeddings=None):
         """Alternate constructor.
@@ -55,12 +55,18 @@ class SAM_Encoder(EncoderBase):
 
 
     def forward(self, src, lengths=None):
+        # print('src', src.size())
         features = self.resnet(src)
-        s_atten = self.sam(features)
-        # memory, hidden_t = self.rowencoder(features[-1])
+
+        # s_atten = self.sam(features)
+        memory, hidden_t = self.rowencoder(features[-1])
+        # print('features', features[-1].size())
+        # print('memory', memory.size())
+
         # print('hidden_t', hidden_t[0].size(), hidden_t[1].size())
-        hidden_t = (torch.zeros(4, src.size(0), 256).type_as(s_atten.data), torch.zeros(4, src.size(0), 256).type_as(s_atten.data))
-        return hidden_t, (features[-1], s_atten), None
+        # hidden_t = (torch.zeros(4, src.size(0), 256).type_as(s_atten.data), torch.zeros(4, src.size(0), 256).type_as(s_atten.data))
+        return hidden_t, memory, None
+        # return hidden_t, (features[-1], s_atten), None
 
     def rowencoder(self, src):
         all_outputs = []
@@ -79,7 +85,7 @@ class SAM_Encoder(EncoderBase):
 
 
 class SAM(nn.Module):
-    def __init__(self,  maxT, depth, in_channels=512, num_channels=64):
+    def __init__(self,  maxT, depth, in_channels=512, num_channels=128):
         super(SAM, self).__init__()
         conv_ksizes = []
         deconv_ksizes = []
@@ -106,6 +112,7 @@ class SAM(nn.Module):
             conv_ksizes.append((3, 3))
             deconv_ksizes.append((3,3))
         padding = [(1,1),(1,1),(1,1),(0,0)]
+
         convs = [nn.Sequential(nn.Conv2d(in_channels, num_channels,
                                         conv_ksizes[0],
                                         strides[0],
@@ -213,7 +220,7 @@ class ResNet(nn.Module):
     # strides = [(1, 1), (1, 1), (2, 2), (2, 2), (2, 2), (2, 1)]
     def __init__(self, block, compress_layer=True):
         self.inplanes = 32
-        strides = [(1, 1), (2, 2), (1, 1), (2, 2), (1, 1), (1, 1)]
+        strides = [(2, 2), (2, 2), (2, 2), (1, 1), (1, 1), (1, 1)]
         layers = [3, 4, 6, 6, 3]
         super(ResNet, self).__init__()
         self.conv1 = nn.Conv2d(3, 32, kernel_size=3, stride=strides[0], padding=1,
@@ -261,25 +268,32 @@ class ResNet(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x, multiscale = False):
-
+        # print('src', x.size())
         # (batch_size, 64, imgH/2, imgW/2)
         out_features = []
         x = F.relu(self.bn1(self.conv1(x)), True)
         # x = F.max_pool2d(x, kernel_size=(2, 2), stride=(2, 2))
+        # print('x0', x.size())
 
         x = self.layer1(x)
         out_features.append(x)
+        # print('x1', x.size())
 
         x = self.layer2(x)
         out_features.append(x)
+        # print('x2', x.size())
 
         x = self.layer3(x)
         out_features.append(x)
+        # print('x3', x.size())
 
         x = self.layer4(x)
         out_features.append(x)
+        # print('x4', x.size())
 
         x = self.layer5(x)
+        # print('x5', x.size())
+
         out_features.append(x)
         return out_features
 

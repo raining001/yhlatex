@@ -100,6 +100,7 @@ class ImageEncoder(EncoderBase):
         pass
 
     def forward(self, src, lengths=None):
+        print('src', src.size())
         # print('src', src.size())
         """See :func:`onmt.encoders.encoder.EncoderBase.forward()`"""
         # (batch_size, 64, imgH, imgW)
@@ -144,7 +145,10 @@ class ImageEncoder(EncoderBase):
 
         # 这里添加了位置信息，在每一行的开头会有一个用第几行数初始化，与原来每行的特征向量做个拼接之后在进行rowencoder
         # out, hidden_t = self.rowcol_origin(src)
+        print('src', src.size())
         out, hidden_t = self.rowencoder(src)
+        print('out', out.size())
+        exit(1)
         # print(('src1', src.size()))
 
         if self.multi_scale:

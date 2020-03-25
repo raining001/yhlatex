@@ -120,14 +120,14 @@ class RNNDecoderBase(DecoderBase):
                 raise ValueError("Cannot use coverage term with no attention.")
             self.attn = None
         else:
-            # self.attn = GlobalAttention(
-            #     hidden_size, coverage=coverage_attn,
-            #     attn_type=attn_type, attn_func=attn_func
-            # )
-            self.attn = ColAttention(
+            self.attn = GlobalAttention(
                 hidden_size, coverage=coverage_attn,
                 attn_type=attn_type, attn_func=attn_func
             )
+            # self.attn = ColAttention(
+            #     hidden_size, coverage=coverage_attn,
+            #     attn_type=attn_type, attn_func=attn_func
+            # )
 
         if copy_attn and not reuse_copy_attn:
             if copy_attn_type == "none" or copy_attn_type is None:

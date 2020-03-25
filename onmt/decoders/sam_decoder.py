@@ -221,12 +221,12 @@ class RNNDecoderBase(DecoderBase):
         """
 
         # c 的size是 bz, 512,attn是将整个w x h 内的值加权和为一个值，因为有512个通道，所以最后为512
-        # dec_state, dec_outs, attns = self._run_forward_pass(
-        #     tgt, memory_bank, memory_lengths=memory_lengths)
+        dec_state, dec_outs, attns = self._run_forward_pass(
+            tgt, memory_bank, memory_lengths=memory_lengths)
 
         #dec_state torch.Size([2, 20, 512])
-        dec_state, dec_outs, attns = self._run_noattn_forward_pass(
-            tgt, memory_bank, memory_lengths=memory_lengths)
+        # dec_state, dec_outs, attns = self._run_noattn_forward_pass(
+        #     tgt, memory_bank, memory_lengths=memory_lengths)
 
 
         # Update the state with the result.
@@ -301,7 +301,6 @@ class SAM_Decoder(RNNDecoderBase):
         attns = {}
         if self.attn is not None:
             attns["std"] = []
-            attns["s_attn"] = []
         if self.copy_attn is not None or self._reuse_copy_attn:
             attns["copy"] = []
         if self._coverage:
@@ -316,16 +315,7 @@ class SAM_Decoder(RNNDecoderBase):
 
         # Input feed concatenates hidden state with
         # input at every time step.
-        memory, s_attns = memory_bank[0], memory_bank[1]
-
-        for i, emb_t in enumerate(emb.split(1)):
-
-            s_attn = s_attns[:, :, i].unsqueeze(2)
-            s_attn_ = s_attn.squeeze(2)
-            s_attn_ = s_attn_.view(s_attn.size(1), s_attn.size(0))
-            attns["s_attn"].append(s_attn_)
-
-            attn_memory = torch.mul(s_attn, memory)
+        for emb_t in emb.split(1):
             decoder_input = torch.cat([emb_t.squeeze(0), input_feed], 1)   # decoder_input 对应论文[yt-1, ot-1] emb_t.squeeze(0) 为 yt-1,input_feed为 ot-1
 
             rnn_output, dec_state = self.rnn(decoder_input, dec_state)      #对应论文公式ht = RNN(ht−1; [yt−1; ot−1])
@@ -336,12 +326,10 @@ class SAM_Decoder(RNNDecoderBase):
             if self.attentional:
                 decoder_output, p_attn = self.attn(    # ot
                     rnn_output,
-                    attn_memory.transpose(0, 1),
+                    memory_bank.transpose(0, 1),
                     memory_lengths=memory_lengths)
-                print('p_attn', p_attn.size())
-                print('decoder_output', decoder_output.size())
-
                 attns["std"].append(p_attn)
+
             else:
                 decoder_output = rnn_output
             if self.context_gate is not None:
@@ -350,7 +338,6 @@ class SAM_Decoder(RNNDecoderBase):
                 decoder_output = self.context_gate(
                     decoder_input, rnn_output, decoder_output
                 )
-
             decoder_output = self.dropout(decoder_output)
             input_feed = decoder_output
 
@@ -363,12 +350,13 @@ class SAM_Decoder(RNNDecoderBase):
 
             if self.copy_attn is not None:
                 _, copy_attn = self.copy_attn(
-                    decoder_output, attn_memory.transpose(0, 1))
+                    decoder_output, memory_bank.transpose(0, 1))
                 attns["copy"] += [copy_attn]
             elif self._reuse_copy_attn:
                 attns["copy"] = attns["std"]
 
         return dec_state, dec_outs, attns
+
 
     def _build_rnn(self, rnn_type, input_size,
                    hidden_size, num_layers, dropout):

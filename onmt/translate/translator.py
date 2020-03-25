@@ -749,17 +749,17 @@ class Translator(object):
                 step=step,
                 batch_offset=decode_strategy.batch_offset)
             if type(attn) == dict:
-                # attn_col = attn["colstd"]
-                # attn_ = attn["rowcolstd"]
-                attn_ = attn["std"]
-                s_attn = attn["s_attn"]
+                attn_col = attn["colstd"]
+                attn_ = attn["rowcolstd"]
+                # attn_ = attn["std"]
+                # s_attn = attn["s_attn"]
 
                 # print('attn_col', attn_col.size())
                 # attn_ = attn_col + torch.mul(attn_col, attn_)
 
                 # attn_ = torch.softmax(attn_, -1)
             if attn_debug:
-                self.debug_probs(log_probs, step)
+                self.debug_probs(log_probs, attn_)
 
 
             decode_strategy.advance(log_probs, s_attn)
