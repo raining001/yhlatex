@@ -2,7 +2,7 @@ from onmt.visual_atten import vis_img_with_attention
 import click
 
 @click.command()
-@click.option('--image', default="data/images/1a00b6791d.png",
+@click.option('--image', default="error_lab/images/do.png",
               help='Path to image to OCR')
 @click.option('--attns', default="error_lab/attn.txt",
               help='Path to model json config')

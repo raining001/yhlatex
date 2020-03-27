@@ -56,6 +56,10 @@ class ImageEncoder(EncoderBase):
                            dropout=dropout,
                            bidirectional=bidirectional)
 
+        self.rnn2 = nn.LSTM(src_size, int(src_size / self.num_directions),
+                           num_layers=num_layers,
+                           dropout=dropout,
+                           bidirectional=bidirectional)
         # self.rnn2 = nn.LSTM(src_size, int(src_size / self.num_directions),
         #                    num_layers=num_layers,
         #                    dropout=dropout,
@@ -100,7 +104,6 @@ class ImageEncoder(EncoderBase):
         pass
 
     def forward(self, src, lengths=None):
-        print('src', src.size())
         # print('src', src.size())
         """See :func:`onmt.encoders.encoder.EncoderBase.forward()`"""
         # (batch_size, 64, imgH, imgW)
@@ -144,11 +147,8 @@ class ImageEncoder(EncoderBase):
         # out = src.view(src.size(2)*src.size(3), src.size(0), src.size(1))
 
         # 这里添加了位置信息，在每一行的开头会有一个用第几行数初始化，与原来每行的特征向量做个拼接之后在进行rowencoder
-        # out, hidden_t = self.rowcol_origin(src)
-        print('src', src.size())
-        out, hidden_t = self.rowencoder(src)
-        print('out', out.size())
-        exit(1)
+        out, hidden_t = self.rowcol_origin(src)
+        # out, hidden_t = self.rowencoder(src)
         # print(('src1', src.size()))
 
         if self.multi_scale:

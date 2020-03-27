@@ -2,6 +2,10 @@
 
 #也可以 import cv2 as cv ,使用时用cv代替cv2
 import cv2
+import sys, os, re, argparse, logging
+from scripts.utils.utils import run
+from scripts.utils.image_utils import *
+from multiprocessing.dummy import Pool as ThreadPool
 
 
 def load_formulas(filename):
@@ -11,13 +15,43 @@ def load_formulas(filename):
             formulas[idx] = line.strip()
     return formulas
 
-filename = "error_lab/src-test.txt"
-dir = "data/images/"
-file = load_formulas(filename)[0]
-img = cv2.imread(dir+file)
-cv2.imwrite("error_lab/"+file, img)
-im = cv2.resize(img, None, None, fx=2, fy=2, interpolation=cv2.INTER_LINEAR)
-cv2.imwrite("error_lab/do.png", im)
+
+
+
+def change_image_channels(image, image_path):
+    if image.mode != 'RGB':
+        image = image.convert("RGB")
+        os.remove(image_path)
+        image.save(image_path)
+    return image
+
+
+
+def resize():
+
+    img_dir = "error_lab/images/111.png"
+    img = cv2.imread(img_dir)
+    # cv2.imwrite("error_lab/images/", img)
+    im = cv2.resize(img, None, None, fx=1/2, fy=1/2, interpolation=cv2.INTER_LINEAR)
+    cv2.imwrite("error_lab/do.png", im)
+
+
+gold_dir = "error_lab/images/"
+for root, dirs, files in os.walk(gold_dir):
+    for fl in files:
+        image_dir = os.path.join(gold_dir, fl)
+        image = Image.open(image_dir)
+        change_image_channels(image, image_dir)
+
+# filename = "error_lab/src-test.txt"
+# dir = "data/images/"
+# resize()
+
+# { \frac { \partial } { \partial T } } S T { \frac { \partial } { \partial T } }
+# { \frac { \partial } { \partial T } } S T { \frac { \partial } { \partial T } }
+
+
+
 
 
 
