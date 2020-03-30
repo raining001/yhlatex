@@ -20,7 +20,7 @@ class SAM_Encoder(EncoderBase):
         # self.vgg = VGG(num_layers, bidirectional, rnn_size, dropout, multi_scale,
         #          image_chanel_size)
         # self.sam = SAM(maxT=160, depth=8)
-        self.FPN = FPN(BasicBlock)
+        self.FPN = FPN(Bottleneck)
         src_size = 512
         self.rnn = nn.LSTM(src_size, int(src_size / 2),
                            num_layers=num_layers,
@@ -191,8 +191,51 @@ def conv3x3(in_planes, out_planes, stride=1):
                      padding=1, bias=False)
 
 
+class Bottleneck(nn.Module):
+    expansion = 2
+
+    def __init__(self, in_planes, planes, stride=1, downsample=None):
+        super(Bottleneck, self).__init__()
+        self.conv1 = nn.Conv2d(in_planes, planes, kernel_size=1, bias=False)
+        self.bn1 = nn.BatchNorm2d(planes)
+        self.conv2 = nn.Conv2d(planes, planes, kernel_size=3, stride=stride, padding=1, bias=False)
+        self.bn2 = nn.BatchNorm2d(planes)
+        self.conv3 = nn.Conv2d(planes, self.expansion * planes, kernel_size=1, bias=False)
+        self.bn3 = nn.BatchNorm2d(self.expansion * planes)
+        self.relu = nn.ReLU(inplace=True)
+        self.downsample = downsample
+        self.stride = stride
+
+    def forward(self, x):
+        residual = x
+
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
+
+        out = self.conv2(out)
+        out = self.bn2(out)
+        out = self.relu(out)
+
+        out = self.conv3(out)
+        out = self.bn3(out)
+
+        if self.downsample is not None:
+            residual = self.downsample(x)
+
+        out += residual
+        out = self.relu(out)
+
+        return out
+
+
+
+
+
+
+
 class BasicBlock(nn.Module):
-    expansion = 1
+    expansion = 2
 
     def __init__(self, inplanes, planes, stride=1, downsample=None):
         super(BasicBlock, self).__init__()
@@ -311,31 +354,31 @@ class FPN(nn.Module):
     def __init__(self, block):
         super(FPN, self).__init__()
         self.inplanes = 64
-        strides = [(1, 1), (2, 2), (1, 1), (1, 2), (2, 1)]
-        layers = [2, 2, 3, 3]
+        strides = [(1, 1), (2, 2), (2, 2), (2, 2), (2, 2)]
+        layers = [2, 2, 2, 2]
         super(FPN, self).__init__()
         self.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=strides[0], padding=1,
                                bias=False)
         self.bn1 = nn.BatchNorm2d(64)
         self.relu = nn.ReLU(inplace=True)
 
-        self.layer1 = self._make_layer(block, 64, layers[0], stride=strides[1])
-        self.layer2 = self._make_layer(block, 128, layers[1], stride=strides[2])
-        self.layer3 = self._make_layer(block, 256, layers[2], stride=strides[3])
-        self.layer4 = self._make_layer(block, 512, layers[3], stride=strides[4])
+        self.layer1 = self._make_layer(block, 64, layers[0])
+        self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
+        self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
+        self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
 
         # Top layer
-        self.toplayer = nn.Conv2d(512, 256, kernel_size=1, stride=1, padding=0)  # Reduce channels
+        self.toplayer = nn.Conv2d(1024, 256, kernel_size=1, stride=1, padding=0)  # Reduce channels
 
         # Smooth layers
-        self.smooth1 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
+        # self.smooth1 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
         self.smooth2 = nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1)
-        # self.smooth3 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
+        # self.smooth3 = nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1)
 
         # Lateral layers
-        self.latlayer1 = nn.Conv2d(256, 256, kernel_size=1, stride=1, padding=0)
-        self.latlayer2 = nn.Conv2d(128, 256, kernel_size=1, stride=1, padding=0)
-        # self.latlayer3 = nn.Conv2d(256, 256, kernel_size=1, stride=1, padding=0)
+        self.latlayer1 = nn.Conv2d(512, 256, kernel_size=1, stride=1, padding=0)
+        self.latlayer2 = nn.Conv2d(256, 256, kernel_size=1, stride=1, padding=0)
+        self.latlayer3 = nn.Conv2d(128, 256, kernel_size=1, stride=1, padding=0)
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -367,30 +410,27 @@ class FPN(nn.Module):
 
     def forward(self, x):
         # Bottom-up
+        print("x", x.size())
+
         x = F.relu(self.bn1(self.conv1(x)), True)
         c1 = F.max_pool2d(x, kernel_size=(2, 2), stride=(2, 2))
-        print('c1', c1.size())
         c2 = self.layer1(c1)
-        print('c2', c2.size())
         c3 = self.layer2(c2)
-        print('c3', c3.size())
         c4 = self.layer3(c3)
-        print('c4', c4.size())
         c5 = self.layer4(c4)        #
-        print('c5', c5.size())
+
         # Top-down
         p5 = self.toplayer(c5)
         p4 = self._upsample_add(p5, self.latlayer1(c4))
 
         p3 = self._upsample_add(p4, self.latlayer2(c3))
 
-        # p2 = self._upsample_add(p3, self.latlayer3(c2))
+        p2 = self._upsample_add(p3, self.latlayer3(c2))
         # Smooth
-        p4 = self.smooth1(p4)
+        # p4 = self.smooth1(p4)
         p3 = self.smooth2(p3)
         # p2 = self.smooth3(p2)
-
-
+        print("p3", p3.size())
         return p3
 
 
@@ -424,43 +464,76 @@ class VGG(nn.Module):
         self.layer6 = nn.Conv2d(512, 512, kernel_size=(3, 3),
                                 padding=(1, 1), stride=(1, 1))
 
+        self.toplayer = nn.Conv2d(512, 256, kernel_size=1, stride=1, padding=0)  # Reduce channels
+
+        # Smooth layers
+        # self.smooth1 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
+        # self.smooth2 = nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1)
+
+        # Lateral layers
+        self.latlayer1 = nn.Conv2d(512, 256, kernel_size=1, stride=1, padding=0)
+        self.latlayer2 = nn.Conv2d(256, 256, kernel_size=1, stride=1, padding=0)
+        self.latlayer3 = nn.Conv2d(256, 256, kernel_size=1, stride=1, padding=0)
+
+        self.smooth3 = nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1)
 
         self.batch_norm1 = nn.BatchNorm2d(256)
         self.batch_norm2 = nn.BatchNorm2d(512)
         self.batch_norm3 = nn.BatchNorm2d(512)
 
+
+    def _upsample_add(self, x, y):
+        _, _, H, W = y.size()
+        return F.interpolate(x, size=(H, W), mode='bilinear', align_corners=False) + y
+
     def forward(self, x):
-        # print('src', src.size())
         """See :func:`onmt.encoders.encoder.EncoderBase.forward()`"""
         # (batch_size, 64, imgH, imgW)
         # layer 1
         # print('输入图片',src.size())
-        src = F.relu(self.layer1(x), True)
+        c1 = F.relu(self.layer1(x), True)
         # (batch_size, 64, imgH/2, imgW/2)
-        src = F.max_pool2d(src, kernel_size=(2, 2), stride=(2, 2))
+        c1 = F.max_pool2d(c1, kernel_size=(2, 2), stride=(2, 2))
 
         # (batch_size, 128, imgH/2, imgW/2)
         # layer 2
-        src = F.relu(self.layer2(src), True)
+        c2 = F.relu(self.layer2(c1), True)
         # (batch_size, 128, imgH/2/2, imgW/2/2)
-        src = F.max_pool2d(src, kernel_size=(2, 2), stride=(2, 2))
+        c2 = F.max_pool2d(c2, kernel_size=(2, 2), stride=(2, 2))
         #  (batch_size, 256, imgH/2/2, imgW/2/2)
         # layer 3
         # batch norm 1
-        src = F.relu(self.batch_norm1(self.layer3(src)), True)
+        c3 = F.relu(self.batch_norm1(self.layer3(c2)), True)
         # (batch_size, 256, imgH/2/2, imgW/2/2)
         # layer4
-        src = F.relu(self.layer4(src), True)
+        c4 = F.relu(self.layer4(c3), True)
 
         # (batch_size, 256, imgH/2/2/2, imgW/2/2)
-        src = F.max_pool2d(src, kernel_size=(1, 2), stride=(1, 2))
+        c4 = F.max_pool2d(c4, kernel_size=(1, 2), stride=(1, 2))
         # (batch_size, 512, imgH/2/2/2, imgW/2/2)
         # layer 5
         # batch norm 2
-        src = F.relu(self.batch_norm2(self.layer5(src)), True)
+        c5 = F.relu(self.batch_norm2(self.layer5(c4)), True)
 
         # (batch_size, 512, imgH/2/2/2, imgW/2/2/2)
-        src = F.max_pool2d(src, kernel_size=(2, 1), stride=(2, 1))
+        c5 = F.max_pool2d(c5, kernel_size=(2, 1), stride=(2, 1))
         # (batch_size, 512, imgH/2/2/2, imgW/2/2/2)
-        src = F.relu(self.batch_norm3(self.layer6(src)), True)
-        return src
+        c6 = F.relu(self.batch_norm3(self.layer6(c5)), True)
+
+
+        p6 = self.toplayer(c6)
+        p5 = self._upsample_add(p6, self.latlayer1(c5))
+
+        p4 = self._upsample_add(p5, self.latlayer2(c4))
+
+        p3 = self._upsample_add(p4, self.latlayer3(c3))
+
+        # p2 = self._upsample_add(p3, self.latlayer3(c2))
+        # Smooth
+        # p5 = self.smooth1(p5)
+        # p4 = self.smooth2(p4)
+        p3 = self.smooth3(p3)
+
+        return p3
+
+

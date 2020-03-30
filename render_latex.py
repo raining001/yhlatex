@@ -2,6 +2,7 @@ import sys, os, re, argparse, logging
 from scripts.utils.utils import run
 from scripts.utils.image_utils import *
 from multiprocessing.dummy import Pool as ThreadPool
+import cv2
 
 TIMEOUT = 10
 
@@ -26,17 +27,20 @@ def process_args(args):
 
 
     parser.add_argument('-ignore', dest='ignore_style',
-                        type=str,  required=True, default=0, help=('If true, when render the latex, it will ignore the style'))
+                        type=str, default=0, help=('If true, when render the latex, it will ignore the style'))
 
-    parser.add_argument('-train_set', dest='train_set',
+    parser.add_argument('--model', dest='model',
                         type=str, required=True, default=0,
-                        help=('If 1 do for train'))
+                        help=('If train means render for train and test means render for test'))
 
     parser.add_argument('--ref', dest='ref_txt',
                         type=str,  default='error_lab/ref.txt')
 
     parser.add_argument('--pred', dest='pred_txt',
                         type=str,  default='error_lab/pred.txt')
+
+    parser.add_argument('--tgt', dest='tgt_txt',
+                        type=str,  default='error_lab/tgt.txt')
 
     parser.add_argument('--output-dir', dest='output_dir',
                         type=str,  default='error_lab/')
@@ -71,20 +75,32 @@ def main(args):
    
     ref = parameters.ref_txt
     pred = parameters.pred_txt
+    tgt = parameters.tgt_txt
     output_dir = parameters.output_dir
     ignore_style = parameters.ignore_style
-    train_set = parameters.train_set
+    model = parameters.model
 
-
-    assert os.path.exists(ref), ref
-    assert os.path.exists(pred), pred
+    if model == "train":
+        assert os.path.exists(tgt), tgt
+    else:
+        assert os.path.exists(ref), ref
+        assert os.path.exists(pred), pred
     assert os.path.exists(output_dir), output_dir
 
-    pred_dir = os.path.join(output_dir, 'images_pred')
-    gold_dir = os.path.join(output_dir, 'images_gold')
-    for dirname in [pred_dir, gold_dir]:
-        if not os.path.exists(dirname):
-            os.makedirs(dirname)
+    if model == 'train':
+        tgt_dir = os.path.join(output_dir, 'images_tgt')
+
+        for dirname in [tgt_dir]:
+            if not os.path.exists(dirname):
+                os.makedirs(dirname)
+    else:
+        pred_dir = os.path.join(output_dir, 'images_pred')
+        gold_dir = os.path.join(output_dir, 'images_gold')
+
+        for dirname in [pred_dir, gold_dir]:
+            if not os.path.exists(dirname):
+                os.makedirs(dirname)
+
     lines = []
     ignoretxt = []
 
@@ -93,31 +109,43 @@ def main(args):
     '\\alpha _ { 1 } ^ { r } \\gamma _ { 1 } + \\dots + \\alpha _ { N } ^ { r } \\gamma _ { N } = 0 \\quad ( r = 1 , . . . , R ) \\; ,\n', 
     'data/full/images_rendered/images_gold/7944775fc9.png', False)]
     '''
+    if model == "train":
 
-    with open(ref) as fin:
-        i = 0
-        for line in fin:
-            img_path = str(i) + '.png'
-            ref_txt = line.strip()
+        with open(tgt) as fin:
+            i = 0
+            for line in fin:
+                img_path = str(i) + '.png'
+                tgt_txt = line.strip()
+                lines.append((img_path, tgt_txt, os.path.join(tgt_dir, img_path), parameters.replace, model))
+                i = i + 1
+    else:
+        with open(ref) as fin:
+            i = 0
+            for line in fin:
+                img_path = str(i) + '.png'
+                ref_txt = line.strip()
 
-            if ignore_style == '1':
-                ref_txt = delstyle(ref_txt)
-                ignoretxt.append(ref_txt)
-            lines.append((img_path, ref_txt, os.path.join(gold_dir, img_path), parameters.replace, train_set))
-            i = i + 1
-    if ignore_style== '1':
-        savetxt(ignoretxt, output_dir+'ns_ref.txt')
-    ignoretxt = []
-    with open(pred) as fin:
-        i = 0
-        for line in fin:
-            img_path = str(i) + '.png'
-            pred_txt = line.strip()
-            if ignore_style== '1':
-                pred_txt = delstyle(pred_txt)
-                ignoretxt.append(pred_txt)
-            lines.append((img_path, pred_txt, os.path.join(pred_dir, img_path), parameters.replace, train_set))
-            i = i + 1
+                if ignore_style == '1':
+                    ref_txt = delstyle(ref_txt)
+                    ignoretxt.append(ref_txt)
+                lines.append((img_path, ref_txt, os.path.join(gold_dir, img_path), parameters.replace, model))
+                i = i + 1
+        if ignore_style== '1':
+            savetxt(ignoretxt, output_dir+'ns_ref.txt')
+        ignoretxt = []
+        with open(pred) as fin:
+            i = 0
+            for line in fin:
+                img_path = str(i) + '.png'
+                pred_txt = line.strip()
+                if ignore_style== '1':
+                    pred_txt = delstyle(pred_txt)
+                    ignoretxt.append(pred_txt)
+                lines.append((img_path, pred_txt, os.path.join(pred_dir, img_path), parameters.replace, model))
+                i = i + 1
+
+
+
     if ignore_style== '1':
         savetxt(ignoretxt, output_dir+'ns_pred.txt')
     logging.info('Creating pool with %d threads'%parameters.num_threads)
@@ -127,20 +155,13 @@ def main(args):
     pool.close() 
     pool.join()
 
-    # if train_set == '1':
-    #     for root, dirs, files in os.walk(pred_dir):
-    #         for fl in files:
-    #             image_dir = os.path.join(pred_dir, fl)
-    #             image = Image.open(image_dir)
-    #             change_image_channels(image, image_dir)
-    #
-    #     for root, dirs, files in os.walk(gold_dir):
-    #         for fl in files:
-    #             image_dir = os.path.join(gold_dir, fl)
-    #             image = Image.open(image_dir)
-    #             change_image_channels(image, image_dir)
 
 
+def resize(img_dir):
+    img = cv2.imread(img_dir)
+    # cv2.imwrite("error_lab/images/", img)
+    im = cv2.resize(img, None, None, fx=1/2, fy=1/2, interpolation=cv2.INTER_LINEAR)
+    cv2.imwrite(img_dir, im)
 
 def savetxt(ignoretxt, out_dir):
     fw = open(out_dir, 'w')  # 将要输出保存的文件地址
@@ -174,7 +195,7 @@ def output_err(output_path, i, reason, img):
     logging.info('ERROR: %s %s\n'%(img,reason))
 
 def main_parallel(line):
-    img_path, l, output_path, replace, train_set = line
+    img_path, l, output_path, replace, model = line
     # print(line)
     pre_name = output_path.replace('/', '_').replace('.', '_')
     l = l.strip()
@@ -211,16 +232,18 @@ def main_parallel(line):
         if not os.path.exists(pdf_filename):
             output_err(output_path, 0, 'cannot compile', img_path)
         else:
-            # os.system("convert -density 200 -quality 100 %s %s"%(pdf_filename, png_filename))
-            os.system("convert -density 110 -quality 100 %s %s" % (pdf_filename, png_filename))
+            os.system("convert -density 200 -quality 100 %s %s"%(pdf_filename, png_filename))
+            # os.system("convert -density 110 -quality 100 %s %s" % (pdf_filename, png_filename))
             os.remove(pdf_filename)
 
             if os.path.exists(png_filename):
 
-                if train_set == '1':
+                if model == 'train':
                     # print(png_filename, output_path)
                     crop_image(png_filename, png_filename)
                     pad_group_image(png_filename, output_path, (5,5,5,5), buckets)
+                    # print(output_path)
+                    resize(output_path)
                 else:
                     crop_image(png_filename, output_path)
                 os.remove(png_filename)

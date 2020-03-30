@@ -147,8 +147,8 @@ class ImageEncoder(EncoderBase):
         # out = src.view(src.size(2)*src.size(3), src.size(0), src.size(1))
 
         # 这里添加了位置信息，在每一行的开头会有一个用第几行数初始化，与原来每行的特征向量做个拼接之后在进行rowencoder
-        out, hidden_t = self.rowcol_origin(src)
-        # out, hidden_t = self.rowencoder(src)
+        # out, hidden_t = self.rowcol_origin(src)
+        out, hidden_t = self.rowencoder(src)
         # print(('src1', src.size()))
 
         if self.multi_scale:

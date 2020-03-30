@@ -1,8 +1,8 @@
 import PIL
 from PIL import Image
 import numpy as np
-
-
+import os
+import cv2
 
 def crop_image(img, output_path, default_size=None):
     old_im = Image.open(img).convert('L')
@@ -23,8 +23,17 @@ def crop_image(img, output_path, default_size=None):
     x_min = np.min(nnz_inds[1])
     x_max = np.max(nnz_inds[1])
     old_im = old_im.crop((x_min, y_min, x_max+1, y_max+1))
+
     old_im.save(output_path)
     return True
+
+def change_image_channels(image, image_path):
+    if image.mode != 'RGB':
+        image = image.convert("RGB")
+        # os.remove(image_path)
+        image.save(image_path)
+    return image
+
 
 
 def crop_image_for_trian(img, output_path, default_size=None):
@@ -47,7 +56,20 @@ def crop_image_for_trian(img, output_path, default_size=None):
     x_max = np.max(nnz_inds[1])
 
     old_im = old_im.crop((x_min, y_min, x_max+1, y_max+1))
-    old_im.save(output_path)
+
+    lap_5 = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
+    # 拉普拉斯5的锐化
+    lap_9 = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
+    # 拉普拉斯9的锐化
+
+    change_image_channels(old_im, output_path)
+
+    src = cv2.imread(output_path)
+    dst = cv2.filter2D(src, cv2.CV_8U, lap_5)
+
+    im = Image.fromarray(dst)
+
+    im.save("error_lab/images/oo.png")
     return True
 
 
