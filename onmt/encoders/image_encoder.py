@@ -217,7 +217,7 @@ class ImageEncoder(EncoderBase):
             all_outputs.append(outputs)
         # print('all_outputs', all_outputs[0].size())
         out = torch.cat(all_outputs, 0)
-        return out, hidden_t
+        return out, hidden_t                #hidden_t (h , c) 其中h(
 
 
     def origin_encoder(self, src, batch_size):

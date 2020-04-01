@@ -5,6 +5,7 @@ import torch
 from onmt.utils.self_atten import Self_Attn
 from onmt.encoders.encoder import EncoderBase
 import math
+from onmt.models.res_rnn import ResLSTM
 
 
 class SAM_Encoder(EncoderBase):
@@ -17,15 +18,19 @@ class SAM_Encoder(EncoderBase):
         super(SAM_Encoder, self).__init__()
 
         # self.resnet = resnet45(compress_layer=True)
-        # self.vgg = VGG(num_layers, bidirectional, rnn_size, dropout, multi_scale,
-        #          image_chanel_size)
+        self.vgg = VGG(num_layers, bidirectional, rnn_size, dropout, multi_scale,
+                 image_chanel_size)
         # self.sam = SAM(maxT=160, depth=8)
-        self.FPN = FPN(Bottleneck)
+        # self.FPN = FPN(Bottleneck)
         src_size = 512
-        self.rnn = nn.LSTM(src_size, int(src_size / 2),
-                           num_layers=num_layers,
-                           dropout=dropout,
-                           bidirectional=bidirectional)
+        # self.rnn = nn.LSTM(src_size, int(src_size / 2),
+        #                    num_layers=num_layers,
+        #                    dropout=dropout,
+        #                    bidirectional=bidirectional)
+
+        self.rnn_res = ResLSTM(num_layers=num_layers, input_size=src_size, rnn_size=int(src_size/2), dropout=dropout)
+
+
     @classmethod
     def from_opt(cls, opt, embeddings=None):
         """Alternate constructor.
@@ -60,13 +65,12 @@ class SAM_Encoder(EncoderBase):
     def forward(self, src, lengths=None):
         # print('src', src.size())
         # features = self.resnet(src)
-        # features = self.vgg(src)
+        features = self.vgg(src)
 
         # s_atten = self.sam(features)
-        features = self.FPN(src)
-        memory, hidden_t = self.rowencoder(features)
-
-
+        # features = self.FPN(src)
+        # memory, hidden_t = self.rowencoder(features)
+        memory, hidden_t = self.reslstmencoder(features)
         # print('features', features[-1].size())
         # print('memory', memory.size())
 
@@ -75,6 +79,18 @@ class SAM_Encoder(EncoderBase):
         return hidden_t, memory, None
         # return hidden_t, (features[-1], s_atten), None
 
+    def reslstmencoder(self, src):
+        all_outputs = []
+        for row in range(src.size(2)):
+            inp = src[:, :, row, :].transpose(0, 2) \
+                .transpose(1, 2)
+            outputs, hidden_t = self.rnn_res(inp)
+            # print('outputs', outputs.size())
+            all_outputs.append(outputs)             # outputs torch.Size([W, bz, c])
+
+        out = torch.cat(all_outputs, 0)
+
+        return out, hidden_t
     def rowencoder(self, src):
         all_outputs = []
         for row in range(src.size(2)):
@@ -410,7 +426,7 @@ class FPN(nn.Module):
 
     def forward(self, x):
         # Bottom-up
-        print("x", x.size())
+        # print("x", x.size())
 
         x = F.relu(self.bn1(self.conv1(x)), True)
         c1 = F.max_pool2d(x, kernel_size=(2, 2), stride=(2, 2))
@@ -430,7 +446,7 @@ class FPN(nn.Module):
         # p4 = self.smooth1(p4)
         p3 = self.smooth2(p3)
         # p2 = self.smooth3(p2)
-        print("p3", p3.size())
+        # print("p3", p3.size())
         return p3
 
 
@@ -439,8 +455,7 @@ def resnet45(compress_layer):
     return model
 
 
-
-class VGG(nn.Module):
+class VGG_FPN(nn.Module):
 
     def __init__(self, num_layers, bidirectional, rnn_size, dropout, multi_scale,
                  image_chanel_size=3):
@@ -536,4 +551,70 @@ class VGG(nn.Module):
 
         return p3
 
+class VGG(nn.Module):
+    def __init__(self, num_layers, bidirectional, rnn_size, dropout, multi_scale,
+                 image_chanel_size=3):
+        super(VGG, self).__init__()
+        self.multi_scale = multi_scale
+        self.num_layers = num_layers
+        self.num_directions = 2 if bidirectional else 1
+        self.hidden_size = rnn_size
 
+        self.layer1 = nn.Conv2d(image_chanel_size, 64, kernel_size=(3, 3),
+                                padding=(1, 1), stride=(1, 1))
+
+        self.layer2 = nn.Conv2d(64, 128, kernel_size=(3, 3),
+                                padding=(1, 1), stride=(1, 1))
+        self.layer3 = nn.Conv2d(128, 256, kernel_size=(3, 3),
+                                padding=(1, 1), stride=(1, 1))
+        self.layer4 = nn.Conv2d(256, 256, kernel_size=(3, 3),
+                                padding=(1, 1), stride=(1, 1))
+        self.layer5 = nn.Conv2d(256, 512, kernel_size=(3, 3),
+                                padding=(1, 1), stride=(1, 1))
+        self.layer6 = nn.Conv2d(512, 512, kernel_size=(3, 3),
+                                padding=(1, 1), stride=(1, 1))
+
+        self.batch_norm1 = nn.BatchNorm2d(256)
+        self.batch_norm2 = nn.BatchNorm2d(512)
+        self.batch_norm3 = nn.BatchNorm2d(512)
+
+
+    def forward(self, src):
+        # print('src', src.size())
+        """See :func:`onmt.encoders.encoder.EncoderBase.forward()`"""
+        # (batch_size, 64, imgH, imgW)
+
+        # layer 1
+        # print('输入图片',src.size())
+        src = F.relu(self.layer1(src[:, :, :, :] - 0.5), True)
+        # (batch_size, 64, imgH/2, imgW/2)
+        src = F.max_pool2d(src, kernel_size=(2, 2), stride=(2, 2))
+
+        # (batch_size, 128, imgH/2, imgW/2)
+        # layer 2
+        src = F.relu(self.layer2(src), True)
+        # (batch_size, 128, imgH/2/2, imgW/2/2)
+        src = F.max_pool2d(src, kernel_size=(2, 2), stride=(2, 2))
+        #  (batch_size, 256, imgH/2/2, imgW/2/2)
+        # layer 3
+        # batch norm 1
+        src = F.relu(self.batch_norm1(self.layer3(src)), True)
+        # (batch_size, 256, imgH/2/2, imgW/2/2)
+        # layer4
+        src = F.relu(self.layer4(src), True)
+        if self.multi_scale:
+            self.highsrc = src
+
+        # (batch_size, 256, imgH/2/2/2, imgW/2/2)
+        src = F.max_pool2d(src, kernel_size=(1, 2), stride=(1, 2))
+        # (batch_size, 512, imgH/2/2/2, imgW/2/2)
+        # layer 5
+        # batch norm 2
+        src = F.relu(self.batch_norm2(self.layer5(src)), True)
+
+        # (batch_size, 512, imgH/2/2/2, imgW/2/2/2)
+        src = F.max_pool2d(src, kernel_size=(2, 1), stride=(2, 1))
+        # (batch_size, 512, imgH/2/2/2, imgW/2/2/2)
+        src = F.relu(self.batch_norm3(self.layer6(src)), True)
+
+        return src
